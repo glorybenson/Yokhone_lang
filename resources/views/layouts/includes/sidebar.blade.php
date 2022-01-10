@@ -12,7 +12,7 @@
                         </li>
 
                         <li>
-                            <a href="./knowledge.html"><i class="feather-lock"></i>
+                            <a href=""><i class="feather-lock"></i>
                                 <span class="shape1"></span><span class="shape2"></span>
                                 <span> Clients</span></a>
                         </li>
@@ -39,8 +39,8 @@
                             <span class="shape1"></span><span class="shape2"></span>
                                 <span> Finance</span> <span class="menu-arrow"></span></a>
                             <ul style="display: none;">
-                                <li><a href="./user-mgt.html">Expenses</a></li>
-                                <li><a href="./payment-mgt.html">Invoices</a></li>
+                                <li><a href="">Expenses</a></li>
+                                <li><a href="">Invoices</a></li>
                             </ul>
                         </li>
 
@@ -49,13 +49,13 @@
                             <span class="shape1"></span><span class="shape2"></span>
                                 <span> Reports</span> <span class="menu-arrow"></span></a>
                             <ul style="display: none;">
-                                <li><a href="./user-mgt.html">Expenses</a></li>
-                                <li><a href="./payment-mgt.html">Incomes</a></li>
-                                <li><a href="./payment-mgt.html">Employees</a></li>
-                                <li><a href="./payment-mgt.html">Farms</a></li>
-                                <li><a href="./user-mgt.html">Trees</a></li>
-                                <li><a href="./payment-mgt.html">Clients</a></li>
-                                <li><a href="./payment-mgt.html">Login history</a></li>
+                                <li><a href="">Expenses</a></li>
+                                <li><a href="">Incomes</a></li>
+                                <li><a href="">Employees</a></li>
+                                <li><a href="">Farms</a></li>
+                                <li><a href="">Trees</a></li>
+                                <li><a href="">Clients</a></li>
+                                <li><a href="">Login history</a></li>
                             </ul>
                         </li>
 

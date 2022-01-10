@@ -228,10 +228,12 @@ class HomeController extends Controller
                     Session::flash('warning', 'All fields are required');
                     return back()->withErrors($validator)->withInput();
                 }
+
+                return back();
                 
-                if ($request->hasFile('CIN_proof')) {
-                    $CIN_proof = save_file($request->file('CIN_proof'), "CIN_PROOF");
-                }
+                // if ($request->hasFile('CIN_proof')) {
+                //     $CIN_proof = save_file($request->file('CIN_proof'), "CIN_PROOF");
+                // }
 
                 // User::create([
                 //     'first_name' => $request->first_name,
@@ -242,9 +244,9 @@ class HomeController extends Controller
                 //     'password' => Hash::make($request->password)
                 // ]);
 
-                dd($request->all());
-                Session::flash('success', "Employee created successfully");
-                return redirect()->route('employees');
+                // dd($request->all());
+                // Session::flash('success', "Employee created successfully");
+                // return redirect()->route('employees');
             }
 
             $data['roles'] = Role::all();

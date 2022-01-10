@@ -1,10 +1,10 @@
 <div class="header">
 
     <div class="header-left">
-        <a href="index.html" class="logo">Yokhone App
+        <a href="{{ route('home') }}" class="logo">Yokhone App
             <!-- <img src="assets/img/logo.svg" alt="Logo"> -->
         </a>
-        <a href="index.html" class="logo logo-small">PT
+        <a href="{{ route('home') }}" class="logo logo-small">PT
             <!-- <img src="assets/img/logo.svg" alt="Logo"> -->
         </a>
     </div>
@@ -38,7 +38,7 @@
                     <span class="status online"></span></span>
             </a>
             <div class="dropdown-menu">
-                <a class="dropdown-item" href="./profile.html"><i class="feather-user"></i> My Profile</a>
+                <a class="dropdown-item" href=""><i class="feather-user"></i> My Profile</a>
                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="feather-power"></i> Logout
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                         @csrf

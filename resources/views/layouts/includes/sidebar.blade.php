@@ -23,7 +23,7 @@
                                     class="menu-arrow"></span></a>
                             <ul style="display: none;">
                                 <li><a href="./profile.html">Trees</a></li>
-                                <li><a href="./change-password.html">Farm</a></li>
+                                <li><a href="{{ route('farms') }}">Farm</a></li>
                             </ul>
                         </li>
 

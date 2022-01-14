@@ -6,35 +6,20 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title float-left">Edit Employee Data</h4>
+                    <h4 class="card-title float-left">Edit Farm</h4>
                     <div class="text-right">
-                        <a href="{{ route('employees') }}" class="btn btn-secondary p-2">Back to Employees</a>
+                        <a href="{{ route('farms') }}" class="btn btn-secondary p-2">Back to Farms</a>
                     </div>
                 </div>
                 <div class="card-body">
-
-                    <form method="POST" action="{{ route('edit.employee', $employee->id) }}">
+                    <form method="POST" action="{{ route('edit.farm', $farm->id) }}">
                         @csrf
-                        <input type="hidden" name="id" value="{{ $employee->id }}">
-
+                        <input type="hidden" name="id" value="{{$farm->id}}">
                         <div class="row mb-3">
-                            <label for="first_name" class="col-md-4 col-form-label text-md-end">{{ __('First Name') }}</label>
+                            <label for="farm_name" class="col-md-4 col-form-label text-md-end">{{ __('Farm Name') }}</label>
                             <div class="col-md-6">
-                            <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ $employee->first_name }}" autocomplete="first name" required autofocus>
-                            @error('first_name')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-</div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="last_name" class="col-md-4 col-form-label text-md-end">{{ __('Last Name') }}</label>
-                            <div class="col-md-6">
-                                <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ $employee->last_name }}" required autocomplete="last name" required autofocus>
-
-                                @error('last_name')
+                                <input id="farm_name" type="text" class="form-control @error('farm_name') is-invalid @enderror" name="farm_name" value="{{ $farm->farm_name }}" autocomplete="name" required autofocus>
+                                @error('farm_name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -43,11 +28,10 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('E-Mail Address') }}</label>
-
+                            <label for="farm_desc" class="col-md-4 col-form-label text-md-end">{{ __('Farm Description') }}</label>
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $employee->email }}" required autocomplete="email">
-                                @error('email')
+                                <textarea id="farm_desc" class="form-control @error('farm_desc') is-invalid @enderror" required name="farm_desc">{{ $farm->farm_desc }}</textarea>
+                                @error('farm_desc')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -56,10 +40,10 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="employee_id" class="col-md-4 col-form-label text-md-end">{{ __('Employee ID') }}</label>
+                            <label for="acquisition_date" class="col-md-4 col-form-label text-md-end">{{ __('Acquisition Date') }}</label>
                             <div class="col-md-6">
-                                <input id="employee_id" type="number" class="form-control @error('employee_id') is-invalid @enderror" name="employee_id" required value="{{ $employee->employee_id }}">
-                                @error('employee_id')
+                                <input id="acquisition_date" type="date" class="form-control @error('acquisition_date') is-invalid @enderror" required name="acquisition_date" value="{{ $farm->acquisition_date }}" autocomplete="date">
+                                @error('acquisition_date')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -68,10 +52,10 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="hiring_date" class="col-md-4 col-form-label text-md-end">{{ __('Hiring Date') }}</label>
+                            <label for="surface" class="col-md-4 col-form-label text-md-end">{{ __('Surface') }}</label>
                             <div class="col-md-6">
-                                <input id="hiring_date" type="date" class="form-control @error('hiring_date') is-invalid @enderror" name="hiring_date" required value="{{ $employee->hiring_date }}">
-                                @error('hiring_date')
+                                <input id="surface" title="" type="text" class="form-control @error('surface') is-invalid @enderror" name="surface" value="{{ $farm->surface }}" required>
+                                @error('surface')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -80,10 +64,10 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="end_date" class="col-md-4 col-form-label text-md-end">{{ __('End Date') }}</label>
+                            <label for="amount" class="col-md-4 col-form-label text-md-end">{{ __('Amount') }}</label>
                             <div class="col-md-6">
-                                <input id="end_date" type="date" class="form-control @error('end_date') is-invalid @enderror" name="end_date" value="{{ $employee->end_date }}">
-                                @error('end_date')
+                                <input id="amount" type="number" class="form-control @error('amount') is-invalid @enderror" name="amount" value="{{ $farm->amount }}" required>
+                                @error('amount')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -92,99 +76,21 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="CIN" class="col-md-4 col-form-label text-md-end">{{ __('CIN') }}</label>
+                            <label for="latitude" class="col-md-4 col-form-label text-md-end">{{ __('Latitude') }}</label>
                             <div class="col-md-6">
-                                <input id="CIN" type="text" class="form-control @error('CIN') is-invalid @enderror" name="CIN" required value="{{ $employee->CIN }}">
-
-                                @error('CIN')
+                                <input id="latitude" type="" onkeypress='return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)' class="form-control @error('latitude') is-invalid @enderror" name="latitude" value="{{ $farm->latitude }}" required>
+                                @error('latitude')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
                             </div>
                         </div>
-
                         <div class="row mb-3">
-                            <label for="CIN_proof" class="col-md-4 col-form-label text-md-end">{{ __('CIN Proof') }}</label>
-
+                            <label for="longitude" class="col-md-4 col-form-label text-md-end">{{ __('Longitude') }}</label>
                             <div class="col-md-6">
-                                <input id="CIN_proof" type="file" accept="application/pdf" class="form-control @error('CIN_proof') is-invalid @enderror" name="CIN_proof" value="{{ $employee->CIN_proof }}">
-
-                                @error('CIN_proof')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="cell_1" class="col-md-4 col-form-label text-md-end">{{ __('Cell1') }}</label>
-                            <div class="col-md-6">
-                                <input id="cell_1" type="text" class="form-control @error('cell_1') is-invalid @enderror" required name="cell_1" value="{{ $employee->cell_1 }}">
-                                @error('cell_1')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="cell_2" class="col-md-4 col-form-label text-md-end">{{ __('Cell2') }}</label>
-                            <div class="col-md-6">
-                                <input id="cell_2" type="text" class="form-control @error('cell_2') is-invalid @enderror" name="cell_2" value="{{ $employee->cell_2 }}">
-                                @error('cell_2')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="address" class="col-md-4 col-form-label text-md-end">{{ __('Address') }}</label>
-
-                            <div class="col-md-6">
-                                <textarea id="address" class="form-control @error('address') is-invalid @enderror" required name="address">{{ $employee->address }}</textarea>
-
-                                @error('address')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="contact_full_name" class="col-md-4 col-form-label text-md-end">{{ __('Contact 1 Full Name') }}</label>
-                            <div class="col-md-6">
-                                <input id="contact_full_name" type="text" class="form-control @error('contact_full_name') is-invalid @enderror" required name="contact_full_name" value="{{ $employee->contact_full_name }}">
-                                @error('contact_full_name')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="contact_1_cell" class="col-md-4 col-form-label text-md-end">{{ __('Contact 1 Cell') }}</label>
-                            <div class="col-md-6">
-                                <input id="contact_1_cell" type="text" class="form-control @error('contact_1_cell') is-invalid @enderror" required name="contact_1_cell" value="{{ $employee->contact_1_cell }}">
-                                @error('contact_1_cell')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="contact_1_cell2" class="col-md-4 col-form-label text-md-end">{{ __('Contact 1 Cell2') }}</label>
-                            <div class="col-md-6">
-                                <input id="contact_1_cell2" type="text" class="form-control @error('contact_1_cell2') is-invalid @enderror" required name="contact_1_cell2" value="{{ $employee->contact_1_cell2 }}">
-                                @error('contact_1_cell2')
+                                <input id="longitude" type="" onkeypress='return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)' class="form-control @error('longitude') is-invalid @enderror" name="longitude" value="{{ $farm->longitude }}" required>
+                                @error('longitude')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -195,7 +101,7 @@
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Update') }}
+                                    {{ __('Submit') }}
                                 </button>
                             </div>
                         </div>
@@ -210,20 +116,19 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title float-left">Create Employee</h4>
+                    <h4 class="card-title float-left">Create Farm</h4>
                     <div class="text-right">
-                        <a href="{{ route('employees') }}" class="btn btn-secondary p-2">Back to Employees</a>
+                        <a href="{{ route('farms') }}" class="btn btn-secondary p-2">Back to Farms</a>
                     </div>
                 </div>
                 <div class="card-body">
-
-                    <form method="POST" action="{{ route('create.employee') }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('create.farm') }}">
                         @csrf
                         <div class="row mb-3">
-                            <label for="first_name" class="col-md-4 col-form-label text-md-end">{{ __('First Name') }}</label>
+                            <label for="farm_name" class="col-md-4 col-form-label text-md-end">{{ __('Farm Name') }}</label>
                             <div class="col-md-6">
-                                <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" autocomplete="name" required autofocus>
-                                @error('first_name')
+                                <input id="farm_name" type="text" class="form-control @error('farm_name') is-invalid @enderror" name="farm_name" value="{{ old('farm_name') }}" autocomplete="name" required autofocus>
+                                @error('farm_name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -232,10 +137,10 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="last_name" class="col-md-4 col-form-label text-md-end">{{ __('Last Name') }}</label>
+                            <label for="farm_desc" class="col-md-4 col-form-label text-md-end">{{ __('Farm Description') }}</label>
                             <div class="col-md-6">
-                                <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" autocomplete="name" required autofocus>
-                                @error('last_name')
+                                <textarea id="farm_desc" class="form-control @error('farm_desc') is-invalid @enderror" required name="farm_desc">{{ old('farm_desc') }}</textarea>
+                                @error('farm_desc')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -244,10 +149,10 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('E-Mail Address') }}</label>
+                            <label for="acquisition_date" class="col-md-4 col-form-label text-md-end">{{ __('Acquisition Date') }}</label>
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" required name="email" value="{{ old('email') }}" autocomplete="email">
-                                @error('email')
+                                <input id="acquisition_date" type="date" class="form-control @error('acquisition_date') is-invalid @enderror" required name="acquisition_date" value="{{ old('acquisition_date') }}" autocomplete="date">
+                                @error('acquisition_date')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -256,10 +161,10 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="employee_id" class="col-md-4 col-form-label text-md-end">{{ __('Employee ID') }}</label>
+                            <label for="surface" class="col-md-4 col-form-label text-md-end">{{ __('Surface') }}</label>
                             <div class="col-md-6">
-                                <input id="employee_id" type="number" class="form-control @error('employee_id') is-invalid @enderror" name="employee_id" value="{{ old('employee_id') }}" required>
-                                @error('employee_id')
+                                <input id="surface" title="" type="text" class="form-control @error('surface') is-invalid @enderror" name="surface" value="{{ old('surface') }}" required>
+                                @error('surface')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -268,10 +173,10 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="hiring_date" class="col-md-4 col-form-label text-md-end">{{ __('Hiring Date') }}</label>
+                            <label for="amount" class="col-md-4 col-form-label text-md-end">{{ __('Amount') }}</label>
                             <div class="col-md-6">
-                                <input id="hiring_date" type="date" class="form-control @error('hiring_date') is-invalid @enderror" name="hiring_date" value="{{ old('hiring_date') }}" required>
-                                @error('hiring_date')
+                                <input id="amount" type="number" class="form-control @error('amount') is-invalid @enderror" name="amount" value="{{ old('amount') }}" required>
+                                @error('amount')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -280,106 +185,21 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="end_date" class="col-md-4 col-form-label text-md-end">{{ __('End Date') }}</label>
+                            <label for="latitude" class="col-md-4 col-form-label text-md-end">{{ __('Latitude') }}</label>
                             <div class="col-md-6">
-                                <input id="end_date" type="date" class="form-control @error('end_date') is-invalid @enderror" name="end_date" value="{{ old('end_date') }}">
-                                @error('end_date')
+                                <input id="latitude" type="" onkeypress='return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)' class="form-control @error('latitude') is-invalid @enderror" name="latitude" value="{{ old('latitude') }}" required>
+                                @error('latitude')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
                             </div>
                         </div>
-
                         <div class="row mb-3">
-                            <label for="CIN" class="col-md-4 col-form-label text-md-end">{{ __('CIN') }}</label>
+                            <label for="longitude" class="col-md-4 col-form-label text-md-end">{{ __('Longitude') }}</label>
                             <div class="col-md-6">
-                                <input id="CIN" type="text" class="form-control @error('CIN') is-invalid @enderror" name="CIN" value="{{ old('CIN') }}" required>
-                                @error('CIN')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="CIN_proof" class="col-md-4 col-form-label text-md-end">{{ __('CIN Proof') }}</label>
-                            <div class="col-md-6">
-                                <input id="CIN_proof" type="file" accept="application/pdf" class="form-control @error('CIN_proof') is-invalid @enderror" name="CIN_proof" value="{{ old('CIN_proof') }}" required>
-                                @error('CIN_proof')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="cell_1" class="col-md-4 col-form-label text-md-end">{{ __('Cell1') }}</label>
-                            <div class="col-md-6">
-                                <input id="cell_1" type="text" class="form-control @error('cell_1') is-invalid @enderror" name="cell_1" value="{{ old('cell_1') }}" required>
-                                @error('cell_1')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="cell_2" class="col-md-4 col-form-label text-md-end">{{ __('Cell2') }}</label>
-                            <div class="col-md-6">
-                                <input id="cell_2" type="text" class="form-control @error('cell_2') is-invalid @enderror" name="cell_2" value="{{ old('cell_2') }}">
-                                @error('cell_2')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="address" class="col-md-4 col-form-label text-md-end">{{ __('Address') }}</label>
-                            <div class="col-md-6">
-                                <textarea id="address" class="form-control @error('address') is-invalid @enderror" required name="address">{{ old('address') }}</textarea>
-                                @error('address')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="contact_full_name" class="col-md-4 col-form-label text-md-end">{{ __('Contact 1 Full Name') }}</label>
-                            <div class="col-md-6">
-                                <input id="contact_full_name" type="text" class="form-control @error('contact_full_name') is-invalid @enderror" name="contact_full_name" value="{{ old('contact_full_name') }}" required>
-                                @error('contact_full_name')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="contact_1_cell" class="col-md-4 col-form-label text-md-end">{{ __('Contact 1 Cell') }}</label>
-                            <div class="col-md-6">
-                                <input id="contact_1_cell" type="text" class="form-control @error('contact_1_cell') is-invalid @enderror" required name="contact_1_cell" value="{{ old('contact_1_cell') }}">
-                                @error('contact_1_cell')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="contact_1_cell2" class="col-md-4 col-form-label text-md-end">{{ __('Contact 1 Cell2') }}</label>
-                            <div class="col-md-6">
-                                <input id="contact_1_cell2" type="text" class="form-control @error('contact_1_cell2') is-invalid @enderror" required name="contact_1_cell2" value="{{ old('contact_1_cell2') }}">
-                                @error('contact_1_cell2')
+                                <input id="longitude" type="" onkeypress='return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)' class="form-control @error('longitude') is-invalid @enderror" name="longitude" value="{{ old('longitude') }}" required>
+                                @error('longitude')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -401,4 +221,17 @@
     </div>
     @endif
 </div>
+
+<script>
+    $('.latitude').keyup(function() {
+        console.log("jbjhvj")
+        var val = $(this).val();
+        if (isNaN(val)) {
+            val = val.replace(/[^0-9\.]/g, '');
+            if (val.split('.').length > 2)
+                val = val.replace(/\.+$/, "");
+        }
+        $(this).val(val);
+    });​
+</script>
 @endsection

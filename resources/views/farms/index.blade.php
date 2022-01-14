@@ -6,9 +6,9 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title float-left">Employees</h4>
+                    <h4 class="card-title float-left">Farms</h4>
                     <div class="text-right">
-                        <a href="{{ route('create.employee') }}" class="btn btn-primary p-2">Add New Employee</a>
+                        <a href="{{ route('create.farm') }}" class="btn btn-primary p-2">Add New Farm</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -16,27 +16,30 @@
                         <table class="table mb-0 table-striped border-0 data-table" id="datatable">
                             <thead class="thead-light">
                                 <th>#</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Email</th>
-                                <th>Cell 1 #</th>
-                                <th>CEll 2 #</th>
+                                <th>Farm Name</th>
+                                <th>Farm Description</th>
+                                <th>Acquisition Date</th>
+                                <th>Surface</th>
+                                <th>Amount</th>
+                                <th>Latitude</th>
+                                <th>Longitude</th>
                                 <th>Action</th>
                             </thead>
                             <tbody>
-                                @if(isset($employees))
-                                @foreach($employees as $employee)
+                                @if(isset($farms))
+                                @foreach($farms as $farm)
                                 <tr>
                                     <td>{{$sn++}}</td>
-                                    <td>{{$employee->first_name}}</td>
-                                    <td>{{$employee->last_name}}</td>
-                                    <td>{{$employee->email}}</td>
-                                    <td>{{$employee->cell_1}}</td>
-                                    <td>{{$employee->cell_2 ?? ""}}</td>
+                                    <td>{{$farm->farm_name}}</td>
+                                    <td>{{$farm->farm_desc}}</td>
+                                    <td>{{$farm->acquisition_date}}</td>
+                                    <td>{{$farm->surface}}</td>
+                                    <td>{{$farm->amount}}</td>
+                                    <td>{{$farm->latitude}}</td>
+                                    <td>{{$farm->longitude}}</td>
                                     <td>
                                         <div class="d-flex">
-                                            <a href="{{ route('edit.employee', $employee->id) }}" class="btn btn-sm p-2" title="Edit"><i class="fa fa-edit"></i></a>
-                                            <a href="{{ route('view.employee', $employee->id) }}" class="btn btn-sm p-2" title="View"><i class="fa fa-eye"></i></a>
+                                            <a href="{{ route('edit.farm', $farm->id) }}" class="btn btn-sm p-2" title="Edit"><i class="fa fa-edit"></i></a>
                                         </div>
                                     </td>
                                 </tr>

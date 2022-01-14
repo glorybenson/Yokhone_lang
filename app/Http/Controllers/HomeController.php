@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employee;
+use App\Models\Farm;
 use App\Models\Role;
 use App\Models\Salary;
 use App\Models\User;
@@ -147,12 +148,12 @@ class HomeController extends Controller
             return back();
         }
     }
+
     public function employees()
     {
         $data['title'] = "Employees";
         $data['sn'] = 1;
         $data['employees'] = Employee::paginate(10);
-        // $data['employees'] = Employee::with('created_user:id,first_name,last_name')->paginate(10);
         return view('employees.index', $data);
     }
 
@@ -164,7 +165,6 @@ class HomeController extends Controller
             return redirect()->route('employees');
         }
         $data['mode'] = $employee->first_name . " " . $employee->last_name . " Data";
-        // $data['employees'] = Employee::with('created_user:id,first_name,last_name')->paginate(10);
         return view('employees.view', $data);
     }
     public function salary_employee($id)
@@ -177,7 +177,6 @@ class HomeController extends Controller
         }
         $data['salaries'] = Salary::where('employee_id', $employee->id)->get();
         $data['title'] = $employee->first_name . " " . $employee->last_name . " Data";
-        // $data['employees'] = Employee::with('created_user:id,first_name,last_name')->paginate(10);
         return view('employees.salary', $data);
     }
 
@@ -350,10 +349,116 @@ class HomeController extends Controller
                 return redirect()->route('employees');
             }
 
-            $data['title'] = "Create User";
+            $data['title'] = "Create New Employee";
             return view('employees.create', $data);
         } catch (\Throwable $th) {
             Session::flash('error', "An error occur try again");
+            return back();
+        }
+    }
+
+
+    public function farms()
+    {
+        $data['title'] = "Farms";
+        $data['sn'] = 1;
+        $data['farms'] = Farm::paginate(10);
+        return view('farms.index', $data);
+    }
+
+    public function create_farm(Request $request)
+    {
+        try {
+            //code...
+            $data['mode'] = "create";
+            if ($_POST) {
+                $rules = array(
+                    'farm_name' => ['required', 'string', 'max:255', 'unique:farms'],
+                    'farm_desc' => ['required', 'string', 'max:255'],
+                    'acquisition_date' => ['required', 'string', 'max:255'],
+                    'surface' => ['required', 'string', 'max:255'],
+                    'amount' => ['required', 'string'],
+                    'latitude' => ['required', 'string'],
+                    'longitude' => ['required', 'string'],
+                );
+
+                $validator = Validator::make($request->all(), $rules);
+
+                if ($validator->fails()) {
+                    Session::flash('warning', 'All fields are required');
+                    return back()->withErrors($validator)->withInput();
+                }
+
+
+                Farm::create([
+                    'farm_name' => $request->farm_name,
+                    'farm_desc' => $request->farm_desc,
+                    'acquisition_date' => $request->acquisition_date,
+                    'surface' => $request->surface,
+                    'amount' => $request->amount,
+                    'latitude' => $request->latitude,
+                    'longitude' => $request->longitude
+                ]);
+
+                Session::flash('success', "Farm created successfully");
+                return redirect()->route('farms');
+            }
+
+            $data['title'] = "Create New Farm";
+            return view('farms.create', $data);
+        } catch (\Throwable $th) {
+            // Session::flash('error', "An error occur try again");
+            Session::flash('error', $th->getMessage());
+            return back();
+        }
+    }
+
+    public function edit_farm(Request $request, $id)
+    {
+        try {
+            $data['mode'] = "edit";
+            $data['farm'] = $farm = Farm::find($id);
+            if (!isset($farm)) {
+                Session::flash('warning', 'Farm not found');
+                return redirect()->route('farms');
+            }
+            if ($_POST) {
+
+                $rules = array(
+                    'farm_name' => ['required', 'string', 'max:255', 'unique:farms,farm_name,' . $request->id],
+                    'farm_desc' => ['required', 'string', 'max:255'],
+                    'acquisition_date' => ['required', 'string', 'max:255'],
+                    'surface' => ['required', 'string', 'max:255'],
+                    'amount' => ['required', 'string'],
+                    'latitude' => ['required', 'string'],
+                    'longitude' => ['required', 'string'],
+                );
+
+                $validator = Validator::make($request->all(), $rules);
+
+                if ($validator->fails()) {
+                    Session::flash('warning', 'All fields are required');
+                    return back()->withErrors($validator)->withInput();
+                }
+
+
+                Farm::where('id', $request->id)->update([
+                    'farm_name' => $request->farm_name,
+                    'farm_desc' => $request->farm_desc,
+                    'acquisition_date' => $request->acquisition_date,
+                    'surface' => $request->surface,
+                    'amount' => $request->amount,
+                    'latitude' => $request->latitude,
+                    'longitude' => $request->longitude
+                ]);
+
+                Session::flash('success', "Farm data updated successfully");
+                return redirect()->route('farms');
+            }
+            $data['title'] = "Edit Farm";
+            return view('farms.create', $data);
+        } catch (\Throwable $th) {
+            Session::flash('error', $th->getMessage());
             return back();
         }
     }

@@ -31,4 +31,6 @@ Route::get('/delete-user/{id}', [App\Http\Controllers\HomeController::class, 'de
 //User Routes
 Route::get('/employees', [App\Http\Controllers\HomeController::class, 'employees'])->name('employees');
 Route::match(['get', 'post'], '/edit-employee/{id}', [App\Http\Controllers\HomeController::class, 'edit_employee'])->name('edit.employee');
+Route::match(['get', 'post'], '/view-employee/{id}', [App\Http\Controllers\HomeController::class, 'view_employee'])->name('view.employee');
+Route::match(['get', 'post'], '/view-employees-salary/{id}', [App\Http\Controllers\HomeController::class, 'salary_employee'])->name('salary.employee');
 Route::match(['get', 'post'], '/create-employee', [App\Http\Controllers\HomeController::class, 'create_employee'])->name('create.employee');

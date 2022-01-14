@@ -150,50 +150,95 @@ class HomeController extends Controller
     {
         $data['title'] = "Employees";
         $data['sn'] = 1;
-        $data['employees'] = User::whereKeyNot(Auth::user()->id)->with('created_user:id,first_name,last_name')->paginate(10);
+        $data['employees'] = Employee::paginate(10);
+        // $data['employees'] = Employee::with('created_user:id,first_name,last_name')->paginate(10);
         return view('employees.index', $data);
+    }
+
+    public function view_employee($id)
+    {
+        $data['employee'] = $employee = Employee::find($id);
+        if (!isset($employee)) {
+            Session::flash('warning', 'Employee not found');
+            return redirect()->route('employees');
+        }
+        $data['mode'] = $employee->first_name." ".$employee->last_name." Data";
+        // $data['employees'] = Employee::with('created_user:id,first_name,last_name')->paginate(10);
+        return view('employees.view', $data);
+    }
+    public function salary_employee($id)
+    {
+        $data['employee'] = $employee = Employee::find($id);
+        if (!isset($employee)) {
+            Session::flash('warning', 'Employee not found');
+            return redirect()->route('employees');
+        }
+        $data['mode'] = $employee->first_name." ".$employee->last_name." Data";
+        // $data['employees'] = Employee::with('created_user:id,first_name,last_name')->paginate(10);
+        return view('employees.salary', $data);
     }
 
     public function edit_employee(Request $request, $id)
     {
         try {
-            if ($_POST) {
+            $data['mode'] = "edit";
+            $data['employee'] = $employee = Employee::find($id);
+            if (!isset($employee)) {
+                Session::flash('warning', 'Employee not found');
+                return redirect()->route('employees');
+            }
+            if ($_POST) {                
                 $rules = array(
                     'first_name' => ['required', 'string', 'max:255'],
                     'last_name' => ['required', 'string', 'max:255'],
-                    'role' => ['required', 'string', 'max:255'],
-                    'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $request->id],
-                );
-
-                $fieldNames = array(
-                    'vendor_id' => "Vendor Name",
-                    'subject' => "Message Subject",
-                    'content' => "Message Content"
+                    'email' => ['required', 'string', 'email', 'max:255', 'unique:employees,email,'.$employee->id],
+                    'employee_id' => ['required', 'string', 'max:255'],
+                    'hiring_date' => ['required', 'string', 'max:255'],
+                    // 'end_date' => ['required', 'string', 'max:255'],
+                    'CIN' => ['required', 'string', 'max:255'],
+                    'CIN_proof' => ['exclude_if:CIN_proof,null', 'mimetypes:application/pdf', 'max:15000'],
+                    'cell_1' => ['required', 'string', 'max:255'],
+                    // 'cell_2' => ['required', 'string', 'max:255'],
+                    'address' => ['required', 'string'],
+                    'contact_full_name' => ['required', 'string', 'max:255'],
+                    'contact_1_cell' => ['required', 'string', 'max:255'],
+                    'contact_1_cell2' => ['required', 'string', 'max:255'],
                 );
 
                 $validator = Validator::make($request->all(), $rules);
-                // $validator->setAttributeNames($fieldNames);
 
                 if ($validator->fails()) {
                     Session::flash('warning', 'All fields are required');
                     return back()->withErrors($validator)->withInput();
                 }
 
-                $user = User::find($request->id);
-                $user->first_name = $request->first_name;
-                $user->last_name = $request->last_name;
-                $user->email = $request->email;
-                $user->role = $request->role;
-                $user->save();
+                if ($request->hasFile('CIN_proof')) {
+                    $CIN_proof = save_file($request->file('CIN_proof'), "CIN_PROOF");
+                }
 
-                Session::flash('success', "User updated successfully");
-                return redirect()->route('home');
+                
+                Employee::where('id', $request->id)->update([
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
+                    'email' => $request->email,
+                    'employee_id' => $request->employee_id,
+                    'hiring_date' => $request->hiring_date,
+                    'end_date' => $request->end_date,
+                    'CIN' => $request->CIN,
+                    'CIN_proof' => $CIN_proof ?? $employee->CIN_proof,
+                    'cell_1' => $request->cell_1,
+                    'cell_2' => $request->cell_2,
+                    'address' => $request->address,
+                    'contact_full_name' => $request->contact_full_name,
+                    'contact_1_cell' => $request->contact_1_cell,
+                    'contact_1_cell2' => $request->contact_1_cell2
+                ]);
+
+                Session::flash('success', "Employee data updated successfully");
+                return redirect()->route('employees');
             }
-            $data['mode'] = "edit";
-            $data['roles'] = Role::all();
-            $data['user'] = User::where('id', $id)->with('user_role')->first();
-            $data['title'] = "Edit User";
-            return view('users.create', $data);
+            $data['title'] = "Edit Employee";
+            return view('employees.create', $data);
         } catch (\Throwable $th) {
             Session::flash('error', $th->getMessage());
             return back();
@@ -252,16 +297,14 @@ class HomeController extends Controller
                     'contact_1_cell2' => $request->contact_1_cell2
                 ]);
 
-                // dd($request->all());
                 Session::flash('success', "Employee created successfully");
                 return redirect()->route('employees');
             }
 
-            $data['roles'] = Role::all();
             $data['title'] = "Create User";
             return view('employees.create', $data);
         } catch (\Throwable $th) {
-            Session::flash('error', $th->getMessage());
+            Session::flash('error', "An error occur try again");
             return back();
         }
     }

@@ -19,26 +19,24 @@
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Email</th>
-                                <th>Created By</th>
-                                <th>Created On</th>
-                                <th>Last Login</th>
+                                <th>Cell 1 #</th>
+                                <th>CEll 2 #</th>
                                 <th>Action</th>
                             </thead>
                             <tbody>
-                                @if(isset($users))
-                                @foreach($users as $user)
+                                @if(isset($employees))
+                                @foreach($employees as $employee)
                                 <tr>
                                     <td>{{$sn++}}</td>
-                                    <td>{{$user->first_name}}</td>
-                                    <td>{{$user->last_name}}</td>
-                                    <td>{{$user->email}}</td>
-                                    <td>{{$user->created_user->first_name ?? ""}} {{$user->created_user->last_name ?? ""}}</td>
-                                    <td>{{$user->created_at}}</td>
-                                    <td>{{$user->last_login}}</td>
+                                    <td>{{$employee->first_name}}</td>
+                                    <td>{{$employee->last_name}}</td>
+                                    <td>{{$employee->email}}</td>
+                                    <td>{{$employee->cell_1}}</td>
+                                    <td>{{$employee->cell_2 ?? ""}}</td>
                                     <td>
                                         <div class="d-flex">
-                                            <a href="{{ route('edit.user', $user->id) }}" class="btn btn-sm p-2" title="Edit"><i class="fa fa-edit"></i></a>
-                                            <a href="{{ route('delete.user', $user->id) }}" onclick="return confirm('Are you sure you want to delete this user?')" title="Delete" class="btn btn-sm p-2" title="Edit"><i class="fa fa-trash"></i></a>
+                                            <a href="{{ route('edit.employee', $employee->id) }}" class="btn btn-sm p-2" title="Edit"><i class="fa fa-edit"></i></a>
+                                            <a href="{{ route('view.employee', $employee->id) }}" class="btn btn-sm p-2" title="View"><i class="fa fa-eye"></i></a>
                                         </div>
                                     </td>
                                 </tr>

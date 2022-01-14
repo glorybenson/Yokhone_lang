@@ -4,8 +4,6 @@
 
 <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome/css/all.min.css') }}">
 
-<link rel="stylesheet" href="{{ asset('assets/plugins/simple-calendar/simple-calendar.css') }}">
-
 <link rel="stylesheet" href="{{ asset('assets/css/feather.css') }}">
 
 <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}">

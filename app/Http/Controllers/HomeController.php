@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use App\Models\Role;
+use App\Models\Salary;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -162,20 +163,68 @@ class HomeController extends Controller
             Session::flash('warning', 'Employee not found');
             return redirect()->route('employees');
         }
-        $data['mode'] = $employee->first_name." ".$employee->last_name." Data";
+        $data['mode'] = $employee->first_name . " " . $employee->last_name . " Data";
         // $data['employees'] = Employee::with('created_user:id,first_name,last_name')->paginate(10);
         return view('employees.view', $data);
     }
     public function salary_employee($id)
     {
+        $data['sn'] = 1;
         $data['employee'] = $employee = Employee::find($id);
         if (!isset($employee)) {
             Session::flash('warning', 'Employee not found');
             return redirect()->route('employees');
         }
-        $data['mode'] = $employee->first_name." ".$employee->last_name." Data";
+        $data['salaries'] = Salary::where('employee_id', $employee->id)->get();
+        $data['title'] = $employee->first_name . " " . $employee->last_name . " Data";
         // $data['employees'] = Employee::with('created_user:id,first_name,last_name')->paginate(10);
         return view('employees.salary', $data);
+    }
+
+    public function add_salary(Request $request)
+    {
+        try {
+            //code...            
+            $rules = array(
+                'salary_amount' => ['required', 'string', 'max:255'],
+                'salary_start_date' => ['required', 'string', 'max:255'],
+                'current_salary' => ['required', 'string', 'max:255'],
+            );
+
+            $validator = Validator::make($request->all(), $rules);
+
+            if ($validator->fails()) {
+                Session::flash('warning', 'All fields are required');
+                if (isset($request->id)) {
+                    # code...                    
+                    return back()->withErrors($validator);
+                }
+                return back()->withErrors($validator)->withInput();
+            }
+            if ($request->id) {
+                Salary::where(['employee_id' => $request->employee_id, 'id' => $request->id])->update([
+                    'employee_id' => $request->employee_id,
+                    'amount' => $request->salary_amount,
+                    'start_date' => $request->salary_start_date,
+                    'current_salary' => $request->current_salary,
+                ]);
+                Session::flash('success', "Salary Record Updated successfully");
+                return back();
+            }
+
+            Salary::create([
+                'employee_id' => $request->employee_id,
+                'amount' => $request->salary_amount,
+                'start_date' => $request->salary_start_date,
+                'current_salary' => $request->current_salary,
+            ]);
+
+            Session::flash('success', "Salary added successfully");
+            return back();
+        } catch (\Throwable $th) {
+            Session::flash('error', $th->getMessage());
+            return back();
+        }
     }
 
     public function edit_employee(Request $request, $id)
@@ -187,11 +236,11 @@ class HomeController extends Controller
                 Session::flash('warning', 'Employee not found');
                 return redirect()->route('employees');
             }
-            if ($_POST) {                
+            if ($_POST) {
                 $rules = array(
                     'first_name' => ['required', 'string', 'max:255'],
                     'last_name' => ['required', 'string', 'max:255'],
-                    'email' => ['required', 'string', 'email', 'max:255', 'unique:employees,email,'.$employee->id],
+                    'email' => ['required', 'string', 'email', 'max:255', 'unique:employees,email,' . $employee->id],
                     'employee_id' => ['required', 'string', 'max:255'],
                     'hiring_date' => ['required', 'string', 'max:255'],
                     // 'end_date' => ['required', 'string', 'max:255'],
@@ -216,7 +265,7 @@ class HomeController extends Controller
                     $CIN_proof = save_file($request->file('CIN_proof'), "CIN_PROOF");
                 }
 
-                
+
                 Employee::where('id', $request->id)->update([
                     'first_name' => $request->first_name,
                     'last_name' => $request->last_name,
@@ -275,7 +324,7 @@ class HomeController extends Controller
                     return back()->withErrors($validator)->withInput();
                 }
 
-                
+
                 if ($request->hasFile('CIN_proof')) {
                     $CIN_proof = save_file($request->file('CIN_proof'), "CIN_PROOF");
                 }

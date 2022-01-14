@@ -18,27 +18,25 @@
                         </div>
                     </div>
                     <div class="text-right">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddNewSalary">
                             Add New Salary
                         </button>
                     </div>
                     <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="AddNewSalary" tabindex="-1" aria-labelledby="AddNewSalaryLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">Add New Salary</h5>
                                 </div>
-                                <div class="modal-body">
-                                    <form>
+                                <form method="POST" action="{{ route('add.salary') }}">
+                                    <div class="modal-body">
                                         @csrf
+                                        <input type="hidden" name="employee_id" value="{{$employee->id}}">
                                         <div class="row mb-3">
                                             <label for="salary_amount" class="col-md-4 col-form-label text-md-end">{{ __('Salary Amount') }}</label>
                                             <div class="col-md-6">
-                                                <input id="salary_amount" type="number
-                                                " class="form-control @error('salary_amount') is-invalid @enderror" name="salary_amount" value="{{ old('salary_amount') }}" autocomplete="first name" autofocus>
-
-                                                @error('salary_amount')
+                                                <input id="salary_amount" type="number" required class="form-control @error('salary_amount') is-invalid @enderror" name="salary_amount" value="{{ old('salary_amount') }}" autocomplete="first name" autofocus> @error('salary_amount')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
@@ -48,7 +46,7 @@
                                         <div class="row mb-3">
                                             <label for="salary_start_date" class="col-md-4 col-form-label text-md-end">{{ __('Salary Start Date') }}</label>
                                             <div class="col-md-6">
-                                                <input id="salary_start_date" type="date" class="form-control @error('salary_start_date') is-invalid @enderror" name="salary_start_date" value="{{ old('salary_start_date') }}" autocomplete="first name" autofocus>
+                                                <input id="salary_start_date" type="date" required class="form-control @error('salary_start_date') is-invalid @enderror" name="salary_start_date" value="{{ old('salary_start_date') }}" autocomplete="first name" autofocus>
 
                                                 @error('salary_start_date')
                                                 <span class="invalid-feedback" role="alert">
@@ -60,7 +58,7 @@
                                         <div class="row mb-3">
                                             <label for="current_salary" class="col-md-4 col-form-label text-md-end">{{ __('Current Salary') }}</label>
                                             <div class="col-md-6">
-                                                <input id="current_salary" type="number" class="form-control @error('current_salary') is-invalid @enderror" name="current_salary" value="{{ old('current_salary') }}" autocomplete="first name" autofocus>
+                                                <input id="current_salary" type="number" required class="form-control @error('current_salary') is-invalid @enderror" name="current_salary" value="{{ old('current_salary') }}" autocomplete="first name" autofocus>
 
                                                 @error('current_salary')
                                                 <span class="invalid-feedback" role="alert">
@@ -69,12 +67,12 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Add</button>
-                                </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Add</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -90,14 +88,72 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @if(isset($salaries))
+                                @foreach($salaries as $salary)
                                 <tr>
-                                    <td>1</td>
-                                    <td>{{$employee->first_name}}</td>
-                                    <td>{{$employee->first_name}}</td>
-                                    <td>{{$employee->first_name}}</td>
+                                    <td>{{$sn++}}</td>
+                                    <td>{{$salary->amount}}</td>
+                                    <td>{{$salary->start_date}}</td>
+                                    <td>{{$salary->current_salary}}</td>
                                     <td>
-                                            <a href="" class="btn btn-sm p-2" title="Edit"><i class="fa fa-edit"></i></a></td>
+                                        <a data-bs-toggle="modal" data-bs-target="#AddNewSalary{{$salary->id}}" class="btn btn-sm p-2" title="Edit"><i class="fa fa-edit"></i></a>
+                                    </td>
                                 </tr>
+
+                                <div class="modal fade" id="AddNewSalary{{$salary->id}}" tabindex="-1" aria-labelledby="AddNewSalaryLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Edit Salary</h5>
+                                            </div>
+                                            <form method="POST" action="{{ route('add.salary') }}">
+                                                <div class="modal-body">
+                                                    @csrf
+                                                    <input type="hidden" name="id" value="{{$salary->id}}">
+                                                    <input type="hidden" name="employee_id" value="{{$employee->id}}">
+                                                    <div class="row mb-3">
+                                                        <label for="salary_amount" class="col-md-4 col-form-label text-md-end">{{ __('Salary Amount') }}</label>
+                                                        <div class="col-md-6">
+                                                            <input id="salary_amount" type="number" required class="form-control @error('salary_amount') is-invalid @enderror" name="salary_amount" value="{{ $salary->amount }}" autocomplete="first name" autofocus> @error('salary_amount')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <label for="salary_start_date" class="col-md-4 col-form-label text-md-end">{{ __('Salary Start Date') }}</label>
+                                                        <div class="col-md-6">
+                                                            <input id="salary_start_date" type="date" required class="form-control @error('salary_start_date') is-invalid @enderror" name="salary_start_date" value="{{ $salary->start_date }}" autocomplete="first name" autofocus>
+                                                            @error('salary_start_date')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <label for="current_salary" class="col-md-4 col-form-label text-md-end">{{ __('Current Salary') }}</label>
+                                                        <div class="col-md-6">
+                                                            <input id="current_salary" type="number" required class="form-control @error('current_salary') is-invalid @enderror" name="current_salary" value="{{ $salary->current_salary }}" autocomplete="first name" autofocus>
+                                                            @error('current_salary')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">Update</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endforeach
+                                @endif
                             </tbody>
                         </table>
                     </div>

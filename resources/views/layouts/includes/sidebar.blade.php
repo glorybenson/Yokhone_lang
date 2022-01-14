@@ -28,7 +28,7 @@
                         </li>
 
 
-                        <li class="{{ request()->is('employees') || request()->is('edit-employee/*') || request()->is('create-employee')  ? 'active active-now' : '' }}">
+                        <li class="{{ request()->is('employees') || request()->is('view-employees-salary/*') || request()->is('view-employee/*') || request()->is('edit-employee/*') || request()->is('create-employee')  ? 'active active-now' : '' }}">
                             <a href="{{ route('employees') }}"><i class="feather-lock"></i>
                                 <span class="shape1"></span><span class="shape2"></span>
                                 <span> Employees</span></a>

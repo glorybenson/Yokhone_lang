@@ -34,3 +34,10 @@ Route::match(['get', 'post'], '/edit-employee/{id}', [App\Http\Controllers\HomeC
 Route::match(['get', 'post'], '/view-employee/{id}', [App\Http\Controllers\HomeController::class, 'view_employee'])->name('view.employee');
 Route::match(['get', 'post'], '/view-employees-salary/{id}', [App\Http\Controllers\HomeController::class, 'salary_employee'])->name('salary.employee');
 Route::match(['get', 'post'], '/create-employee', [App\Http\Controllers\HomeController::class, 'create_employee'])->name('create.employee');
+Route::post('/add-salary', [App\Http\Controllers\HomeController::class, 'add_salary'])->name('add.salary');
+
+//Farms
+Route::get('/farms', [App\Http\Controllers\HomeController::class, 'farms'])->name('farms');
+Route::match(['get', 'post'], '/create-farm', [App\Http\Controllers\HomeController::class, 'create_farm'])->name('create.farm');
+Route::match(['get', 'post'], '/edit-farm/{id}', [App\Http\Controllers\HomeController::class, 'edit_farm'])->name('edit.farm');
+

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employee;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -229,24 +230,31 @@ class HomeController extends Controller
                     return back()->withErrors($validator)->withInput();
                 }
 
-                return back();
                 
-                // if ($request->hasFile('CIN_proof')) {
-                //     $CIN_proof = save_file($request->file('CIN_proof'), "CIN_PROOF");
-                // }
+                if ($request->hasFile('CIN_proof')) {
+                    $CIN_proof = save_file($request->file('CIN_proof'), "CIN_PROOF");
+                }
 
-                // User::create([
-                //     'first_name' => $request->first_name,
-                //     'last_name' => $request->last_name,
-                //     'role' => $request->role,
-                //     'created_by' => Auth::user()->id,
-                //     'email' => $request->email,
-                //     'password' => Hash::make($request->password)
-                // ]);
+                Employee::create([
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
+                    'email' => $request->email,
+                    'employee_id' => $request->employee_id,
+                    'hiring_date' => $request->hiring_date,
+                    'end_date' => $request->end_date,
+                    'CIN' => $request->CIN,
+                    'CIN_proof' => $CIN_proof ?? "",
+                    'cell_1' => $request->cell_1,
+                    'cell_2' => $request->cell_2,
+                    'address' => $request->address,
+                    'contact_full_name' => $request->contact_full_name,
+                    'contact_1_cell' => $request->contact_1_cell,
+                    'contact_1_cell2' => $request->contact_1_cell2
+                ]);
 
                 // dd($request->all());
-                // Session::flash('success', "Employee created successfully");
-                // return redirect()->route('employees');
+                Session::flash('success', "Employee created successfully");
+                return redirect()->route('employees');
             }
 
             $data['roles'] = Role::all();

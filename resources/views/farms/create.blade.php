@@ -221,17 +221,4 @@
     </div>
     @endif
 </div>
-
-<script>
-    $('.latitude').keyup(function() {
-        console.log("jbjhvj")
-        var val = $(this).val();
-        if (isNaN(val)) {
-            val = val.replace(/[^0-9\.]/g, '');
-            if (val.split('.').length > 2)
-                val = val.replace(/\.+$/, "");
-        }
-        $(this).val(val);
-    });​
-</script>
 @endsection

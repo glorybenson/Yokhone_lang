@@ -6,6 +6,7 @@ use App\Models\Employee;
 use App\Models\Farm;
 use App\Models\Role;
 use App\Models\Salary;
+use App\Models\Tree;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -42,7 +43,7 @@ class HomeController extends Controller
     {
         $data['title'] = "Users";
         $data['sn'] = 1;
-        $data['users'] = User::whereKeyNot(Auth::user()->id)->with('created_user:id,first_name,last_name')->paginate(10);
+        $data['users'] = User::whereKeyNot(Auth::user()->id)->with('created_user:id,first_name,last_name')->orderBy('id', 'desc')->paginate(10);
         return view('users.index', $data);
     }
 
@@ -153,7 +154,7 @@ class HomeController extends Controller
     {
         $data['title'] = "Employees";
         $data['sn'] = 1;
-        $data['employees'] = Employee::paginate(10);
+        $data['employees'] = Employee::orderBy('id', 'desc')->paginate(10);
         return view('employees.index', $data);
     }
 
@@ -175,7 +176,7 @@ class HomeController extends Controller
             Session::flash('warning', 'Employee not found');
             return redirect()->route('employees');
         }
-        $data['salaries'] = Salary::where('employee_id', $employee->id)->get();
+        $data['salaries'] = Salary::where('employee_id', $employee->id)->orderBy('id', 'desc')->get();
         $data['title'] = $employee->first_name . " " . $employee->last_name . " Data";
         return view('employees.salary', $data);
     }
@@ -362,7 +363,7 @@ class HomeController extends Controller
     {
         $data['title'] = "Farms";
         $data['sn'] = 1;
-        $data['farms'] = Farm::paginate(10);
+        $data['farms'] = Farm::orderBy('id', 'desc')->paginate(10);
         return view('farms.index', $data);
     }
 
@@ -457,6 +458,105 @@ class HomeController extends Controller
             }
             $data['title'] = "Edit Farm";
             return view('farms.create', $data);
+        } catch (\Throwable $th) {
+            Session::flash('error', $th->getMessage());
+            return back();
+        }
+    }
+
+    public function trees()
+    {
+        $data['title'] = "Trees";
+        $data['sn'] = 1;
+        $data['trees'] = Tree::with('farm:id,farm_name')->orderBy('id', 'desc')->paginate(10);
+        return view('trees.index', $data);
+    }
+
+    public function create_tree(Request $request)
+    {
+        try {
+            //code...
+            $data['mode'] = "create";
+            $data['farms'] = $f = Farm::orderBy('id', 'desc')->get();
+            if ($_POST) {
+                $rules = array(
+                    'farm_id' => ['required', 'string', 'max:255'],
+                    'desc' => ['required', 'string', 'max:255'],
+                    'reason' => ['required', 'string', 'max:255'],
+                    'quantity' => ['required', 'string', 'max:255'],
+                    'date_planted' => ['required', 'string']
+                );
+
+                $validator = Validator::make($request->all(), $rules);
+
+                if ($validator->fails()) {
+                    Session::flash('warning', 'All fields are required');
+                    return back()->withErrors($validator)->withInput();
+                }
+
+
+                Tree::create([
+                    'farm_id' => $request->farm_id,
+                    'desc' => $request->desc,
+                    'reason' => $request->reason,
+                    'quantity' => $request->quantity,
+                    'date_planted' => $request->date_planted
+                ]);
+
+                Session::flash('success', "Tree created successfully");
+                return redirect()->route('trees');
+            }
+
+            $data['title'] = "Create New Tree";
+            return view('trees.create', $data);
+        } catch (\Throwable $th) {
+            // Session::flash('error', "An error occur try again");
+            Session::flash('error', $th->getMessage());
+            return back();
+        }
+    }
+
+    public function edit_tree(Request $request, $id)
+    {
+        try {
+            $data['mode'] = "edit";
+            $data['tree'] = $tree = Tree::find($id);
+            $data['farms'] = Farm::orderBy('id', 'desc')->get();
+            if (!isset($tree)) {
+                Session::flash('warning', 'Tree not found');
+                return redirect()->route('trees');
+            }
+            if ($_POST) {
+
+                $rules = array(
+                    'farm_id' => ['required', 'string', 'max:255'],
+                    'desc' => ['required', 'string', 'max:255'],
+                    'reason' => ['required', 'string', 'max:255'],
+                    'quantity' => ['required', 'string', 'max:255'],
+                    'date_planted' => ['required', 'string']
+                );
+
+                $validator = Validator::make($request->all(), $rules);
+
+                if ($validator->fails()) {
+                    Session::flash('warning', 'All fields are required');
+                    return back()->withErrors($validator)->withInput();
+                }
+
+
+                Tree::where('id', $request->id)->update([
+                    'farm_id' => $request->farm_id,
+                    'desc' => $request->desc,
+                    'reason' => $request->reason,
+                    'quantity' => $request->quantity,
+                    'date_planted' => $request->date_planted
+                ]);
+
+                Session::flash('success', "Tree data updated successfully");
+                return redirect()->route('trees');
+            }
+            $data['title'] = "Edit Tree";
+            return view('trees.create', $data);
         } catch (\Throwable $th) {
             Session::flash('error', $th->getMessage());
             return back();

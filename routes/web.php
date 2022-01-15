@@ -41,3 +41,8 @@ Route::get('/farms', [App\Http\Controllers\HomeController::class, 'farms'])->nam
 Route::match(['get', 'post'], '/create-farm', [App\Http\Controllers\HomeController::class, 'create_farm'])->name('create.farm');
 Route::match(['get', 'post'], '/edit-farm/{id}', [App\Http\Controllers\HomeController::class, 'edit_farm'])->name('edit.farm');
 
+//Trees
+Route::get('/trees', [App\Http\Controllers\HomeController::class, 'trees'])->name('trees');
+Route::match(['get', 'post'], '/create-tree', [App\Http\Controllers\HomeController::class, 'create_tree'])->name('create.tree');
+Route::match(['get', 'post'], '/edit-tree/{id}', [App\Http\Controllers\HomeController::class, 'edit_tree'])->name('edit.tree');
+

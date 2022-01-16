@@ -38,6 +38,7 @@
                             <p class="account-subtitle">Access to our dashboard</p>
                             <form method="POST" action="">
                                 @csrf
+                                <input type="hidden" name="timezone" id="timezone">
                                 <div class="form-group">
                                     <label class="form-control-label">Email Address</label>
                                     <input type="email" name="email" value="{{ old('email') }}" class="form-control @error('email') is-invalid @enderror">
@@ -91,6 +92,12 @@
     <script src="{{ asset('assets/js/script.js') }}"></script>
 </body>
 
+<script>
+    $(function() {
+        // get user timezone
+        $('#timezone').val(Intl.DateTimeFormat().resolvedOptions().timeZone)
+    })
+</script>
 <!-- Mirrored from emr.dreamguystech.com/html/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 06 Oct 2021 23:00:33 GMT -->
 
 </html>

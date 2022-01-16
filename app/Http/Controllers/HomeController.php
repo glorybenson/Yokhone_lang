@@ -43,7 +43,7 @@ class HomeController extends Controller
     {
         $data['title'] = "Users";
         $data['sn'] = 1;
-        $data['users'] = User::whereKeyNot(Auth::user()->id)->with('created_user:id,first_name,last_name')->orderBy('id', 'desc')->paginate(10);
+        $data['users'] = User::with('created_user:id,first_name,last_name')->orderBy('id', 'desc')->paginate(10);
         return view('users.index', $data);
     }
 
@@ -470,6 +470,7 @@ class HomeController extends Controller
         $data['sn'] = 1;
         $data['trees'] = Tree::with('farm:id,farm_name')->orderBy('id', 'desc')->paginate(10);
         return view('trees.index', $data);
+        
     }
 
     public function create_tree(Request $request)

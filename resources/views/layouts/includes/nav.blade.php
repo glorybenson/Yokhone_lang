@@ -1,6 +1,17 @@
 <div class="header">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.14/moment-timezone-with-data-2012-2022.min.js"></script>
 
-    <div class="header-left">
+<script>
+        $(function () {
+            // guess user timezone 
+            $('#tz').val(moment.tz.guess())
+            console.log(moment.tz.guess())
+            console.log("{{\Carbon\Carbon::now()->timezone("+moment.tz.guess()+")}}")
+            $('#time-noww').text("{{\Carbon\Carbon::now()->timezone("+moment.tz.guess()+")}}")
+        })
+    </script>
+<div class="header-left">
         <a href="{{ route('home') }}" class="logo">Yokhone App
             <!-- <img src="assets/img/logo.svg" alt="Logo"> -->
         </a>
@@ -12,11 +23,11 @@
     </a>
 
     <div class="top-nav-search">
-        <img class="img-fluid logo-dark mb-2" src="{{ asset('logo/logo.png') }}" alt="Logo">
+        <img class="img-fluid logo-dark mb-2" src="{{ asset('logo/logo2.png') }}" alt="Logo">
     </div>
     <div class="top-nav-search ml-5">
         <h5 style="margin-top: 18px; position: relative; width:360px">
-            {{ date('D, M j, Y \a\t g:ia', time()) }}
+            {{ \Carbon\Carbon::now()->timezone(Auth::user()->timezone)->format('D, M j, Y \a\t g:ia') }}
         </h5>
     </div>
 

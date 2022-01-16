@@ -20,7 +20,7 @@
                                 <th>Last Name</th>
                                 <th>Email</th>
                                 <th>Cell 1 #</th>
-                                <th>CEll 2 #</th>
+                                <th>Hiring Date</th>
                                 <th>Action</th>
                             </thead>
                             <tbody>
@@ -32,7 +32,7 @@
                                     <td>{{$employee->last_name}}</td>
                                     <td>{{$employee->email}}</td>
                                     <td>{{$employee->cell_1}}</td>
-                                    <td>{{$employee->cell_2 ?? ""}}</td>
+                                    <td>{{$employee->hiring_date ?? ""}}</td>
                                     <td>
                                         <div class="d-flex">
                                             <a href="{{ route('edit.employee', $employee->id) }}" class="btn btn-sm p-2" title="Edit"><i class="fa fa-edit"></i></a>
@@ -45,18 +45,6 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="mt-4">
-                        @if(isset($users))
-                        {!! $users->links("pagination::bootstrap-4") !!}
-                        @endif
-                    </div>
-                    <!-- @if (session('status'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('status') }}
-                    </div>
-                    @endif
-
-                    {{ __('You are logged in!') }} -->
                 </div>
             </div>
         </div>

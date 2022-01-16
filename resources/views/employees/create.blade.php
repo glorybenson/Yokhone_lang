@@ -108,8 +108,7 @@
                             <label for="CIN_proof" class="col-md-4 col-form-label text-md-end">{{ __('CIN Proof') }}</label>
 
                             <div class="col-md-6">
-                                <input id="CIN_proof" type="file" accept="application/pdf" class="form-control @error('CIN_proof') is-invalid @enderror" name="CIN_proof" value="{{ $employee->CIN_proof }}">
-
+                                <input id="CIN_proof" type="file" accept="image/*,.doc, .docx, .pdf" class="form-control @error('CIN_proof') is-invalid @enderror" name="CIN_proof" value="{{ $employee->CIN_proof }}">
                                 @error('CIN_proof')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -194,7 +193,7 @@
 
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to submit this form?')">
                                     {{ __('Update') }}
                                 </button>
                             </div>
@@ -306,7 +305,7 @@
                         <div class="row mb-3">
                             <label for="CIN_proof" class="col-md-4 col-form-label text-md-end">{{ __('CIN Proof') }}</label>
                             <div class="col-md-6">
-                                <input id="CIN_proof" type="file" accept="application/pdf" class="form-control @error('CIN_proof') is-invalid @enderror" name="CIN_proof" value="{{ old('CIN_proof') }}" required>
+                                <input id="CIN_proof" type="file" accept="image/*,.doc, .docx, .pdf" class="form-control @error('CIN_proof') is-invalid @enderror" name="CIN_proof" value="{{ old('CIN_proof') }}" required>
                                 @error('CIN_proof')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -389,7 +388,7 @@
 
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to submit this form?')">
                                     {{ __('Submit') }}
                                 </button>
                             </div>

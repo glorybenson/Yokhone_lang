@@ -47,18 +47,6 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="mt-4">
-                        @if(isset($users))
-                        {!! $users->links("pagination::bootstrap-4") !!}
-                        @endif
-                    </div>
-                    <!-- @if (session('status'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('status') }}
-                    </div>
-                    @endif
-
-                    {{ __('You are logged in!') }} -->
                 </div>
             </div>
         </div>

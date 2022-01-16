@@ -22,8 +22,7 @@
                             <label for="first_name" class="col-md-4 col-form-label text-md-end">{{ __('First Name') }}</label>
 
                             <div class="col-md-6">
-                                <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ $user->first_name }}" autocomplete="first name" autofocus>
-
+                                <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ $user->first_name }}" autocomplete="first name" required>
                                 @error('first_name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -36,7 +35,7 @@
                             <label for="last_name" class="col-md-4 col-form-label text-md-end">{{ __('Last Name') }}</label>
 
                             <div class="col-md-6">
-                                <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ $user->last_name }}" required autocomplete="last name" autofocus>
+                                <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ $user->last_name }}" required autocomplete="last name">
 
                                 @error('last_name')
                                 <span class="invalid-feedback" role="alert">
@@ -64,7 +63,7 @@
                             <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('User Role') }}</label>
 
                             <div class="col-md-6">
-                                <select class="form-control @error('role') is-invalid @enderror" name="role">
+                                <select class="form-control @error('role') is-invalid @enderror" name="role" required>
                                     <option value="">Select Role</option>
                                     @if(isset($roles))
                                     @foreach($roles as $role)
@@ -81,7 +80,7 @@
                         </div>
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to submit this form?')">
                                     {{ __('Submit') }}
                                 </button>
                             </div>
@@ -110,7 +109,7 @@
                             <label for="first_name" class="col-md-4 col-form-label text-md-end">{{ __('First Name') }}</label>
 
                             <div class="col-md-6">
-                                <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" autocomplete="name" autofocus>
+                                <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" autocomplete="name" required>
 
                                 @error('first_name')
                                 <span class="invalid-feedback" role="alert">
@@ -152,7 +151,7 @@
                             <label for="role" class="col-md-4 col-form-label text-md-end">{{ __('User Role') }}</label>
 
                             <div class="col-md-6">
-                                <select class="form-control @error('role') is-invalid @enderror" name="role">
+                                <select class="form-control @error('role') is-invalid @enderror" name="role" required>
                                     <option value="">Select Role</option>
                                     @if(isset($roles))
                                     @foreach($roles as $role)
@@ -192,7 +191,7 @@
 
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to submit this form?')">
                                     {{ __('Submit') }}
                                 </button>
                             </div>

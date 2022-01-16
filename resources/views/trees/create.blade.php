@@ -37,7 +37,7 @@
                         <div class="row mb-3">
                             <label for="desc" class="col-md-4 col-form-label text-md-end">{{ __('Description') }}</label>
                             <div class="col-md-6">
-                                <textarea id="desc" class="form-control @error('desc') is-invalid @enderror" name="desc">{{ $tree->desc }}</textarea>
+                                <textarea id="desc" class="form-control @error('desc') is-invalid @enderror" required name="desc">{{ $tree->desc }}</textarea>
                                 @error('desc')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -50,7 +50,11 @@
                         <div class="row mb-3">
                             <label for="reason" class="col-md-4 col-form-label text-md-end">{{ __('Reason') }}</label>
                             <div class="col-md-6">
-                                <textarea id="reason" class="form-control @error('reason') is-invalid @enderror" required name="reason">{{ $tree->reason }}</textarea>
+                                <select id="reason" class="form-control @error('reason') is-invalid @enderror" name="reason" required>
+                                    <option value="">Select Reason</option>
+                                    <option value="Plantation" {{ $farm->reason == "Plantation" ? 'selected' : '' }}>Plantation</option>
+                                    <option value="Death" {{ $farm->reason == "Death" ? 'selected' : '' }}>Death</option>
+                                </select>
                                 @error('reason')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -85,7 +89,7 @@
 
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to submit this form?')">
                                     {{ __('Submit') }}
                                 </button>
                             </div>
@@ -131,7 +135,7 @@
                         <div class="row mb-3">
                             <label for="desc" class="col-md-4 col-form-label text-md-end">{{ __('Description') }}</label>
                             <div class="col-md-6">
-                                <textarea id="desc" class="form-control @error('desc') is-invalid @enderror" name="desc">{{ old('desc') }}</textarea>
+                                <textarea id="desc" class="form-control @error('desc') is-invalid @enderror" required name="desc">{{ old('desc') }}</textarea>
                                 @error('desc')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -144,7 +148,11 @@
                         <div class="row mb-3">
                             <label for="reason" class="col-md-4 col-form-label text-md-end">{{ __('Reason') }}</label>
                             <div class="col-md-6">
-                                <textarea id="reason" class="form-control @error('reason') is-invalid @enderror" required name="reason">{{ old('reason') }}</textarea>
+                                <select id="reason" class="form-control @error('reason') is-invalid @enderror" name="reason" required>
+                                    <option value="">Select Reason</option>
+                                    <option value="Plantation" {{ old('reason') == "Plantation" ? 'selected' : '' }}>Plantation</option>
+                                    <option value="Death" {{ old('reason') == "Death" ? 'selected' : '' }}>Death</option>
+                                </select>
                                 @error('reason')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -179,7 +187,7 @@
 
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to submit this form?')">
                                     {{ __('Submit') }}
                                 </button>
                             </div>

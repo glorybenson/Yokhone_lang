@@ -43,7 +43,7 @@ class HomeController extends Controller
     {
         $data['title'] = "Users";
         $data['sn'] = 1;
-        $data['users'] = User::with('created_user:id,first_name,last_name')->orderBy('id', 'desc')->paginate(10);
+        $data['users'] = User::with('created_user:id,first_name,last_name')->orderBy('id', 'desc')->get();
         return view('users.index', $data);
     }
 
@@ -154,7 +154,7 @@ class HomeController extends Controller
     {
         $data['title'] = "Employees";
         $data['sn'] = 1;
-        $data['employees'] = Employee::orderBy('id', 'desc')->paginate(10);
+        $data['employees'] = Employee::orderBy('id', 'desc')->get();
         return view('employees.index', $data);
     }
 

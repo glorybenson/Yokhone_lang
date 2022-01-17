@@ -17,8 +17,8 @@
                         <div class="col-md-6"><a href="#" class="btn btn-primary">Salary History</a>
                         </div>
                     </div>
-                    <div class="text-right">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddNewSalary">
+                    <div class="text-right mb-3">
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#AddNewSalary">
                             Add New Salary
                         </button>
                     </div>

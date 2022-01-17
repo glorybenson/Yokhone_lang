@@ -21,7 +21,7 @@
                         <div class="row mb-3">
                             <label for="first_name" class="col-md-4 col-form-label text-md-end">{{ __('First Name') }}</label>
 
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ $user->first_name }}" autocomplete="first name" required>
                                 @error('first_name')
                                 <span class="invalid-feedback" role="alert">
@@ -34,7 +34,7 @@
                         <div class="row mb-3">
                             <label for="last_name" class="col-md-4 col-form-label text-md-end">{{ __('Last Name') }}</label>
 
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ $user->last_name }}" required autocomplete="last name">
 
                                 @error('last_name')
@@ -48,7 +48,7 @@
                         <div class="row mb-3">
                             <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('E-Mail Address') }}</label>
 
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $user->email }}" required autocomplete="email">
 
                                 @error('email')
@@ -62,7 +62,7 @@
                         <div class="row mb-3">
                             <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('User Role') }}</label>
 
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <select class="form-control @error('role') is-invalid @enderror" name="role" required>
                                     <option value="">Select Role</option>
                                     @if(isset($roles))
@@ -108,7 +108,7 @@
                         <div class="row mb-3">
                             <label for="first_name" class="col-md-4 col-form-label text-md-end">{{ __('First Name') }}</label>
 
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" autocomplete="name" required>
 
                                 @error('first_name')
@@ -122,7 +122,7 @@
                         <div class="row mb-3">
                             <label for="last_name" class="col-md-4 col-form-label text-md-end">{{ __('Last Name') }}</label>
 
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" required autocomplete="name" autofocus>
 
                                 @error('last_name')
@@ -136,7 +136,7 @@
                         <div class="row mb-3">
                             <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('E-Mail Address') }}</label>
 
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
 
                                 @error('email')
@@ -150,7 +150,7 @@
                         <div class="row mb-3">
                             <label for="role" class="col-md-4 col-form-label text-md-end">{{ __('User Role') }}</label>
 
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <select class="form-control @error('role') is-invalid @enderror" name="role" required>
                                     <option value="">Select Role</option>
                                     @if(isset($roles))
@@ -170,7 +170,7 @@
                         <div class="row mb-3">
                             <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
 
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
 
                                 @error('password')
@@ -184,7 +184,7 @@
                         <div class="row mb-3">
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
 
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                             </div>
                         </div>

@@ -47,6 +47,93 @@ class HomeController extends Controller
         return view('users.index', $data);
     }
 
+    public function my_profile(Request $request)
+    {
+        try {
+            # code...
+            $data['mode'] = 'profile';
+            if ($_POST) {
+                $rules = array(
+                    'first_name' => ['required', 'string', 'max:255'],
+                    'last_name' => ['required', 'string', 'max:255'],
+                    'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . Auth::user()->id],
+                );
+
+                $validator = Validator::make($request->all(), $rules);
+                // $validator->setAttributeNames($fieldNames);
+
+                if ($validator->fails()) {
+                    Session::flash('warning', 'All fields are required');
+                    return back()->withErrors($validator)->withInput();
+                }
+
+                $user = User::find($request->id);
+                $user->first_name = $request->first_name;
+                $user->last_name = $request->last_name;
+                $user->email = $request->email;
+                $user->save();
+
+                Session::flash('success', "Profile updated successfully");
+                return back();
+            }
+            return view('settings.profile', $data);
+        } catch (\Throwable $th) {
+            Session::flash('error', $th->getMessage());
+            return back();
+        }
+    }
+
+    public function change_password(Request $request)
+    {
+        # code...
+        try {
+            //code...
+            $data['mode'] = 'password';
+            if ($_POST) {
+                $rules = array(
+                    'current_password'     => 'required',
+                    'new_password'  => ['required', 'min:8', 'same:confirm_new_password', 'max:16', 'regex:/[a-z]/', 'regex:/[A-Z]/', 'regex:/[0-9]/', 'regex:/[@$!%*#?&+-]/'],
+                    'confirm_new_password' => 'required'
+                );
+
+                $fieldNames = array(
+                    'current_password'     => 'Current Password',
+                    'new_password'  => 'New Password',
+                    'confirm_new_password' => 'Confirm New Password'
+                );
+                //dd($request);
+                $validator = Validator::make($request->all(), $rules);
+                $validator->setAttributeNames($fieldNames);
+                if ($validator->fails()) {
+                    $request->session()->flash('warning', 'Password must 8 character long, maximum of 16 character, One English uppercase characters (A – Z), One English lowercase characters (a – z), One Base 10 digits (0 – 9) and One Non-alphanumeric (For example: !, $, #, or %)');
+                    return back()->withErrors($validator);
+                }
+                
+                $current_password = Auth::user()->password;
+                if (!Hash::check($request->current_password, $current_password)) {
+                    $request->session()->flash('warning', 'Password Wrong');
+                    return back()->withErrors(['current_password' => 'Please enter correct current password']);
+                }
+
+                if ($request->new_password != $request->confirm_new_password) {
+                    $request->session()->flash('warning', 'Password not set');
+                    return back()->withErrors(['new_password' => 'The New password and Confirm password not match']);
+                }
+
+                $obj_user = User::find(Auth::user()->id);
+                $obj_user->password = Hash::make($request->new_password);
+                $obj_user->save();
+                $request->session()->flash('success', 'Password changed successfully');
+                return \back();
+
+            }
+            return view('settings.profile', $data);
+        } catch (\Throwable $th) {
+            Session::flash('error', $th->getMessage());
+            return back();
+        }
+    }
+
     public function edit_user(Request $request, $id)
     {
         try {
@@ -56,12 +143,6 @@ class HomeController extends Controller
                     'last_name' => ['required', 'string', 'max:255'],
                     'role' => ['required', 'string', 'max:255'],
                     'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $request->id],
-                );
-
-                $fieldNames = array(
-                    'vendor_id' => "Vendor Name",
-                    'subject' => "Message Subject",
-                    'content' => "Message Content"
                 );
 
                 $validator = Validator::make($request->all(), $rules);
@@ -470,7 +551,6 @@ class HomeController extends Controller
         $data['sn'] = 1;
         $data['trees'] = Tree::with('farm:id,farm_name')->orderBy('id', 'desc')->paginate(10);
         return view('trees.index', $data);
-        
     }
 
     public function create_tree(Request $request)

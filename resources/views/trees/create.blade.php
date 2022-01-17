@@ -17,7 +17,7 @@
                         <input type="hidden" name="id" value="{{$tree->id}}">
                         <div class="row mb-3">
                             <label for="farm_id" class="col-md-4 col-form-label text-md-end">{{ __('Farm Name') }}</label>
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <select id="farm_id" class="form-control @error('farm_id') is-invalid @enderror" name="farm_id" required>
                                     <option value="">Select Farm</option>
                                     @if(isset($farms))
@@ -36,7 +36,7 @@
 
                         <div class="row mb-3">
                             <label for="desc" class="col-md-4 col-form-label text-md-end">{{ __('Description') }}</label>
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <textarea id="desc" class="form-control @error('desc') is-invalid @enderror" required name="desc">{{ $tree->desc }}</textarea>
                                 @error('desc')
                                 <span class="invalid-feedback" role="alert">
@@ -49,7 +49,7 @@
                                           
                         <div class="row mb-3">
                             <label for="reason" class="col-md-4 col-form-label text-md-end">{{ __('Reason') }}</label>
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <select id="reason" class="form-control @error('reason') is-invalid @enderror" name="reason" required>
                                     <option value="">Select Reason</option>
                                     <option value="Plantation" {{ $farm->reason == "Plantation" ? 'selected' : '' }}>Plantation</option>
@@ -65,7 +65,7 @@
 
                         <div class="row mb-3">
                             <label for="quantity" class="col-md-4 col-form-label text-md-end">{{ __('Quantity') }}</label>
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <input id="quantity" type="number" class="form-control @error('quantity') is-invalid @enderror" required name="quantity" value="{{ $tree->quantity }}" autocomplete="date">
                                 @error('quantity')
                                 <span class="invalid-feedback" role="alert">
@@ -77,7 +77,7 @@
 
                         <div class="row mb-3">
                             <label for="date_planted" class="col-md-4 col-form-label text-md-end">{{ __('Date Planted') }}</label>
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <input id="date_planted" type="date" class="form-control @error('date_planted') is-invalid @enderror" name="date_planted" value="{{ $tree->date_planted }}" required>
                                 @error('date_planted')
                                 <span class="invalid-feedback" role="alert">
@@ -115,7 +115,7 @@
                         @csrf
                         <div class="row mb-3">
                             <label for="farm_id" class="col-md-4 col-form-label text-md-end">{{ __('Farm Name') }}</label>
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <select id="farm_id" class="form-control @error('farm_id') is-invalid @enderror" name="farm_id" required>
                                     <option value="">Select Farm</option>
                                     @if(isset($farms))
@@ -134,7 +134,7 @@
 
                         <div class="row mb-3">
                             <label for="desc" class="col-md-4 col-form-label text-md-end">{{ __('Description') }}</label>
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <textarea id="desc" class="form-control @error('desc') is-invalid @enderror" required name="desc">{{ old('desc') }}</textarea>
                                 @error('desc')
                                 <span class="invalid-feedback" role="alert">
@@ -147,7 +147,7 @@
                                           
                         <div class="row mb-3">
                             <label for="reason" class="col-md-4 col-form-label text-md-end">{{ __('Reason') }}</label>
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <select id="reason" class="form-control @error('reason') is-invalid @enderror" name="reason" required>
                                     <option value="">Select Reason</option>
                                     <option value="Plantation" {{ old('reason') == "Plantation" ? 'selected' : '' }}>Plantation</option>
@@ -163,7 +163,7 @@
 
                         <div class="row mb-3">
                             <label for="quantity" class="col-md-4 col-form-label text-md-end">{{ __('Quantity') }}</label>
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <input id="quantity" type="number" class="form-control @error('quantity') is-invalid @enderror" required name="quantity" value="{{ old('quantity') }}" autocomplete="date">
                                 @error('quantity')
                                 <span class="invalid-feedback" role="alert">
@@ -175,7 +175,7 @@
 
                         <div class="row mb-3">
                             <label for="date_planted" class="col-md-4 col-form-label text-md-end">{{ __('Date Planted') }}</label>
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <input id="date_planted" type="date" class="form-control @error('date_planted') is-invalid @enderror" name="date_planted" value="{{ old('date_planted') }}" required>
                                 @error('date_planted')
                                 <span class="invalid-feedback" role="alert">

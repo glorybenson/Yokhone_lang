@@ -1,16 +1,4 @@
 <div class="header">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.14/moment-timezone-with-data-2012-2022.min.js"></script>
-
-<script>
-        $(function () {
-            // guess user timezone 
-            $('#tz').val(moment.tz.guess())
-            console.log(moment.tz.guess())
-            console.log("{{\Carbon\Carbon::now()->timezone("+moment.tz.guess()+")}}")
-            $('#time-noww').text("{{\Carbon\Carbon::now()->timezone("+moment.tz.guess()+")}}")
-        })
-    </script>
 <div class="header-left">
         <a href="{{ route('home') }}" class="logo">Yokhone App
             <!-- <img src="assets/img/logo.svg" alt="Logo"> -->
@@ -34,12 +22,10 @@
     <a class="mobile_btn" id="mobile_btn"> <i class="fas fa-bars"></i>
     </a>
 
-
-
     <ul class="nav user-menu">
         <li class="nav-item dropdown">
             <a href="#" class="nav-link notifications-item">
-                <i class="feather-bell"></i> <span class="badge badge-pill">1</span>
+                <i class="fa -bell"></i> <span class="badge badge-pill">1</span>
             </a>
         </li>
 
@@ -49,7 +35,8 @@
                     <span class="status online"></span></span>
             </a>
             <div class="dropdown-menu">
-                <a class="dropdown-item" href=""><i class="feather-user"></i> My Profile</a>
+                <a class="dropdown-item" href="{{ route('my.profile') }}"><i class="feather-user"></i> My Profile</a>
+                <a class="dropdown-item" href="{{ route('change.password') }}"><i class="fa fa-lock"></i> Change Password</a>
                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="feather-power"></i> Logout
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                         @csrf

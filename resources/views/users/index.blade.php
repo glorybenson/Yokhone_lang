@@ -34,7 +34,9 @@
                                     <td>{{$user->email}}</td>
                                     <td>{{$user->created_user->first_name ?? ""}} {{$user->created_user->last_name ?? ""}}</td>
                                     <td>{{$user->created_at}}</td>
-                                    <td>{{$user->last_login}}</td>
+                                    <td>
+                                        {{$user->last_login}}
+                                    </td>
                                     <td>
                                         <div class="d-flex">
                                             <a href="{{ route('edit.user', $user->id) }}" class="btn btn-sm p-2" title="Edit"><i class="fa fa-edit"></i></a>

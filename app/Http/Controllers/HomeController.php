@@ -326,7 +326,7 @@ class HomeController extends Controller
                     'hiring_date' => ['required', 'string', 'max:255'],
                     // 'end_date' => ['required', 'string', 'max:255'],
                     'CIN' => ['required', 'string', 'max:255'],
-                    'CIN_proof' => ['exclude_if:CIN_proof,null', 'mimetypes:application/pdf', 'max:15000'],
+                    'CIN_proof' => ['exclude_if:CIN_proof,null', 'max:15000'],
                     'cell_1' => ['required', 'string', 'max:255'],
                     // 'cell_2' => ['required', 'string', 'max:255'],
                     'address' => ['required', 'string'],

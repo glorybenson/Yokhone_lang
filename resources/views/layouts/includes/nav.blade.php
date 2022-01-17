@@ -25,7 +25,7 @@
     <ul class="nav user-menu">
         <li class="nav-item dropdown">
             <a href="#" class="nav-link notifications-item">
-                <i class="fa -bell"></i> <span class="badge badge-pill">1</span>
+                <i class="fa fa-bell"></i> <span class="badge badge-pill">1</span>
             </a>
         </li>
 

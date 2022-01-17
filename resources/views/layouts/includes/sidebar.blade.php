@@ -10,8 +10,8 @@
                         <span>Users</span></a>
                 </li>
 
-                <li>
-                    <a href=""><i class="feather-lock"></i>
+                <li class="{{ request()->is('clients') || request()->is('edit-client/*') || request()->is('create-client')  ? 'active active-now' : '' }}">
+                    <a href="{{ route('clients') }}"><i class="feather-lock"></i>
                         <span class="shape1"></span><span class="shape2"></span>
                         <span> Clients</span></a>
                 </li>

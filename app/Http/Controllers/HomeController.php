@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
 use App\Models\Employee;
 use App\Models\Farm;
 use App\Models\Role;
@@ -108,16 +109,11 @@ class HomeController extends Controller
                     $request->session()->flash('warning', 'Password must 8 character long, maximum of 16 character, One English uppercase characters (A – Z), One English lowercase characters (a – z), One Base 10 digits (0 – 9) and One Non-alphanumeric (For example: !, $, #, or %)');
                     return back()->withErrors($validator);
                 }
-                
+
                 $current_password = Auth::user()->password;
                 if (!Hash::check($request->current_password, $current_password)) {
                     $request->session()->flash('warning', 'Password Wrong');
                     return back()->withErrors(['current_password' => 'Please enter correct current password']);
-                }
-
-                if ($request->new_password != $request->confirm_new_password) {
-                    $request->session()->flash('warning', 'Password not set');
-                    return back()->withErrors(['new_password' => 'The New password and Confirm password not match']);
                 }
 
                 $obj_user = User::find(Auth::user()->id);
@@ -125,7 +121,6 @@ class HomeController extends Controller
                 $obj_user->save();
                 $request->session()->flash('success', 'Password changed successfully');
                 return \back();
-
             }
             return view('settings.profile', $data);
         } catch (\Throwable $th) {
@@ -249,6 +244,7 @@ class HomeController extends Controller
         $data['mode'] = $employee->first_name . " " . $employee->last_name . " Data";
         return view('employees.view', $data);
     }
+
     public function salary_employee($id)
     {
         $data['sn'] = 1;
@@ -444,7 +440,7 @@ class HomeController extends Controller
     {
         $data['title'] = "Farms";
         $data['sn'] = 1;
-        $data['farms'] = Farm::orderBy('id', 'desc')->paginate(10);
+        $data['farms'] = Farm::orderBy('id', 'desc')->get();
         return view('farms.index', $data);
     }
 
@@ -540,17 +536,23 @@ class HomeController extends Controller
             $data['title'] = "Edit Farm";
             return view('farms.create', $data);
         } catch (\Throwable $th) {
-            Session::flash('error', $th->getMessage());
+            Session::flash('error', "Try again!");
             return back();
         }
     }
 
     public function trees()
     {
-        $data['title'] = "Trees";
-        $data['sn'] = 1;
-        $data['trees'] = Tree::with('farm:id,farm_name')->orderBy('id', 'desc')->paginate(10);
-        return view('trees.index', $data);
+        try {
+            //code...
+            $data['title'] = "Trees";
+            $data['sn'] = 1;
+            $data['trees'] = Tree::with('farm:id,farm_name')->orderBy('id', 'desc')->get();
+            return view('trees.index', $data);
+        } catch (\Throwable $th) {
+            Session::flash('error', "Try again!");
+            return back();
+        }
     }
 
     public function create_tree(Request $request)
@@ -638,6 +640,136 @@ class HomeController extends Controller
             }
             $data['title'] = "Edit Tree";
             return view('trees.create', $data);
+        } catch (\Throwable $th) {
+            Session::flash('error', $th->getMessage());
+            return back();
+        }
+    }
+
+    public function clients()
+    {
+        try {
+            //code...
+            $data['title'] = "Clents";
+            $data['sn'] = 1;
+            $data['clients'] = Client::with('employee:id,first_name,last_name')->orderBy('id', 'desc')->get();
+            return view('clients.index', $data);
+        } catch (\Throwable $th) {
+            // Session::flash('error', "Try again!");
+            Session::flash('error', $th->getMessage());
+            return back();
+        }
+    }
+    public function create_client(Request $request)
+    {
+        try {
+            //code...
+            $data['mode'] = "create";
+            $data['employees'] = Employee::orderBy('first_name', 'asc')->get(['id', 'first_name', 'last_name']);
+            if ($_POST) {
+                $rules = array(
+                    'client_name' => ['required', 'string', 'max:255'],
+                    'full_address' => ['required', 'string', 'max:255'],
+                    'contact_full_name' => ['required', 'string', 'max:255'],
+                    'contact_phone' => ['required', 'string', 'max:255'],
+                    'contact_email' => ['required', 'string', 'max:255'],
+                    'date_become_client' => ['required', 'string', 'max:255'],
+                    'referred_by' => ['required', 'string', 'max:255'],
+                    'employee' => ['required_if:referred_by,==,employee'],
+                    'note' => ['required_if:referred_by,==,other'],
+                );
+
+                $customMessages = [
+                    'note.required_if' => 'The :attribute field is required.',
+                    'employee.required_if' => 'The :attribute field is required.',
+                ];
+
+                $validator = Validator::make($request->all(), $rules, $customMessages);
+
+                if ($validator->fails()) {
+                    Session::flash('warning', 'All fields are required');
+                    return back()->withErrors($validator)->withInput();
+                }
+
+
+                Client::create([
+                    'client_name' => $request->client_name,
+                    'full_address' => $request->full_address,
+                    'contact_full_name' => $request->contact_full_name,
+                    'contact_phone' => $request->contact_phone,
+                    'contact_email' => $request->contact_email,
+                    'date_become_client' => $request->date_become_client,
+                    'referred_by' => $request->referred_by,
+                    'employee_id' => $request->employee ?? null,
+                    'note' => $request->note ?? null,
+                ]);
+
+                Session::flash('success', "Client created successfully");
+                return redirect()->route('clients');
+            }
+
+            $data['title'] = "Create New Client";
+            return view('clients.create', $data);
+        } catch (\Throwable $th) {
+            // Session::flash('error', "An error occur try again");
+            Session::flash('error', $th->getMessage());
+            return back();
+        }
+    }
+
+    public function edit_client(Request $request, $id)
+    {
+        try {
+            $data['mode'] = "edit";
+            $data['client'] = $client = Client::find($id);
+            $data['employees'] = Employee::orderBy('first_name', 'asc')->get(['id', 'first_name', 'last_name']);
+            if (!isset($client)) {
+                Session::flash('warning', 'Client not found');
+                return redirect()->route('clients');
+            }
+            if ($_POST) {
+
+                $rules = array(
+                    'client_name' => ['required', 'string', 'max:255'],
+                    'full_address' => ['required', 'string', 'max:255'],
+                    'contact_full_name' => ['required', 'string', 'max:255'],
+                    'contact_phone' => ['required', 'string', 'max:255'],
+                    'contact_email' => ['required', 'string', 'max:255'],
+                    'date_become_client' => ['required', 'string', 'max:255'],
+                    'referred_by' => ['required', 'string', 'max:255'],
+                    'employee' => ['required_if:referred_by,==,employee'],
+                    'note' => ['required_if:referred_by,==,other'],
+                );
+
+                $customMessages = [
+                    'note.required_if' => 'The :attribute field is required.',
+                    'employee.required_if' => 'The :attribute field is required.',
+                ];
+
+                $validator = Validator::make($request->all(), $rules, $customMessages);
+
+                if ($validator->fails()) {
+                    Session::flash('warning', 'All fields are required');
+                    return back()->withErrors($validator)->withInput();
+                }
+
+                Client::where('id', $request->id)->update([
+                    'client_name' => $request->client_name,
+                    'full_address' => $request->full_address,
+                    'contact_full_name' => $request->contact_full_name,
+                    'contact_phone' => $request->contact_phone,
+                    'contact_email' => $request->contact_email,
+                    'date_become_client' => $request->date_become_client,
+                    'referred_by' => $request->referred_by,
+                    'employee_id' => $request->employee ?? $client->employee->id,
+                    'note' => $request->note ?? $client->note,
+                ]);
+
+                Session::flash('success', "Client data updated successfully");
+                return redirect()->route('clients');
+            }
+            $data['title'] = "Edit Client";
+            return view('clients.create', $data);
         } catch (\Throwable $th) {
             Session::flash('error', $th->getMessage());
             return back();

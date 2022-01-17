@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <title>Yokhone Club Dashboard - {{$title ?? "" }}</title>
 
-    <!-- <link rel="shortcut icon" type="image/x-icon" href="assets/img/"> -->
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('logo/logo2.png') }}">
 </head>
 
 @include('layouts.includes.style')

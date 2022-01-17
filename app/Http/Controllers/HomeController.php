@@ -217,6 +217,10 @@ class HomeController extends Controller
         try {
             //code...
             $user = User::find($id);
+            if($user->role == 1){
+                Session::flash('error', 'The Admin can not be deleted');
+                return back();
+            }
             $user->delete();
             Session::flash('success', 'User Deleted successfully');
             return redirect()->route('home');
@@ -660,6 +664,7 @@ class HomeController extends Controller
             return back();
         }
     }
+
     public function create_client(Request $request)
     {
         try {

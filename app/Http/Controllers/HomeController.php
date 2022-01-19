@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use App\Models\Employee;
+use App\Models\Expense;
 use App\Models\Farm;
 use App\Models\Invoice;
 use App\Models\Role;
@@ -218,7 +219,7 @@ class HomeController extends Controller
         try {
             //code...
             $user = User::find($id);
-            if($user->role == 1){
+            if ($user->role == 1) {
                 Session::flash('error', 'The Admin can not be deleted');
                 return back();
             }
@@ -788,7 +789,7 @@ class HomeController extends Controller
             //code...
             $data['title'] = "Expenses";
             $data['sn'] = 1;
-            $data['expenses'] = Client::with('employee:id,first_name,last_name')->orderBy('id', 'desc')->get();
+            $data['expenses'] = Expense::with(['employee:id,first_name,last_name', 'farm:id,farm_name'])->orderBy('id', 'desc')->get();
             return view('expenses.index', $data);
         } catch (\Throwable $th) {
             // Session::flash('error', "Try again!");
@@ -803,25 +804,17 @@ class HomeController extends Controller
             //code...
             $data['mode'] = "create";
             $data['employees'] = Employee::orderBy('first_name', 'asc')->get(['id', 'first_name', 'last_name']);
+            $data['farms'] = Farm::orderBy('farm_name', 'asc')->get(['id', 'farm_name']);
+            $data['farms'] = Farm::orderBy('farm_name', 'asc')->get(['id', 'farm_name']);
             if ($_POST) {
                 $rules = array(
-                    'client_name' => ['required', 'string', 'max:255'],
-                    'full_address' => ['required', 'string', 'max:255'],
-                    'contact_full_name' => ['required', 'string', 'max:255'],
-                    'contact_phone' => ['required', 'string', 'max:255'],
-                    'contact_email' => ['required', 'string', 'max:255'],
-                    'date_become_client' => ['required', 'string', 'max:255'],
-                    'referred_by' => ['required', 'string', 'max:255'],
-                    'employee' => ['required_if:referred_by,==,employee'],
-                    'note' => ['required_if:referred_by,==,other'],
+                    'date' => ['required', 'string'],
+                    'desc' => ['required', 'string'],
+                    'farm' => ['required', 'string'],
+                    'employee' => ['required', 'string']
                 );
 
-                $customMessages = [
-                    'note.required_if' => 'The :attribute field is required.',
-                    'employee.required_if' => 'The :attribute field is required.',
-                ];
-
-                $validator = Validator::make($request->all(), $rules, $customMessages);
+                $validator = Validator::make($request->all(), $rules);
 
                 if ($validator->fails()) {
                     Session::flash('warning', 'All fields are required');
@@ -829,23 +822,18 @@ class HomeController extends Controller
                 }
 
 
-                Client::create([
-                    'client_name' => $request->client_name,
-                    'full_address' => $request->full_address,
-                    'contact_full_name' => $request->contact_full_name,
-                    'contact_phone' => $request->contact_phone,
-                    'contact_email' => $request->contact_email,
-                    'date_become_client' => $request->date_become_client,
-                    'referred_by' => $request->referred_by,
-                    'employee_id' => $request->employee ?? null,
-                    'note' => $request->note ?? null,
+                Expense::create([
+                    'date' => $request->date,
+                    'desc' => $request->desc,
+                    'farm_id' => $request->farm,
+                    'employee_id' => $request->employee,
                 ]);
 
-                Session::flash('success', "Client created successfully");
-                return redirect()->route('clients');
+                Session::flash('success', "Expense created successfully");
+                return redirect()->route('expenses');
             }
 
-            $data['title'] = "Create New Client";
+            $data['title'] = "Create New Expenses";
             return view('expenses.create', $data);
         } catch (\Throwable $th) {
             // Session::flash('error', "An error occur try again");
@@ -858,54 +846,39 @@ class HomeController extends Controller
     {
         try {
             $data['mode'] = "edit";
-            $data['client'] = $client = Client::find($id);
+            $data['expense'] = $expense = Expense::find($id);
             $data['employees'] = Employee::orderBy('first_name', 'asc')->get(['id', 'first_name', 'last_name']);
-            if (!isset($client)) {
-                Session::flash('warning', 'Client not found');
-                return redirect()->route('clients');
+            $data['farms'] = Farm::orderBy('farm_name', 'asc')->get(['id', 'farm_name']);
+            if (!isset($expense)) {
+                Session::flash('warning', 'Expense not found');
+                return redirect()->route('expenses');
             }
             if ($_POST) {
-
                 $rules = array(
-                    'client_name' => ['required', 'string', 'max:255'],
-                    'full_address' => ['required', 'string', 'max:255'],
-                    'contact_full_name' => ['required', 'string', 'max:255'],
-                    'contact_phone' => ['required', 'string', 'max:255'],
-                    'contact_email' => ['required', 'string', 'max:255'],
-                    'date_become_client' => ['required', 'string', 'max:255'],
-                    'referred_by' => ['required', 'string', 'max:255'],
-                    'employee' => ['required_if:referred_by,==,employee'],
-                    'note' => ['required_if:referred_by,==,other'],
+                    'date' => ['required', 'string'],
+                    'desc' => ['required', 'string'],
+                    'farm' => ['required', 'string'],
+                    'employee' => ['required', 'string']
                 );
 
-                $customMessages = [
-                    'note.required_if' => 'The :attribute field is required.',
-                    'employee.required_if' => 'The :attribute field is required.',
-                ];
-
-                $validator = Validator::make($request->all(), $rules, $customMessages);
+                $validator = Validator::make($request->all(), $rules);
 
                 if ($validator->fails()) {
                     Session::flash('warning', 'All fields are required');
                     return back()->withErrors($validator)->withInput();
                 }
 
-                Client::where('id', $request->id)->update([
-                    'client_name' => $request->client_name,
-                    'full_address' => $request->full_address,
-                    'contact_full_name' => $request->contact_full_name,
-                    'contact_phone' => $request->contact_phone,
-                    'contact_email' => $request->contact_email,
-                    'date_become_client' => $request->date_become_client,
-                    'referred_by' => $request->referred_by,
-                    'employee_id' => $request->employee ?? $client->employee->id,
-                    'note' => $request->note ?? $client->note,
+                Expense::where('id', $request->id)->update([
+                    'date' => $request->date,
+                    'desc' => $request->desc,
+                    'farm_id' => $request->farm,
+                    'employee_id' => $request->employee,
                 ]);
 
-                Session::flash('success', "Client data updated successfully");
-                return redirect()->route('clients');
+                Session::flash('success', "Expense data updated successfully");
+                return redirect()->route('expenses');
             }
-            $data['title'] = "Edit Client";
+            $data['title'] = "Edit Expense";
             return view('expenses.create', $data);
         } catch (\Throwable $th) {
             Session::flash('error', $th->getMessage());

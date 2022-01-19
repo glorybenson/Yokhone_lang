@@ -32,13 +32,13 @@
                         <span> Employees</span></a>
                 </li>
 
-                <li class="{{ request()->is('invoices') || request()->is('create-invoice') || request()->is('edit-invoice/*') ? 'active submenu active-now' : '' }}">
+                <li class="{{ request()->is('invoices') || request()->is('create-invoice') || request()->is('edit-invoice/*') || request()->is('expenses') || request()->is('create-expense') || request()->is('edit-expense/*') ? 'active submenu active-now' : '' }}">
                     <a href="#"><i class="feather-user"></i>
                         <span class="shape1"></span><span class="shape2"></span>
                         <span> Finance</span> <span class="menu-arrow"></span></a>
                     <ul style="display: none;">
-                        <li><a href="{{ route('expenses') }}">Expenses</a></li>
-                        <li><a href="{{ route('invoices') }}">Invoices</a></li>
+                        <li><a class="{{ request()->is('expenses') || request()->is('create-expense') || request()->is('edit-expense/*') ? 'active active-now' : '' }}" href="{{ route('expenses') }}">Expenses</a></li>
+                        <li><a class="{{ request()->is('invoices') || request()->is('create-invoice') || request()->is('edit-invoice/*') ? 'active active-now' : ''  }}" href="{{ route('invoices') }}">Invoices</a></li>
                     </ul>
                 </li>
 

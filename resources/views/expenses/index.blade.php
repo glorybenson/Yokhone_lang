@@ -23,26 +23,17 @@
                                 <th>Action</th>
                             </thead>
                             <tbody>
-                                @if(isset($clients))
-                                @foreach($clients as $client)
+                                @if(isset($expenses))
+                                @foreach($expenses as $expense)
                                 <tr>
                                     <td>{{$sn++}}</td>
-                                    <td>{{$client->client_name}}</td>
-                                    <td>{{$client->full_address}}</td>
-                                    <td>{{$client->contact_full_name}}</td>
-                                    <td>{{$client->contact_phone}}</td>
-                                    <td>{{$client->contact_email}}</td>
-                                    <td>{{$client->date_become_client}}</td>
-                                    <td>
-                                        @if($client->referred_by == "other")
-                                        {{$client->note}}
-                                        @elseif($client->referred_by == "employee")
-                                        {{$client->employee->first_name}}
-                                        @endif
-                                    </td>
+                                    <td>{{$expense->date}}</td>
+                                    <td>{{$expense->desc}}</td>
+                                    <td>{{$expense->farm->farm_name}}</td>
+                                    <td>{{$expense->employee->first_name}} {{$expense->employee->last_name}}</td>
                                     <td>
                                         <div class="d-flex">
-                                            <a href="{{ route('edit.client', $client->id) }}" class="btn btn-sm p-2" title="Edit"><i class="fa fa-edit"></i></a>
+                                            <a href="{{ route('edit.expense', $expense->id) }}" class="btn btn-sm p-2" title="Edit"><i class="fa fa-edit"></i></a>
                                         </div>
                                     </td>
                                 </tr>

@@ -18,7 +18,7 @@
                         <div class="row">
                             <label for="client_name" class="col-md-4 col-form-label text-md-end">Client Name</label>
                             <div class="col-md-8 mb-3">
-                                <select class="form-control @error('client_name') is-invalid @enderror" name="client_name">
+                                <select class="form-control @error('client_name') is-invalid @enderror" name="client_name" required>
                                     <option value="">Select an Client</option>
                                     @if(isset($clients))
                                     @foreach($clients as $client)
@@ -37,7 +37,7 @@
                         <div class="row mb-3">
                             <label for="date" class="col-md-4 col-form-label text-md-end">{{ __('Date') }}</label>
                             <div class="col-md-8">
-                                <input id="date" type="date" class="form-control @error('date') is-invalid @enderror" name="date" value="{{ $invoice->date }}">
+                                <input id="date" type="date" class="form-control @error('date') is-invalid @enderror" required name="date" value="{{ $invoice->date }}">
                                 @error('date')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -49,7 +49,7 @@
                         <div class="row mb-3">
                             <label for="desc" class="col-md-4 col-form-label text-md-end">{{ __('Description') }}</label>
                             <div class="col-md-8">
-                                <textarea id="desc" class="form-control @error('desc') is-invalid @enderror" name="desc">{{ $invoice->desc }}</textarea>
+                                <textarea id="desc" class="form-control @error('desc') is-invalid @enderror" name="desc" required>{{ $invoice->desc }}</textarea>
                                 @error('desc')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -61,7 +61,7 @@
                         <div class="row mb-3">
                             <label for="quantity" class="col-md-4 col-form-label text-md-end">{{ __('Quantity') }}</label>
                             <div class="col-md-8">
-                                <input id="quantity" type="number" class="form-control @error('quantity') is-invalid @enderror" name="quantity" value="{{ $invoice->quantity }}" autocomplete="date">
+                                <input id="quantity" type="number" class="form-control @error('quantity') is-invalid @enderror" name="quantity" value="{{ $invoice->quantity }}" autocomplete="" required>
                                 @error('quantity')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -73,7 +73,7 @@
                         <div class="row mb-3">
                             <label for="unit_price" class="col-md-4 col-form-label text-md-end">{{ __('Unit Price') }}</label>
                             <div class="col-md-8">
-                                <input id="unit_price" type="number" class="form-control @error('unit_price') is-invalid @enderror" name="unit_price" value="{{ $invoice->unit_price }}" autocomplete="date">
+                                <input id="unit_price" type="number" class="form-control @error('unit_price') is-invalid @enderror" name="unit_price" value="{{ $invoice->unit_price }}" autocomplete="date" required>
                                 @error('unit_price')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -85,7 +85,7 @@
                         <div class="row mb-3">
                             <label for="total_price_before_discount" class="col-md-4 col-form-label text-md-end">{{ __('Total Price before discount') }}</label>
                             <div class="col-md-8">
-                                <input id="total_price_before_discount" type="number" class="form-control @error('total_price_before_discount') is-invalid @enderror" name="total_price_before_discount" value="{{ $invoice->total_price_before_discount }}" autocomplete="date">
+                                <input id="total_price_before_discount" type="number" class="form-control @error('total_price_before_discount') is-invalid @enderror" name="total_price_before_discount" required value="{{ $invoice->total_price_before_discount }}" autocomplete="">
                                 @error('total_price_before_discount')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -97,7 +97,7 @@
                         <div class="row mb-3">
                             <label for="discount" class="col-md-4 col-form-label text-md-end">{{ __('Discount') }}</label>
                             <div class="col-md-8">
-                                <input id="discount" type="number" class="form-control @error('discount') is-invalid @enderror" name="discount" value="{{ $invoice->discount }}" autocomplete="date">
+                                <input id="discount" type="number" class="form-control @error('discount') is-invalid @enderror" name="discount" value="{{ $invoice->discount }}" autocomplete="date" required>
                                 @error('discount')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -110,7 +110,7 @@
                         <div class="row mb-3">
                             <label for="total_price_after_discount" class="col-md-4 col-form-label text-md-end">{{ __('Total Price after discount') }}</label>
                             <div class="col-md-8">
-                                <input id="total_price_after_discount" type="number" class="form-control @error('total_price_after_discount') is-invalid @enderror" name="total_price_after_discount" value="{{ $invoice->total_price_after_discount }}" autocomplete="date">
+                                <input id="total_price_after_discount" type="number" class="form-control @error('total_price_after_discount') is-invalid @enderror" name="total_price_after_discount" value="{{ $invoice->total_price_after_discount }}" required autocomplete="date">
                                 @error('total_price_after_discount')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -123,7 +123,7 @@
                         <div class="row">
                             <label for="farm" class="col-md-4 col-form-label text-md-end">Farm</label>
                             <div class="col-md-8 mb-3">
-                                <select class="form-control @error('farm') is-invalid @enderror" name="farm">
+                                <select class="form-control @error('farm') is-invalid @enderror" name="farm" required>
                                     <option value="">Select an Farm</option>
                                     @if(isset($farms))
                                     @foreach($farms as $farm)
@@ -168,7 +168,7 @@
                         <div class="row">
                             <label for="client_name" class="col-md-4 col-form-label text-md-end">Client Name</label>
                             <div class="col-md-8 mb-3">
-                                <select class="form-control @error('client_name') is-invalid @enderror" name="client_name">
+                                <select class="form-control @error('client_name') is-invalid @enderror" name="client_name" required>
                                     <option value="">Select an Client</option>
                                     @if(isset($clients))
                                     @foreach($clients as $client)
@@ -187,7 +187,7 @@
                         <div class="row mb-3">
                             <label for="date" class="col-md-4 col-form-label text-md-end">{{ __('Date') }}</label>
                             <div class="col-md-8">
-                                <input id="date" type="date" class="form-control @error('date') is-invalid @enderror" name="date" value="{{ old('date') }}">
+                                <input id="date" type="date" class="form-control @error('date') is-invalid @enderror" required name="date" value="{{ old('date') }}">
                                 @error('date')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -199,7 +199,7 @@
                         <div class="row mb-3">
                             <label for="desc" class="col-md-4 col-form-label text-md-end">{{ __('Description') }}</label>
                             <div class="col-md-8">
-                                <textarea id="desc" class="form-control @error('desc') is-invalid @enderror" name="desc">{{ old('desc') }}</textarea>
+                                <textarea id="desc" class="form-control @error('desc') is-invalid @enderror" required name="desc">{{ old('desc') }}</textarea>
                                 @error('desc')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -211,7 +211,7 @@
                         <div class="row mb-3">
                             <label for="quantity" class="col-md-4 col-form-label text-md-end">{{ __('Quantity') }}</label>
                             <div class="col-md-8">
-                                <input id="quantity" type="number" class="form-control @error('quantity') is-invalid @enderror" name="quantity" value="{{ old('quantity') }}" autocomplete="date">
+                                <input id="quantity" type="number" class="form-control @error('quantity') is-invalid @enderror" name="quantity" value="{{ old('quantity') }}" autocomplete="" required>
                                 @error('quantity')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -223,7 +223,7 @@
                         <div class="row mb-3">
                             <label for="unit_price" class="col-md-4 col-form-label text-md-end">{{ __('Unit Price') }}</label>
                             <div class="col-md-8">
-                                <input id="unit_price" type="number" class="form-control @error('unit_price') is-invalid @enderror" name="unit_price" value="{{ old('unit_price') }}" autocomplete="date">
+                                <input id="unit_price" type="number" class="form-control @error('unit_price') is-invalid @enderror" name="unit_price" value="{{ old('unit_price') }}" required>
                                 @error('unit_price')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -235,7 +235,7 @@
                         <div class="row mb-3">
                             <label for="total_price_before_discount" class="col-md-4 col-form-label text-md-end">{{ __('Total Price before discount') }}</label>
                             <div class="col-md-8">
-                                <input id="total_price_before_discount" type="number" class="form-control @error('total_price_before_discount') is-invalid @enderror" name="total_price_before_discount" value="{{ old('total_price_before_discount') }}" autocomplete="date">
+                                <input id="total_price_before_discount" type="number" class="form-control @error('total_price_before_discount') is-invalid @enderror" name="total_price_before_discount" value="{{ old('total_price_before_discount') }}" required>
                                 @error('total_price_before_discount')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -247,7 +247,7 @@
                         <div class="row mb-3">
                             <label for="discount" class="col-md-4 col-form-label text-md-end">{{ __('Discount') }}</label>
                             <div class="col-md-8">
-                                <input id="discount" type="number" class="form-control @error('discount') is-invalid @enderror" name="discount" value="{{ old('discount') }}" autocomplete="date">
+                                <input id="discount" type="number" class="form-control @error('discount') is-invalid @enderror" name="discount" value="{{ old('discount') }}" required>
                                 @error('discount')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -260,7 +260,7 @@
                         <div class="row mb-3">
                             <label for="total_price_after_discount" class="col-md-4 col-form-label text-md-end">{{ __('Total Price after discount') }}</label>
                             <div class="col-md-8">
-                                <input id="total_price_after_discount" type="number" class="form-control @error('total_price_after_discount') is-invalid @enderror" name="total_price_after_discount" value="{{ old('total_price_after_discount') }}" autocomplete="date">
+                                <input id="total_price_after_discount" type="number" class="form-control @error('total_price_after_discount') is-invalid @enderror" name="total_price_after_discount" value="{{ old('total_price_after_discount') }}" required>
                                 @error('total_price_after_discount')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -273,7 +273,7 @@
                         <div class="row">
                             <label for="farm" class="col-md-4 col-form-label text-md-end">Farm</label>
                             <div class="col-md-8 mb-3">
-                                <select class="form-control @error('farm') is-invalid @enderror" name="farm">
+                                <select class="form-control @error('farm') is-invalid @enderror" name="farm" required>
                                     <option value="">Select an Farm</option>
                                     @if(isset($farms))
                                     @foreach($farms as $farm)

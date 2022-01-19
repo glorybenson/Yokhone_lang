@@ -51,6 +51,16 @@ Route::get('/clients', [App\Http\Controllers\HomeController::class, 'clients'])-
 Route::match(['get', 'post'], '/create-client', [App\Http\Controllers\HomeController::class, 'create_client'])->name('create.client');
 Route::match(['get', 'post'], '/edit-client/{id}', [App\Http\Controllers\HomeController::class, 'edit_client'])->name('edit.client');
 
+//Expenses
+Route::get('/expenses', [App\Http\Controllers\HomeController::class, 'expenses'])->name('expenses');
+Route::match(['get', 'post'], '/create-expense', [App\Http\Controllers\HomeController::class, 'create_expense'])->name('create.expense');
+Route::match(['get', 'post'], '/edit-expense/{id}', [App\Http\Controllers\HomeController::class, 'edit_expense'])->name('edit.expense');
+
+//Invoices
+Route::get('/invoices', [App\Http\Controllers\HomeController::class, 'invoices'])->name('invoices');
+Route::match(['get', 'post'], '/create-invoice', [App\Http\Controllers\HomeController::class, 'create_invoice'])->name('create.invoice');
+Route::match(['get', 'post'], '/edit-invoice/{id}', [App\Http\Controllers\HomeController::class, 'edit_invoice'])->name('edit.invoice');
+
 //Settings
 Route::match(['get', 'post'], '/my-profile', [App\Http\Controllers\HomeController::class, 'my_profile'])->name('my.profile');
 Route::match(['get', 'post'], '/change-password', [App\Http\Controllers\HomeController::class, 'change_password'])->name('change.password');

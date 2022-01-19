@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use App\Models\Employee;
 use App\Models\Farm;
+use App\Models\Invoice;
 use App\Models\Role;
 use App\Models\Salary;
 use App\Models\Tree;
@@ -775,6 +776,259 @@ class HomeController extends Controller
             }
             $data['title'] = "Edit Client";
             return view('clients.create', $data);
+        } catch (\Throwable $th) {
+            Session::flash('error', $th->getMessage());
+            return back();
+        }
+    }
+
+    public function expenses()
+    {
+        try {
+            //code...
+            $data['title'] = "Expenses";
+            $data['sn'] = 1;
+            $data['expenses'] = Client::with('employee:id,first_name,last_name')->orderBy('id', 'desc')->get();
+            return view('expenses.index', $data);
+        } catch (\Throwable $th) {
+            // Session::flash('error', "Try again!");
+            Session::flash('error', $th->getMessage());
+            return back();
+        }
+    }
+
+    public function create_expense(Request $request)
+    {
+        try {
+            //code...
+            $data['mode'] = "create";
+            $data['employees'] = Employee::orderBy('first_name', 'asc')->get(['id', 'first_name', 'last_name']);
+            if ($_POST) {
+                $rules = array(
+                    'client_name' => ['required', 'string', 'max:255'],
+                    'full_address' => ['required', 'string', 'max:255'],
+                    'contact_full_name' => ['required', 'string', 'max:255'],
+                    'contact_phone' => ['required', 'string', 'max:255'],
+                    'contact_email' => ['required', 'string', 'max:255'],
+                    'date_become_client' => ['required', 'string', 'max:255'],
+                    'referred_by' => ['required', 'string', 'max:255'],
+                    'employee' => ['required_if:referred_by,==,employee'],
+                    'note' => ['required_if:referred_by,==,other'],
+                );
+
+                $customMessages = [
+                    'note.required_if' => 'The :attribute field is required.',
+                    'employee.required_if' => 'The :attribute field is required.',
+                ];
+
+                $validator = Validator::make($request->all(), $rules, $customMessages);
+
+                if ($validator->fails()) {
+                    Session::flash('warning', 'All fields are required');
+                    return back()->withErrors($validator)->withInput();
+                }
+
+
+                Client::create([
+                    'client_name' => $request->client_name,
+                    'full_address' => $request->full_address,
+                    'contact_full_name' => $request->contact_full_name,
+                    'contact_phone' => $request->contact_phone,
+                    'contact_email' => $request->contact_email,
+                    'date_become_client' => $request->date_become_client,
+                    'referred_by' => $request->referred_by,
+                    'employee_id' => $request->employee ?? null,
+                    'note' => $request->note ?? null,
+                ]);
+
+                Session::flash('success', "Client created successfully");
+                return redirect()->route('clients');
+            }
+
+            $data['title'] = "Create New Client";
+            return view('expenses.create', $data);
+        } catch (\Throwable $th) {
+            // Session::flash('error', "An error occur try again");
+            Session::flash('error', $th->getMessage());
+            return back();
+        }
+    }
+
+    public function edit_expense(Request $request, $id)
+    {
+        try {
+            $data['mode'] = "edit";
+            $data['client'] = $client = Client::find($id);
+            $data['employees'] = Employee::orderBy('first_name', 'asc')->get(['id', 'first_name', 'last_name']);
+            if (!isset($client)) {
+                Session::flash('warning', 'Client not found');
+                return redirect()->route('clients');
+            }
+            if ($_POST) {
+
+                $rules = array(
+                    'client_name' => ['required', 'string', 'max:255'],
+                    'full_address' => ['required', 'string', 'max:255'],
+                    'contact_full_name' => ['required', 'string', 'max:255'],
+                    'contact_phone' => ['required', 'string', 'max:255'],
+                    'contact_email' => ['required', 'string', 'max:255'],
+                    'date_become_client' => ['required', 'string', 'max:255'],
+                    'referred_by' => ['required', 'string', 'max:255'],
+                    'employee' => ['required_if:referred_by,==,employee'],
+                    'note' => ['required_if:referred_by,==,other'],
+                );
+
+                $customMessages = [
+                    'note.required_if' => 'The :attribute field is required.',
+                    'employee.required_if' => 'The :attribute field is required.',
+                ];
+
+                $validator = Validator::make($request->all(), $rules, $customMessages);
+
+                if ($validator->fails()) {
+                    Session::flash('warning', 'All fields are required');
+                    return back()->withErrors($validator)->withInput();
+                }
+
+                Client::where('id', $request->id)->update([
+                    'client_name' => $request->client_name,
+                    'full_address' => $request->full_address,
+                    'contact_full_name' => $request->contact_full_name,
+                    'contact_phone' => $request->contact_phone,
+                    'contact_email' => $request->contact_email,
+                    'date_become_client' => $request->date_become_client,
+                    'referred_by' => $request->referred_by,
+                    'employee_id' => $request->employee ?? $client->employee->id,
+                    'note' => $request->note ?? $client->note,
+                ]);
+
+                Session::flash('success', "Client data updated successfully");
+                return redirect()->route('clients');
+            }
+            $data['title'] = "Edit Client";
+            return view('expenses.create', $data);
+        } catch (\Throwable $th) {
+            Session::flash('error', $th->getMessage());
+            return back();
+        }
+    }
+
+    public function invoices()
+    {
+        try {
+            //code...
+            $data['title'] = "Invoices";
+            $data['sn'] = 1;
+            $data['invoices'] = Invoice::with(['farm:id,farm_name', 'client:id,client_name'])->orderBy('id', 'desc')->get();
+            return view('invoices.index', $data);
+        } catch (\Throwable $th) {
+            // Session::flash('error', "Try again!");
+            Session::flash('error', $th->getMessage());
+            return back();
+        }
+    }
+
+    public function create_invoice(Request $request)
+    {
+        try {
+            //code...
+            $data['mode'] = "create";
+            $data['clients'] = Client::orderBy('client_name', 'asc')->get(['id', 'client_name']);
+            $data['farms'] = Farm::orderBy('farm_name', 'asc')->get(['id', 'farm_name']);
+            $data['employees'] = Employee::orderBy('first_name', 'asc')->get(['id', 'first_name', 'last_name']);
+            if ($_POST) {
+                $rules = array(
+                    'client_name' => ['required', 'string', 'max:255'],
+                    'date' => ['required', 'string', 'max:255'],
+                    'desc' => ['required', 'string'],
+                    'quantity' => ['required', 'string'],
+                    'unit_price' => ['required', 'string'],
+                    'total_price_before_discount' => ['required', 'string'],
+                    'discount' => ['required', 'string'],
+                    'total_price_after_discount' => ['required', 'string'],
+                    'farm' => ['required', 'string']
+                );
+
+                $validator = Validator::make($request->all(), $rules);
+
+                if ($validator->fails()) {
+                    Session::flash('warning', 'All fields are required');
+                    return back()->withErrors($validator)->withInput();
+                }
+
+                Invoice::create([
+                    'client_id' => $request->client_name,
+                    'date' => $request->date,
+                    'desc' => $request->desc,
+                    'quantity' => $request->quantity,
+                    'unit_price' => $request->unit_price,
+                    'total_price_before_discount' => $request->total_price_before_discount,
+                    'discount' => $request->discount,
+                    'total_price_after_discount' => $request->total_price_after_discount,
+                    'farm_id' => $request->farm,
+                ]);
+
+                Session::flash('success', "Invoice created successfully");
+                return redirect()->route('invoices');
+            }
+
+            $data['title'] = "Create New Invoice";
+            return view('invoices.create', $data);
+        } catch (\Throwable $th) {
+            // Session::flash('error', "An error occur try again");
+            Session::flash('error', $th->getMessage());
+            return back();
+        }
+    }
+
+    public function edit_invoice(Request $request, $id)
+    {
+        try {
+            $data['mode'] = "edit";
+            $data['clients'] = Client::orderBy('client_name', 'asc')->get(['id', 'client_name']);
+            $data['farms'] = Farm::orderBy('farm_name', 'asc')->get(['id', 'farm_name']);
+            $data['invoice'] = $invoice = Invoice::where('id', $id)->with(['farm:id,farm_name', 'client:id,client_name'])->first();
+            if (!isset($invoice)) {
+                Session::flash('warning', 'Invoice not found');
+                return redirect()->route('clients');
+            }
+            if ($_POST) {
+                $rules = array(
+                    'client_name' => ['required', 'string', 'max:255'],
+                    'date' => ['required', 'string', 'max:255'],
+                    'desc' => ['required', 'string'],
+                    'quantity' => ['required', 'string'],
+                    'unit_price' => ['required', 'string'],
+                    'total_price_before_discount' => ['required', 'string'],
+                    'discount' => ['required', 'string'],
+                    'total_price_after_discount' => ['required', 'string'],
+                    'farm' => ['required', 'string']
+                );
+
+                $validator = Validator::make($request->all(), $rules);
+
+                if ($validator->fails()) {
+                    Session::flash('warning', 'All fields are required');
+                    return back()->withErrors($validator)->withInput();
+                }
+
+                Invoice::where('id', $request->id)->update([
+                    'client_id' => $request->client_name,
+                    'date' => $request->date,
+                    'desc' => $request->desc,
+                    'quantity' => $request->quantity,
+                    'unit_price' => $request->unit_price,
+                    'total_price_before_discount' => $request->total_price_before_discount,
+                    'discount' => $request->discount,
+                    'total_price_after_discount' => $request->total_price_after_discount,
+                    'farm_id' => $request->farm,
+                ]);
+
+                Session::flash('success', "Invoice data updated successfully");
+                return redirect()->route('invoices');
+            }
+            $data['title'] = "Edit Invoice";
+            return view('invoices.create', $data);
         } catch (\Throwable $th) {
             Session::flash('error', $th->getMessage());
             return back();

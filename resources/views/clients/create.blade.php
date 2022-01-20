@@ -14,6 +14,7 @@
                 <div class="card-body">
                     <form method="POST" action="{{ route('edit.client', $client->id) }}">
                         @csrf
+                        <input type="hidden" name="id" value="{{$client->id}}">
                         <div class="row mb-3">
                             <label for="client_name" class="col-md-4 col-form-label text-md-end">{{ __('Client Name') }}</label>
                             <div class="col-md-8">
@@ -108,7 +109,7 @@
                                     <option value="">Select an Employee</option>
                                     @if(isset($employees))
                                     @foreach($employees as $employee)
-                                    <option value="{{$employee->id}}" {{ $client->employee->id == $employee->id ? 'selected' : '' }}>{{$employee->first_name}} {{$employee->last_name}}</option>
+                                    <option value="{{$employee->id}}" {{ $client->employee_id == $employee->id ? 'selected' : '' }}>{{$employee->first_name}} {{$employee->last_name}}</option>
                                     @endforeach
                                     @endif
                                 </select>
@@ -134,7 +135,7 @@
 
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to submit this form?')">
+                                <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to submit this form?')">
                                     {{ __('Submit') }}
                                 </button>
                             </div>
@@ -278,7 +279,7 @@
 
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to submit this form?')">
+                                <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to submit this form?')">
                                     {{ __('Submit') }}
                                 </button>
                             </div>

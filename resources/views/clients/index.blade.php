@@ -8,7 +8,7 @@
                 <div class="card-header">
                     <h4 class="card-title float-left">Clients</h4>
                     <div class="text-right">
-                        <a href="{{ route('create.client') }}" class="btn btn-secondary p-2">Add New client</a>
+                        <a href="{{ route('create.client') }}" class="btn btn-success p-2">Add New client</a>
                     </div>
                 </div>
                 <div class="card-body">

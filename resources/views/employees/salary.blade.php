@@ -14,7 +14,7 @@
                     <div class="row mb-4">
                         <div class="col-md-6"><a href="{{ route('view.employee', $employee->id) }}" class="btn btn-dark">{{$employee->first_name}} {{$employee->last_name }}</a>
                         </div>
-                        <div class="col-md-6"><a href="#" class="btn btn-primary">Salary History</a>
+                        <div class="col-md-6"><a href="#" class="btn btn-success">Salary History</a>
                         </div>
                     </div>
                     <div class="text-right mb-3">
@@ -70,7 +70,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to submit this form?')">Add</button>
+                                        <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to submit this form?')">Add</button>
                                     </div>
                                 </form>
                             </div>
@@ -146,7 +146,7 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to submit this form?')">Update</button>
+                                                    <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to submit this form?')">Update</button>
                                                 </div>
                                             </form>
                                         </div>

@@ -1,5 +1,5 @@
 <div class="header">
-<div class="header-left">
+    <div class="header-left">
         <a href="{{ route('home') }}" class="logo">Yokhone App
             <!-- <img src="assets/img/logo.svg" alt="Logo"> -->
         </a>
@@ -25,7 +25,14 @@
     <ul class="nav user-menu">
         <li class="nav-item dropdown">
             <a href="#" class="nav-link notifications-item">
-                <i class="fa fa-bell"></i> <span class="badge badge-pill">1</span>
+                <i class="fa fa-bell"></i> <span class="badge badge-pill">
+                    <?php $notifications = auth()->user()->notifications; ?>
+                    @if(isset($notifications))
+                    {{ $notifications->count() ?? 0 }}
+                    @else
+                    0
+                    @endif
+                </span>
             </a>
         </li>
 

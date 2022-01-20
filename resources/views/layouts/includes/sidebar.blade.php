@@ -4,19 +4,19 @@
             <ul>
                 <li class="menu-title"> <span></span>
                 </li>
-                <li class="{{ request()->is('home') || request()->is('edit-user/*') || request()->is('create-user')  ? 'active submenu active-now' : '' }}">
+                <li class="{{ request()->is('home') || request()->is('edit-user/*') || request()->is('create-user')  ? 'active active-now' : '' }}">
                     <a href="{{ route('home') }}"><i class="feather-home"></i>
                         <span class="shape1"></span><span class="shape2"></span>
                         <span>Users</span></a>
                 </li>
 
-                <li class="{{ request()->is('clients') || request()->is('edit-client/*') || request()->is('create-client')  ? 'active submenu active-now' : '' }}">
+                <li class="{{ request()->is('clients') || request()->is('edit-client/*') || request()->is('create-client')  ? 'active active-now' : '' }}">
                     <a href="{{ route('clients') }}"><i class="feather-lock"></i>
                         <span class="shape1"></span><span class="shape2"></span>
                         <span> Clients</span></a>
                 </li>
 
-                <li class="{{ request()->is('farms') || request()->is('edit-farm/*') || request()->is('create-farm') || request()->is('trees') || request()->is('edit-tree/*') || request()->is('create-tree')  ? 'active submenu active-now' : '' }}">
+                <li class="{{ request()->is('farms') || request()->is('edit-farm/*') || request()->is('create-farm') || request()->is('trees') || request()->is('edit-tree/*') || request()->is('create-tree')  ? 'active active-now' : '' }}">
                     <a href="#"><i class="feather-user-plus"></i>
                         <span class="shape1"></span><span class="shape2"></span> <span> Farm</span> <span class="menu-arrow"></span></a>
                     <ul style="display: none;">
@@ -26,13 +26,13 @@
                 </li>
 
 
-                <li class="{{ request()->is('employees') || request()->is('view-employees-salary/*') || request()->is('view-employee/*') || request()->is('edit-employee/*') || request()->is('create-employee')  ? 'active submenu active-now' : '' }}">
+                <li class="{{ request()->is('employees') || request()->is('view-employees-salary/*') || request()->is('view-employee/*') || request()->is('edit-employee/*') || request()->is('create-employee')  ? 'active active-now' : '' }}">
                     <a href="{{ route('employees') }}"><i class="feather-lock"></i>
                         <span class="shape1"></span><span class="shape2"></span>
                         <span> Employees</span></a>
                 </li>
 
-                <li class="{{ request()->is('invoices') || request()->is('create-invoice') || request()->is('edit-invoice/*') || request()->is('expenses') || request()->is('create-expense') || request()->is('edit-expense/*') ? 'active submenu active-now' : '' }}">
+                <li class="{{ request()->is('invoices') || request()->is('create-invoice') || request()->is('edit-invoice/*') || request()->is('expenses') || request()->is('create-expense') || request()->is('edit-expense/*') ? 'active active-now' : '' }}">
                     <a href="#"><i class="feather-user"></i>
                         <span class="shape1"></span><span class="shape2"></span>
                         <span> Finance</span> <span class="menu-arrow"></span></a>

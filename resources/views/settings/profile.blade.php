@@ -51,7 +51,7 @@
                         </div>
                         <div class="">
                             <div class="text-right m-3">
-                                <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to submit this form?')">
+                                <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to submit this form?')">
                                     {{ __('Update Profile') }}
                                 </button>
                             </div>
@@ -113,7 +113,7 @@
                         </div>
                         <div class="">
                             <div class="text-right m-3">
-                                <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to submit this form?')">
+                                <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to submit this form?')">
                                     {{ __('Update Profile') }}
                                 </button>
                             </div>

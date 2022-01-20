@@ -5,21 +5,32 @@
     </div>
     <div class="noti-content">
         <ul class="notification-list">
+            <?php $notifications=auth()->user()->notifications; ?>
+            @if(isset($notifications))
+            @forelse($notifications as $notification)
             <li class="notification-message">
-                <a href="#">
+                <a>
                     <div class="media">
-                        <span class="avatar">
-                            <img alt="" src="assets/img/profiles/avatar-02.jpg" class="rounded-circle">
-                        </span>
                         <div class="media-body">
-                            <p class="noti-details"><span class="noti-title">Faith</span> added new task
-                                <span class="noti-title">A new Company</span>
+                            <p class="noti-details"><span class="noti-title"></span> {{$notification->data['message']}}
+                                <span class="noti-title">
+                                    @if($notification->data['data'] != ' ')
+                                    <b>
+                                        <spaceless> - {{$notification->data['data']}}</spaceless>
+                                    </b>
+                                    @else
+                                    @endif
+                                </span>
                             </p>
-                            <p class="noti-time"><span class="notification-time">4 mins ago</span></p>
+                            <p class="noti-time"><span class="notification-time">{{$notification->created_at->diffForHumans()}}</span></p>
                         </div>
                     </div>
                 </a>
             </li>
+            @empty
+            @endforelse
+            @endif
+
         </ul>
     </div>
     <div class="topnav-dropdown-footer">

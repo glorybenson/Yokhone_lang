@@ -52,8 +52,8 @@
                             <div class="col-md-8">
                                 <select id="reason" class="form-control @error('reason') is-invalid @enderror" name="reason" required>
                                     <option value="">Select Reason</option>
-                                    <option value="Plantation" {{ $farm->reason == "Plantation" ? 'selected' : '' }}>Plantation</option>
-                                    <option value="Death" {{ $farm->reason == "Death" ? 'selected' : '' }}>Death</option>
+                                    <option value="Plantation" {{ $tree->reason == "Plantation" ? 'selected' : '' }}>Plantation</option>
+                                    <option value="Death" {{ $tree->reason == "Death" ? 'selected' : '' }}>Death</option>
                                 </select>
                                 @error('reason')
                                 <span class="invalid-feedback" role="alert">
@@ -89,7 +89,7 @@
 
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to submit this form?')">
+                                <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to submit this form?')">
                                     {{ __('Submit') }}
                                 </button>
                             </div>
@@ -187,7 +187,7 @@
 
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to submit this form?')">
+                                <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to submit this form?')">
                                     {{ __('Submit') }}
                                 </button>
                             </div>

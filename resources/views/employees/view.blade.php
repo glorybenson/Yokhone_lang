@@ -12,7 +12,7 @@
                 </div>
                 <div class="card-body">
                     <div class="row mb-4">
-                        <div class="col-md-6"><a href="#" class="btn btn-primary">{{$employee->first_name}} {{$employee->last_name }}</a>
+                        <div class="col-md-6"><a href="#" class="btn btn-success">{{$employee->first_name}} {{$employee->last_name }}</a>
                         </div>
                         <div class="col-md-6"><a href="{{ route('salary.employee', $employee->id) }}" class="btn btn-dark">Salary History</a>
                         </div>

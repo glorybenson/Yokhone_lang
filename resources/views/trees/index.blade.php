@@ -7,7 +7,7 @@
                 <div class="card-header">
                     <h4 class="card-title float-left">Trees</h4>
                     <div class="text-right">
-                        <a href="{{ route('create.tree') }}" class="btn btn-primary p-2">Add New Tree</a>
+                        <a href="{{ route('create.tree') }}" class="btn btn-success p-2">Add New Tree</a>
                     </div>
                 </div>
                 <div class="card-body">

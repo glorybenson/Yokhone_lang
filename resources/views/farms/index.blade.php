@@ -8,7 +8,7 @@
                 <div class="card-header">
                     <h4 class="card-title float-left">Farms</h4>
                     <div class="text-right">
-                        <a href="{{ route('create.farm') }}" class="btn btn-primary p-2">Add New Farm</a>
+                        <a href="{{ route('create.farm') }}" class="btn btn-success p-2">Add New Farm</a>
                     </div>
                 </div>
                 <div class="card-body">

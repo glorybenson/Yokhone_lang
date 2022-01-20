@@ -11,11 +11,14 @@ use App\Models\Role;
 use App\Models\Salary;
 use App\Models\Tree;
 use App\Models\User;
+use App\Notifications\GeneralNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\View;
 
 class HomeController extends Controller
 {
@@ -28,12 +31,28 @@ class HomeController extends Controller
     {
         $this->middleware('auth');
 
+
+        //its just a dummy data object.
+        // $notifications = auth()->user()->unreadNotifications;
+
+        // // // Sharing is caring
+        // View::share('notifications', $notifications);
+
         function save_file($file, $path)
         {
             $name = $path . date('dMY') . time() . '.' . $file->getClientOriginalExtension();
             $fileDestination = $path;
             $file->move($fileDestination, $name);
             return $name;
+        }
+
+        function send_notification($message, $first = null, $last = null)
+        {
+            $data = [
+                'message' => $message,
+                'data' => $first . ' ' . $last
+            ];
+            Notification::send(Auth::user(), new GeneralNotification($data));
         }
     }
 
@@ -156,7 +175,7 @@ class HomeController extends Controller
                 $user->email = $request->email;
                 $user->role = $request->role;
                 $user->save();
-
+                send_notification('Updated a user data', $user->first_name, $user->last_name);
                 Session::flash('success', "User updated successfully");
                 return redirect()->route('home');
             }
@@ -200,6 +219,7 @@ class HomeController extends Controller
                     'email' => $request->email,
                     'password' => Hash::make($request->password)
                 ]);
+                send_notification('Created a new user ', $request->first_name, $request->last_name);
 
                 Session::flash('success', "User created successfully");
                 return redirect()->route('home');
@@ -224,6 +244,7 @@ class HomeController extends Controller
                 return back();
             }
             $user->delete();
+            send_notification('Updated a user data', $user->first_name, $user->last_name);
             Session::flash('success', 'User Deleted successfully');
             return redirect()->route('home');
         } catch (\Throwable $th) {
@@ -267,6 +288,7 @@ class HomeController extends Controller
     public function add_salary(Request $request)
     {
         try {
+            $data['employee'] = $employee = Employee::find($request->id);
             //code...            
             $rules = array(
                 'salary_amount' => ['required', 'string', 'max:255'],
@@ -291,6 +313,8 @@ class HomeController extends Controller
                     'start_date' => $request->salary_start_date,
                     'current_salary' => $request->current_salary,
                 ]);
+                send_notification('Updated salary for employee', $employee->first_name, $employee->last_name);
+
                 Session::flash('success', "Salary Record Updated successfully");
                 return back();
             }
@@ -301,6 +325,7 @@ class HomeController extends Controller
                 'start_date' => $request->salary_start_date,
                 'current_salary' => $request->current_salary,
             ]);
+            send_notification('Created a new salary for employee', $employee->first_name, $employee->last_name);
 
             Session::flash('success', "Salary added successfully");
             return back();
@@ -366,6 +391,7 @@ class HomeController extends Controller
                     'contact_1_cell2' => $request->contact_1_cell2
                 ]);
 
+                send_notification('Updated an employee data', $employee->first_name, $employee->last_name);
                 Session::flash('success', "Employee data updated successfully");
                 return redirect()->route('employees');
             }
@@ -428,6 +454,7 @@ class HomeController extends Controller
                     'contact_1_cell' => $request->contact_1_cell,
                     'contact_1_cell2' => $request->contact_1_cell2
                 ]);
+                send_notification('Created a new Employee ', $request->first_name, $request->last_name);
 
                 Session::flash('success', "Employee created successfully");
                 return redirect()->route('employees');
@@ -483,6 +510,8 @@ class HomeController extends Controller
                     'latitude' => $request->latitude,
                     'longitude' => $request->longitude
                 ]);
+                send_notification('Created a new farm data', $request->farm_name);
+
 
                 Session::flash('success', "Farm created successfully");
                 return redirect()->route('farms');
@@ -535,6 +564,7 @@ class HomeController extends Controller
                     'latitude' => $request->latitude,
                     'longitude' => $request->longitude
                 ]);
+                send_notification('Updated a farm data', $request->farm_name);
 
                 Session::flash('success', "Farm data updated successfully");
                 return redirect()->route('farms');
@@ -592,6 +622,8 @@ class HomeController extends Controller
                     'date_planted' => $request->date_planted
                 ]);
 
+                send_notification('Created a new Tree data');
+
                 Session::flash('success', "Tree created successfully");
                 return redirect()->route('trees');
             }
@@ -640,6 +672,7 @@ class HomeController extends Controller
                     'quantity' => $request->quantity,
                     'date_planted' => $request->date_planted
                 ]);
+                send_notification('Updated a new Tree data');
 
                 Session::flash('success', "Tree data updated successfully");
                 return redirect()->route('trees');
@@ -711,6 +744,9 @@ class HomeController extends Controller
                     'note' => $request->note ?? null,
                 ]);
 
+
+                send_notification('Created a new client data', $request->client_name);
+
                 Session::flash('success', "Client created successfully");
                 return redirect()->route('clients');
             }
@@ -735,7 +771,6 @@ class HomeController extends Controller
                 return redirect()->route('clients');
             }
             if ($_POST) {
-
                 $rules = array(
                     'client_name' => ['required', 'string', 'max:255'],
                     'full_address' => ['required', 'string', 'max:255'],
@@ -768,9 +803,10 @@ class HomeController extends Controller
                     'contact_email' => $request->contact_email,
                     'date_become_client' => $request->date_become_client,
                     'referred_by' => $request->referred_by,
-                    'employee_id' => $request->employee ?? $client->employee->id,
+                    'employee_id' => $request->employee ?? $client->employee_id,
                     'note' => $request->note ?? $client->note,
                 ]);
+                send_notification('Updated a client data', $request->client_name);
 
                 Session::flash('success', "Client data updated successfully");
                 return redirect()->route('clients');
@@ -805,7 +841,6 @@ class HomeController extends Controller
             $data['mode'] = "create";
             $data['employees'] = Employee::orderBy('first_name', 'asc')->get(['id', 'first_name', 'last_name']);
             $data['farms'] = Farm::orderBy('farm_name', 'asc')->get(['id', 'farm_name']);
-            $data['farms'] = Farm::orderBy('farm_name', 'asc')->get(['id', 'farm_name']);
             if ($_POST) {
                 $rules = array(
                     'date' => ['required', 'string'],
@@ -829,6 +864,7 @@ class HomeController extends Controller
                     'employee_id' => $request->employee,
                 ]);
 
+                send_notification('Created a new expense data');
                 Session::flash('success', "Expense created successfully");
                 return redirect()->route('expenses');
             }
@@ -874,6 +910,7 @@ class HomeController extends Controller
                     'farm_id' => $request->farm,
                     'employee_id' => $request->employee,
                 ]);
+                send_notification('Updated an expense data');
 
                 Session::flash('success', "Expense data updated successfully");
                 return redirect()->route('expenses');
@@ -941,6 +978,7 @@ class HomeController extends Controller
                     'farm_id' => $request->farm,
                 ]);
 
+                send_notification('Created a new invoice data', $request->client_name);
                 Session::flash('success', "Invoice created successfully");
                 return redirect()->route('invoices');
             }
@@ -996,6 +1034,8 @@ class HomeController extends Controller
                     'total_price_after_discount' => $request->total_price_after_discount,
                     'farm_id' => $request->farm,
                 ]);
+
+                send_notification('Updated a invoice data', $request->client_name);
 
                 Session::flash('success', "Invoice data updated successfully");
                 return redirect()->route('invoices');

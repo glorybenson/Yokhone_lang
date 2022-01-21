@@ -38,7 +38,7 @@
 
         <li class="nav-item dropdown has-arrow main-drop ml-md-3">
             <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                <span class="user-img"><img src="assets/img/avatar_glory.jpg" alt="">
+                <span class="user-img"><img src="{{ asset('avatar.png') }}" alt="">
                     <span class="status online"></span></span>
             </a>
             <div class="dropdown-menu">

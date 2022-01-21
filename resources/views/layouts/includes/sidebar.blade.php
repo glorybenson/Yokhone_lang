@@ -4,18 +4,23 @@
             <ul>
                 <li class="menu-title"> <span></span>
                 </li>
+                @if(Auth::user()->role == '1' || Auth::user()->role == "2")
                 <li class="{{ request()->is('home') || request()->is('edit-user/*') || request()->is('create-user')  ? 'active active-now' : '' }}">
                     <a href="{{ route('home') }}"><i class="feather-home"></i>
                         <span class="shape1"></span><span class="shape2"></span>
                         <span>Users</span></a>
                 </li>
+                @endif
 
+                @if(Auth::user()->role == '1' || Auth::user()->role == "3")
                 <li class="{{ request()->is('clients') || request()->is('edit-client/*') || request()->is('create-client')  ? 'active active-now' : '' }}">
                     <a href="{{ route('clients') }}"><i class="feather-lock"></i>
                         <span class="shape1"></span><span class="shape2"></span>
                         <span> Clients</span></a>
                 </li>
+                @endif
 
+                @if(Auth::user()->role == '1' || Auth::user()->role == "4")
                 <li class="{{ request()->is('farms') || request()->is('edit-farm/*') || request()->is('create-farm') || request()->is('trees') || request()->is('edit-tree/*') || request()->is('create-tree')  ? 'active active-now' : '' }}">
                     <a href="#"><i class="feather-user-plus"></i>
                         <span class="shape1"></span><span class="shape2"></span> <span> Farm</span> <span class="menu-arrow"></span></a>
@@ -24,14 +29,19 @@
                         <li><a class="{{ request()->is('farms') || request()->is('edit-farm/*') || request()->is('create-farm')  ? 'active active-now' : '' }}" href="{{ route('farms') }}">Farm</a></li>
                     </ul>
                 </li>
+                @endif
 
 
+                @if(Auth::user()->role == '1' || Auth::user()->role == "5")
                 <li class="{{ request()->is('employees') || request()->is('view-employees-salary/*') || request()->is('view-employee/*') || request()->is('edit-employee/*') || request()->is('create-employee')  ? 'active active-now' : '' }}">
                     <a href="{{ route('employees') }}"><i class="feather-lock"></i>
                         <span class="shape1"></span><span class="shape2"></span>
                         <span> Employees</span></a>
                 </li>
+                @endif
 
+
+                @if(Auth::user()->role == '1' || Auth::user()->role == "6")
                 <li class="{{ request()->is('invoices') || request()->is('create-invoice') || request()->is('edit-invoice/*') || request()->is('expenses') || request()->is('create-expense') || request()->is('edit-expense/*') ? 'active active-now' : '' }}">
                     <a href="#"><i class="feather-user"></i>
                         <span class="shape1"></span><span class="shape2"></span>
@@ -41,7 +51,10 @@
                         <li><a class="{{ request()->is('invoices') || request()->is('create-invoice') || request()->is('edit-invoice/*') ? 'active active-now' : ''  }}" href="{{ route('invoices') }}">Invoices</a></li>
                     </ul>
                 </li>
+                @endif
 
+
+                @if(Auth::user()->role == '1' || Auth::user()->role == "1")
                 <li class="">
                     <a href="#"><i class="feather-user"></i>
                         <span class="shape1"></span><span class="shape2"></span>
@@ -56,6 +69,8 @@
                         <li><a href="">Login history</a></li>
                     </ul>
                 </li>
+                @endif
+
 
             </ul>
         </div>

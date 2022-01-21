@@ -15,17 +15,20 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert(
-            [
+        $check = DB::table('users')->where('role', 1)->first();
+        if (!$check) {
+            DB::table('users')->insert(
                 [
-                    'first_name' => "Admin",
-                    "last_name" => 'Admin',
-                    "created_by" => null,
-                    "role" => 1,
-                    "email" => 'admin@gmail.com',
-                    "password" => Hash::make('Admin@123'),
+                    [
+                        'first_name' => "Admin",
+                        "last_name" => 'Admin',
+                        "created_by" => null,
+                        "role" => 1,
+                        "email" => 'admin@gmail.com',
+                        "password" => Hash::make('Admin@123'),
+                    ]
                 ]
-            ]
-        );
+            );
+        }
     }
 }

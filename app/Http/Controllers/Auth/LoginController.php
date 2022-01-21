@@ -55,7 +55,7 @@ class LoginController extends Controller
                 return '/farms';
                 break;
             case '5':
-                return '/employess';
+                return '/employees';
                 break;
             case '6':
                 return '/expenses';

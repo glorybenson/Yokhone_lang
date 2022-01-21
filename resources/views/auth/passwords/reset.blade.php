@@ -10,7 +10,7 @@
     <title>Yokhone Club - Reset Password</title>
 
     <meta name="description" content="Prototype">
-    <!-- <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo.svg"> -->
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('logo/logo2.png') }}">
 
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
 

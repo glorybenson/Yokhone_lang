@@ -39,6 +39,18 @@
                             </div>
                         </div>
 
+                        <div class="row mb-3">
+                            <label for="amount" class="col-md-4 col-form-label text-md-end">{{ __('Amount') }}</label>
+                            <div class="col-md-8">
+                                <input id="amount" type="number" class="form-control @error('amount') is-invalid @enderror" name="amount" value="{{ $expense->amount }}" required>
+                                @error('amount')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+
                         <div class="row">
                             <label for="farm" class="col-md-4 col-form-label text-md-end">Farm</label>
                             <div class="col-md-8 mb-3">
@@ -120,6 +132,19 @@
                             <div class="col-md-8">
                                 <textarea id="desc" class="form-control @error('desc') is-invalid @enderror" required name="desc">{{ old('desc') }}</textarea>
                                 @error('desc')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        
+                        <div class="row mb-3">
+                            <label for="amount" class="col-md-4 col-form-label text-md-end">{{ __('Amount') }}</label>
+                            <div class="col-md-8">
+                                <input id="amount" type="number" class="form-control @error('amount') is-invalid @enderror" name="amount" value="{{ old('amount') }}" required>
+                                @error('amount')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>

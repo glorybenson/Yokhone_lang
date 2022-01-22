@@ -39,8 +39,10 @@
                                     </td>
                                     <td>
                                         <div class="d-flex">
+                                            @if($user->role != 1)
                                             <a href="{{ route('edit.user', $user->id) }}" class="btn btn-sm p-2" title="Edit"><i class="fa fa-edit"></i></a>
                                             <a href="{{ route('delete.user', $user->id) }}" onclick="return confirm('Are you sure you want to delete this user?')" title="Delete" class="btn btn-sm p-2" title="Edit"><i class="fa fa-trash"></i></a>
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>

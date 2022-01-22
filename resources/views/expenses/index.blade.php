@@ -18,6 +18,7 @@
                                 <th>#</th>
                                 <th>Date</th>
                                 <th>Description</th>
+                                <th>Amount</th>
                                 <th>Farm Name</th>
                                 <th>Employee making the expense</th>
                                 <th>Action</th>
@@ -29,6 +30,7 @@
                                     <td>{{$sn++}}</td>
                                     <td>{{$expense->date}}</td>
                                     <td>{{$expense->desc}}</td>
+                                    <td>{{$expense->amount}}</td>
                                     <td>{{$expense->farm->farm_name}}</td>
                                     <td>{{$expense->employee->first_name}} {{$expense->employee->last_name}}</td>
                                     <td>

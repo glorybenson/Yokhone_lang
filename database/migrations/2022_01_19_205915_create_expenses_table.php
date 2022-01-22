@@ -17,6 +17,7 @@ class CreateExpensesTable extends Migration
             $table->id();
             $table->foreignId('farm_id')->constrained('farms')->cascadeOnDelete();
             $table->foreignId('employee_id')->constrained('employees')->cascadeOnDelete();
+            $table->integer('amount');
             $table->date('date');
             $table->longText('desc');
             $table->timestamps();

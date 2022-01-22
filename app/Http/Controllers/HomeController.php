@@ -30,14 +30,6 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-
-
-        //its just a dummy data object.
-        // $notifications = auth()->user()->unreadNotifications;
-
-        // // // Sharing is caring
-        // View::share('notifications', $notifications);
-
         function save_file($file, $path)
         {
             $name = $path . date('dMY') . time() . '.' . $file->getClientOriginalExtension();
@@ -243,6 +235,7 @@ class HomeController extends Controller
                 Session::flash('error', 'The Admin can not be deleted');
                 return back();
             }
+            dd($user->role);
             $user->delete();
             send_notification('Updated a user data', $user->first_name, $user->last_name);
             Session::flash('success', 'User Deleted successfully');
@@ -845,6 +838,7 @@ class HomeController extends Controller
                 $rules = array(
                     'date' => ['required', 'string'],
                     'desc' => ['required', 'string'],
+                    'amount' => ['required', 'string'],
                     'farm' => ['required', 'string'],
                     'employee' => ['required', 'string']
                 );
@@ -860,6 +854,7 @@ class HomeController extends Controller
                 Expense::create([
                     'date' => $request->date,
                     'desc' => $request->desc,
+                    'amount' => $request->amount,
                     'farm_id' => $request->farm,
                     'employee_id' => $request->employee,
                 ]);
@@ -893,6 +888,7 @@ class HomeController extends Controller
                 $rules = array(
                     'date' => ['required', 'string'],
                     'desc' => ['required', 'string'],
+                    'amount' => ['required', 'string'],
                     'farm' => ['required', 'string'],
                     'employee' => ['required', 'string']
                 );
@@ -907,6 +903,7 @@ class HomeController extends Controller
                 Expense::where('id', $request->id)->update([
                     'date' => $request->date,
                     'desc' => $request->desc,
+                    'amount' => $request->amount,
                     'farm_id' => $request->farm,
                     'employee_id' => $request->employee,
                 ]);

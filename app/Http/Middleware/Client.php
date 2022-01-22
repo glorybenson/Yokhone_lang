@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
-class User
+class Client
 {
     /**
      * Handle an incoming request.
@@ -18,13 +18,13 @@ class User
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user()->role == 2 || Auth::user()->role == 1) {
-            return $next($request);
-        } else {
+        if(Auth::user()->role == 3 || Auth::user()->role == 1){
+        return $next($request);
+        }else{
             switch (Auth::user()->role) {
-                case 3:
+                case 2:
                     Session::flash('permission_warning', 'You no not have access to this page');
-                    return redirect('/clients');
+                    return redirect('/home');
                     break;
                 case 4:
                     Session::flash('permission_warning', 'You no not have access to this page');
@@ -40,7 +40,7 @@ class User
                     break;
                 default:
                     break;
-            }
+            } 
         }
     }
 }

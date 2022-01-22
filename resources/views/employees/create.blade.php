@@ -20,13 +20,13 @@
                         <div class="row mb-3">
                             <label for="first_name" class="col-md-4 col-form-label text-md-end">{{ __('First Name') }}</label>
                             <div class="col-md-8">
-                            <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ $employee->first_name }}" autocomplete="first name" required autofocus>
-                            @error('first_name')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-</div>
+                                <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ $employee->first_name }}" autocomplete="first name" required autofocus>
+                                @error('first_name')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
                         </div>
 
                         <div class="row mb-3">
@@ -108,12 +108,17 @@
                             <label for="CIN_proof" class="col-md-4 col-form-label text-md-end">{{ __('CIN Proof') }}</label>
 
                             <div class="col-md-8">
+                                <div class="input-group">
                                 <input id="CIN_proof" type="file" accept="image/*,.doc, .docx, .pdf" class="form-control @error('CIN_proof') is-invalid @enderror" name="CIN_proof" value="{{ $employee->CIN_proof }}">
                                 @error('CIN_proof')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
+                                    <span class="input-group-btn">
+                                        <a target="blank" href="{{ asset('CIN_PROOF/'.$employee->CIN_proof) }}" class="btn btn-dark" type="button">View</a>
+                                    </span>
+                                </div>
                             </div>
                         </div>
 

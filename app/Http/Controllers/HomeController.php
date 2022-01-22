@@ -230,12 +230,15 @@ class HomeController extends Controller
     {
         try {
             //code...
-            $user = User::find($id);
-            if ($user->role == 1) {
-                Session::flash('error', 'The Admin can not be deleted');
+            if (Auth::user()->role != 1) {
+                Session::flash('permission_warning', 'You no not have access to delete this record');
                 return back();
             }
-            dd($user->role);
+            $user = User::find($id);
+            if ($user->role == 1) {
+                Session::flash('permission_warning', 'The Admin can not be deleted');
+                return back();
+            }
             $user->delete();
             send_notification('Updated a user data', $user->first_name, $user->last_name);
             Session::flash('success', 'User Deleted successfully');

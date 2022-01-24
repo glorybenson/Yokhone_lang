@@ -54,12 +54,6 @@
                         <div class="row">
                             <label for="farm" class="col-md-4 col-form-label text-md-end">Farm</label>
                             <div class="col-md-8 mb-3">
-                                <div class="input-group">
-                                    <input type="text" class="form-control">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-default" type="button">Go!</button>
-                                    </span>
-                                </div>
                                 <select class="form-control @error('farm') is-invalid @enderror" name="farm">
                                     <option value="">Select a Farm</option>
                                     @if(isset($farms))
@@ -145,7 +139,7 @@
                             </div>
                         </div>
 
-
+                        
                         <div class="row mb-3">
                             <label for="amount" class="col-md-4 col-form-label text-md-end">{{ __('Amount') }}</label>
                             <div class="col-md-8">

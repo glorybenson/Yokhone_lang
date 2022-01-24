@@ -172,7 +172,7 @@ class HomeController extends Controller
                 return redirect()->route('home');
             }
             $data['mode'] = "edit";
-            $data['roles'] = Role::all();
+            $data['roles'] = Role::where('name', '!=', 'Admin')->get();
             $data['user'] = User::where('id', $id)->with('user_role')->first();
             $data['title'] = "Edit User";
             return view('users.create', $data);
@@ -217,7 +217,7 @@ class HomeController extends Controller
                 return redirect()->route('home');
             }
 
-            $data['roles'] = Role::all();
+            $data['roles'] = Role::where('name', '!=', 'Admin')->get();
             $data['title'] = "Create User";
             return view('users.create', $data);
         } catch (\Throwable $th) {

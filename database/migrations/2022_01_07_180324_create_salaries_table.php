@@ -18,7 +18,7 @@ class CreateSalariesTable extends Migration
             $table->foreignId('employee_id')->constrained('employees')->cascadeOnDelete();
             $table->integer('amount');
             $table->date('start_date');
-            $table->integer('current_salary');
+            $table->date('end_date');
             $table->timestamps();
         });
     }

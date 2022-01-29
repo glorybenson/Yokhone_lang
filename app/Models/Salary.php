@@ -13,6 +13,6 @@ class Salary extends Model
         'employee_id',
         'amount',
         'start_date',
-        'current_salary',
+        'end_date',
     ];
 }

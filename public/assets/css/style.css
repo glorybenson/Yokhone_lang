@@ -2300,7 +2300,7 @@ button.bg-danger:hover {
 }
 
 .notifications {
-    min-width: 320px;
+    min-width: 350px;
     padding: 0;
     position: fixed;
     right: -350px;
@@ -4260,11 +4260,15 @@ table.table-inbox tbody tr.checked {
 .noti-title {
     color: #333
 }
+.close-notification {
+    color: red; position: absolute; right: 10px; cursor: pointer;
+}
 
 .notifications .noti-content {
     height: calc(100vh - 80px);
-    width: 320px;
+    width: 350px;
     overflow-y: auto;
+    padding-right: 10px;
     position: relative
 }
 

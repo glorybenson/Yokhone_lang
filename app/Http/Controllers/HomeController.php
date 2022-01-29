@@ -284,12 +284,12 @@ class HomeController extends Controller
     public function add_salary(Request $request)
     {
         try {
-            $data['employee'] = $employee = Employee::find($request->id);
+            $data['employee'] = $employee = Employee::find($request->employee_id);
             //code...            
             $rules = array(
                 'salary_amount' => ['required', 'string', 'max:255'],
                 'salary_start_date' => ['required', 'string', 'max:255'],
-                'current_salary' => ['required', 'string', 'max:255'],
+                'salary_end_date' => ['required', 'string', 'max:255'],
             );
 
             $validator = Validator::make($request->all(), $rules);
@@ -307,7 +307,7 @@ class HomeController extends Controller
                     'employee_id' => $request->employee_id,
                     'amount' => $request->salary_amount,
                     'start_date' => $request->salary_start_date,
-                    'current_salary' => $request->current_salary,
+                    'end_date' => $request->salary_end_date,
                 ]);
                 send_notification('Updated salary for employee', $employee->first_name, $employee->last_name);
 
@@ -319,7 +319,7 @@ class HomeController extends Controller
                 'employee_id' => $request->employee_id,
                 'amount' => $request->salary_amount,
                 'start_date' => $request->salary_start_date,
-                'current_salary' => $request->current_salary,
+                'end_date' => $request->salary_end_date,
             ]);
             send_notification('Created a new salary for employee', $employee->first_name, $employee->last_name);
 
@@ -1046,5 +1046,26 @@ class HomeController extends Controller
             Session::flash('error', $th->getMessage());
             return back();
         }
+    }
+
+    public function delete_notification(Request $request)
+    {
+        # code...
+        $Notification = Auth::user()->Notifications->find($request->not_id);
+        if ($Notification) {
+            $Notification->markAsRead();
+        }
+        // $data = array(
+        //     'data' => $Notification,
+        //     'request' => $request
+        // );
+        return true;
+    }
+    public function delete_all_notification()
+    {
+        # code...
+        $user = Auth::user();
+        $user->unreadNotifications()->update(['read_at' => now()]);
+        return back();
     }
 }

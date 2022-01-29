@@ -26,7 +26,7 @@
         <li class="nav-item dropdown">
             <a href="#" class="nav-link notifications-item">
                 <i class="fa fa-bell"></i> <span class="badge badge-pill">
-                    <?php $notifications = auth()->user()->notifications; ?>
+                    <?php $notifications = auth()->user()->unreadNotifications; ?>
                     @if(isset($notifications))
                     {{ $notifications->count() ?? 0 }}
                     @else

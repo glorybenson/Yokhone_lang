@@ -56,11 +56,11 @@
                                             </div>
                                         </div>
                                         <div class="row mb-3">
-                                            <label for="current_salary" class="col-md-4 col-form-label text-md-end">{{ __('Current Salary') }}</label>
+                                            <label for="salary_end_date" class="col-md-4 col-form-label text-md-end">{{ __('Salary End Date') }}</label>
                                             <div class="col-md-6">
-                                                <input id="current_salary" type="number" required class="form-control @error('current_salary') is-invalid @enderror" name="current_salary" value="{{ old('current_salary') }}" autocomplete="first name" autofocus>
+                                                <input id="salary_end_date" type="date" required class="form-control @error('salary_end_date') is-invalid @enderror" name="salary_end_date" value="{{ old('salary_end_date') }}" autocomplete="first name" autofocus>
 
-                                                @error('current_salary')
+                                                @error('salary_end_date')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
@@ -83,7 +83,7 @@
                                     <th>#</th>
                                     <th>Salary Amount</th>
                                     <th>Salary Start Date</th>
-                                    <th>Current Salary</th>
+                                    <th>Salary End Date</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -94,7 +94,7 @@
                                     <td>{{$sn++}}</td>
                                     <td>{{$salary->amount}}</td>
                                     <td>{{$salary->start_date}}</td>
-                                    <td>{{$salary->current_salary}}</td>
+                                    <td>{{$salary->end_date}}</td>
                                     <td>
                                         <a data-bs-toggle="modal" data-bs-target="#AddNewSalary{{$salary->id}}" class="btn btn-sm p-2" title="Edit"><i class="fa fa-edit"></i></a>
                                     </td>
@@ -133,10 +133,10 @@
                                                         </div>
                                                     </div>
                                                     <div class="row mb-3">
-                                                        <label for="current_salary" class="col-md-4 col-form-label text-md-end">{{ __('Current Salary') }}</label>
+                                                        <label for="salary_end_date" class="col-md-4 col-form-label text-md-end">{{ __('Salary End Date') }}</label>
                                                         <div class="col-md-6">
-                                                            <input id="current_salary" type="number" required class="form-control @error('current_salary') is-invalid @enderror" name="current_salary" value="{{ $salary->current_salary }}" autocomplete="first name" autofocus>
-                                                            @error('current_salary')
+                                                            <input id="salary_end_date" type="date" required class="form-control @error('salary_end_date') is-invalid @enderror" name="salary_end_date" value="{{ $salary->end_date }}" autocomplete="first name" autofocus>
+                                                            @error('salary_end_date')
                                                             <span class="invalid-feedback" role="alert">
                                                                 <strong>{{ $message }}</strong>
                                                             </span>

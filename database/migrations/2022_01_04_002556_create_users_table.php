@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->foreignId('created_by')->constrained('users')->cascadeOnDelete();
-            $table->foreignId('role')->constrained('roles')->cascadeOnDelete();
+            $table->json('roles');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamp('last_login')->nullable();

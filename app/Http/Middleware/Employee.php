@@ -18,28 +18,30 @@ class Employee
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user()->role == 5 || Auth::user()->role == 1) {
+        if (in_array(1, Auth::user()->roles) || in_array(5, Auth::user()->roles)) {
             return $next($request);
         } else {
-            switch (Auth::user()->role) {
-                case 2:
-                    Session::flash('permission_warning', 'You no not have access to this page');
-                    return redirect('/home');
-                    break;
-                case 3:
-                    Session::flash('permission_warning', 'You no not have access to this page');
-                    return redirect('/clients');
-                    break;
-                case 4:
-                    Session::flash('permission_warning', 'You no not have access to this page');
-                    return redirect('/farms');
-                    break;
-                case 6:
-                    Session::flash('permission_warning', 'You no not have access to this page');
-                    return redirect('/expenses');
-                    break;
-                default:
-                    break;
+            foreach (Auth::user()->roles as $role) {
+                switch ($role) {
+                    case 2:
+                        Session::flash('permission_warning', 'You no not have access to this page');
+                        return redirect('/home');
+                        break;
+                    case 3:
+                        Session::flash('permission_warning', 'You no not have access to this page');
+                        return redirect('/clients');
+                        break;
+                    case 4:
+                        Session::flash('permission_warning', 'You no not have access to this page');
+                        return redirect('/farms');
+                        break;
+                    case 6:
+                        Session::flash('permission_warning', 'You no not have access to this page');
+                        return redirect('/expenses');
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }

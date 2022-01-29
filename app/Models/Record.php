@@ -5,14 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Role extends Model
+class Record extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name',
-    ];
-
-    protected $casts = [
-        // 'routes' => 'array'
+        'employee_id',
+        'date',
+        'reason',
+        'details',
     ];
 }

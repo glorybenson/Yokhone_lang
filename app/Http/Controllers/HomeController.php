@@ -7,6 +7,7 @@ use App\Models\Employee;
 use App\Models\Expense;
 use App\Models\Farm;
 use App\Models\Invoice;
+use App\Models\Record;
 use App\Models\Role;
 use App\Models\Salary;
 use App\Models\Tree;
@@ -142,6 +143,52 @@ class HomeController extends Controller
         }
     }
 
+    
+    public function create_user(Request $request)
+    {
+        try {
+            //code...
+            $data['mode'] = "create";
+            if ($_POST) {
+                //dd($request->all());
+                $rules = array(
+                    'first_name' => ['required', 'string', 'max:255'],
+                    'last_name' => ['required', 'string', 'max:255'],
+                    'role' => ['required'],
+                    'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                    'password' => ['required', 'string', 'min:8', 'confirmed'],
+                );
+
+                $validator = Validator::make($request->all(), $rules);
+
+                if ($validator->fails()) {
+                    Session::flash('warning', 'All fields are required');
+                    return back()->withErrors($validator)->withInput();
+                }
+
+                User::create([
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
+                    'roles' => $request->role,
+                    'created_by' => Auth::user()->id,
+                    'email' => $request->email,
+                    'password' => Hash::make($request->password)
+                ]);
+                send_notification('Created a new user ', $request->first_name, $request->last_name);
+
+                Session::flash('success', "User created successfully");
+                return redirect()->route('home');
+            }
+
+            $data['roles'] = Role::where('name', '!=', 'Admin')->get();
+            $data['title'] = "Create User";
+            return view('users.create', $data);
+        } catch (\Throwable $th) {
+            Session::flash('error', $th->getMessage());
+            return back();
+        }
+    }
+
     public function edit_user(Request $request, $id)
     {
         try {
@@ -149,7 +196,7 @@ class HomeController extends Controller
                 $rules = array(
                     'first_name' => ['required', 'string', 'max:255'],
                     'last_name' => ['required', 'string', 'max:255'],
-                    'role' => ['required', 'string', 'max:255'],
+                    'role' => ['required'],
                     'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $request->id],
                 );
 
@@ -165,7 +212,7 @@ class HomeController extends Controller
                 $user->first_name = $request->first_name;
                 $user->last_name = $request->last_name;
                 $user->email = $request->email;
-                $user->role = $request->role;
+                $user->roles = $request->role;
                 $user->save();
                 send_notification('Updated a user data', $user->first_name, $user->last_name);
                 Session::flash('success', "User updated successfully");
@@ -175,50 +222,6 @@ class HomeController extends Controller
             $data['roles'] = Role::where('name', '!=', 'Admin')->get();
             $data['user'] = User::where('id', $id)->with('user_role')->first();
             $data['title'] = "Edit User";
-            return view('users.create', $data);
-        } catch (\Throwable $th) {
-            Session::flash('error', $th->getMessage());
-            return back();
-        }
-    }
-
-    public function create_user(Request $request)
-    {
-        try {
-            //code...
-            $data['mode'] = "create";
-            if ($_POST) {
-                $rules = array(
-                    'first_name' => ['required', 'string', 'max:255'],
-                    'last_name' => ['required', 'string', 'max:255'],
-                    'role' => ['required', 'string', 'max:255'],
-                    'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                    'password' => ['required', 'string', 'min:8', 'confirmed'],
-                );
-
-                $validator = Validator::make($request->all(), $rules);
-
-                if ($validator->fails()) {
-                    Session::flash('warning', 'All fields are required');
-                    return back()->withErrors($validator)->withInput();
-                }
-
-                User::create([
-                    'first_name' => $request->first_name,
-                    'last_name' => $request->last_name,
-                    'role' => $request->role,
-                    'created_by' => Auth::user()->id,
-                    'email' => $request->email,
-                    'password' => Hash::make($request->password)
-                ]);
-                send_notification('Created a new user ', $request->first_name, $request->last_name);
-
-                Session::flash('success', "User created successfully");
-                return redirect()->route('home');
-            }
-
-            $data['roles'] = Role::where('name', '!=', 'Admin')->get();
-            $data['title'] = "Create User";
             return view('users.create', $data);
         } catch (\Throwable $th) {
             Session::flash('error', $th->getMessage());
@@ -268,7 +271,7 @@ class HomeController extends Controller
         return view('employees.view', $data);
     }
 
-    public function salary_employee($id)
+    public function employee_salary($id)
     {
         $data['sn'] = 1;
         $data['employee'] = $employee = Employee::find($id);
@@ -277,7 +280,7 @@ class HomeController extends Controller
             return redirect()->route('employees');
         }
         $data['salaries'] = Salary::where('employee_id', $employee->id)->orderBy('id', 'desc')->get();
-        $data['title'] = $employee->first_name . " " . $employee->last_name . " Data";
+        $data['title'] = $employee->first_name . " " . $employee->last_name . " Salary History";
         return view('employees.salary', $data);
     }
 
@@ -324,6 +327,69 @@ class HomeController extends Controller
             send_notification('Created a new salary for employee', $employee->first_name, $employee->last_name);
 
             Session::flash('success', "Salary added successfully");
+            return back();
+        } catch (\Throwable $th) {
+            Session::flash('error', $th->getMessage());
+            return back();
+        }
+    }
+
+    public function employee_record($id)
+    {
+        $data['sn'] = 1;
+        $data['employee'] = $employee = Employee::find($id);
+        if (!isset($employee)) {
+            Session::flash('warning', 'Employee not found');
+            return redirect()->route('employees');
+        }
+        $data['records'] = Record::where('employee_id', $employee->id)->orderBy('id', 'desc')->get();
+        $data['title'] = $employee->first_name . " " . $employee->last_name . " Records";
+        return view('employees.record', $data);
+    }
+
+    public function add_record(Request $request)
+    {
+        try {
+            $data['employee'] = $employee = Employee::find($request->employee_id);
+            //code...            
+            $rules = array(
+                'date' => ['required'],
+                'reason' => ['required'],
+                'details' => ['required', 'string', 'max:255'],
+            );
+
+            $validator = Validator::make($request->all(), $rules);
+
+            if ($validator->fails()) {
+                Session::flash('warning', 'All fields are required');
+                if (isset($request->id)) {
+                    # code...                    
+                    return back()->withErrors($validator);
+                }
+                return back()->withErrors($validator)->withInput();
+            }
+            if ($request->id) {
+                Record::where(['employee_id' => $request->employee_id, 'id' => $request->id])->update([
+                    'employee_id' => $request->employee_id,
+                    'date' => $request->date,
+                    'reason' => $request->reason,
+                    'details' => $request->details,
+                ]);
+                send_notification('Updated record for employee', $employee->first_name, $employee->last_name);
+
+                Session::flash('success', "ecord Updated successfully");
+                return back();
+            }
+
+            Record::create([
+                'employee_id' => $request->employee_id,
+                'date' => $request->date,
+                'reason' => $request->reason,
+                'details' => $request->details,
+            ]);
+            send_notification('Created a new record for employee', $employee->first_name, $employee->last_name);
+
+            Session::flash('success', "Record added successfully");
             return back();
         } catch (\Throwable $th) {
             Session::flash('error', $th->getMessage());

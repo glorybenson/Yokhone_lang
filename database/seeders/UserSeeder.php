@@ -16,17 +16,18 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $check = DB::table('users')->where('role', 1)->first();
+        $check = DB::table('users')->where('email', 'admin@gmail.com')->first();
         if (!$check) {
             DB::table('users')->insert(
                 [
                     [
                         'first_name' => "Admin",
                         "last_name" => 'Admin',
-                        "created_by" => null,
-                        "role" => 1,
+                        "created_by" => 0,
+                        "roles" => '[1, 2, 3]',
                         "email" => 'admin@gmail.com',
                         "password" => Hash::make('Admin@123'),
+                        // "created_by" => Carbon::now()
                     ]
                 ]
             );

@@ -3,11 +3,24 @@
 @section('content')
 <div class="content container-fluid">
     @if(isset($mode) && $mode == "edit")
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col-md-12">
+                <div class="d-flex align-items-center">
+                    <h5 class="page-title">Dashboard</h5>
+                    <ul class="breadcrumb ml-2">
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">User</a></li>
+                        <li class="breadcrumb-item active">Update User Data</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title float-left">Edit User</h4>
+                    <h4 class="card-title float-left">Update User</h4>
                     <div class="text-right">
                         <a href="{{ route('home') }}" class="btn btn-secondary p-2">Back to Users</a>
                     </div>
@@ -19,9 +32,9 @@
                         <input type="hidden" name="id" value="{{ $user->id }}">
 
                         <div class="row mb-3">
-                            <label for="first_name" class="col-md-4 col-form-label text-md-end">{{ __('First Name') }}</label>
+                            <label for="first_name" class="col-md-2 col-form-label text-md-end">{{ __('First Name') }}</label>
 
-                            <div class="col-md-8">
+                            <div class="col-md-10">
                                 <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ $user->first_name }}" autocomplete="first name" required>
                                 @error('first_name')
                                 <span class="invalid-feedback" role="alert">
@@ -32,9 +45,9 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="last_name" class="col-md-4 col-form-label text-md-end">{{ __('Last Name') }}</label>
+                            <label for="last_name" class="col-md-2 col-form-label text-md-end">{{ __('Last Name') }}</label>
 
-                            <div class="col-md-8">
+                            <div class="col-md-10">
                                 <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ $user->last_name }}" required autocomplete="last name">
 
                                 @error('last_name')
@@ -46,9 +59,9 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('E-Mail Address') }}</label>
+                            <label for="email" class="col-md-2 col-form-label text-md-end">{{ __('E-Mail Address') }}</label>
 
-                            <div class="col-md-8">
+                            <div class="col-md-10">
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $user->email }}" required autocomplete="email">
 
                                 @error('email')
@@ -60,14 +73,14 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('User Role') }}</label>
+                            <label for="email" class="col-md-2 col-form-label text-md-end">{{ __('User Role') }}</label>
 
-                            <div class="col-md-8">
-                                <select class="form-control @error('role') is-invalid @enderror" name="role" required>
+                            <div class="col-md-10">
+                                <select multiple class="select select2-hidden-accessible @error('role') is-invalid @enderror" name="role[]" required>
                                     <option value="">Select Role</option>
                                     @if(isset($roles))
                                     @foreach($roles as $role)
-                                    <option value="{{ $role->id }}" {{ $user->user_role->id == $role->id ? 'selected' : ''}} >{{$role->name}}</option>
+                                    <option value="{{ $role->id }}" {{ in_array($role->id, $user->roles) ? 'selected' : ''}}>{{$role->name}}</option>
                                     @endforeach
                                     @endif
                                 </select>
@@ -78,12 +91,10 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to submit this form?')">
-                                    {{ __('Submit') }}
-                                </button>
-                            </div>
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-primary p-2" onclick="return confirm('Are you sure you want to submit this form?')">
+                                {{ __('Submit') }}
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -92,6 +103,19 @@
     </div>
     @endif
     @if(isset($mode) && $mode == "create")
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col-md-12">
+                <div class="d-flex align-items-center">
+                    <h5 class="page-title">Dashboard</h5>
+                    <ul class="breadcrumb ml-2">
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">User</a></li>
+                        <li class="breadcrumb-item active">Create New User</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -102,13 +126,12 @@
                     </div>
                 </div>
                 <div class="card-body">
-
                     <form method="POST" action="{{ route('create.user') }}">
                         @csrf
                         <div class="row mb-3">
-                            <label for="first_name" class="col-md-4 col-form-label text-md-end">{{ __('First Name') }}</label>
+                            <label for="first_name" class="col-md-2 col-form-label text-md-end">{{ __('First Name') }}</label>
 
-                            <div class="col-md-8">
+                            <div class="col-md-10">
                                 <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" autocomplete="name" required>
 
                                 @error('first_name')
@@ -120,9 +143,9 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="last_name" class="col-md-4 col-form-label text-md-end">{{ __('Last Name') }}</label>
+                            <label for="last_name" class="col-md-2 col-form-label text-md-end">{{ __('Last Name') }}</label>
 
-                            <div class="col-md-8">
+                            <div class="col-md-10">
                                 <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" required autocomplete="name" autofocus>
 
                                 @error('last_name')
@@ -134,9 +157,9 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('E-Mail Address') }}</label>
+                            <label for="email" class="col-md-2 col-form-label text-md-end">{{ __('E-Mail Address') }}</label>
 
-                            <div class="col-md-8">
+                            <div class="col-md-10">
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
 
                                 @error('email')
@@ -148,14 +171,13 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="role" class="col-md-4 col-form-label text-md-end">{{ __('User Role') }}</label>
-
-                            <div class="col-md-8">
-                                <select class="form-control @error('role') is-invalid @enderror" name="role" required>
-                                    <option value="">Select Role</option>
+                            <label for="role" class="col-md-2 col-form-label text-md-end">{{ __('User Role') }}</label>
+                            <div class="col-md-10">
+                                <select multiple class="select @error('role') is-invalid @enderror" name="role[]" required aria-label=".form-select-lg example">
+                                    <option>Select Role</option>
                                     @if(isset($roles))
                                     @foreach($roles as $role)
-                                    <option value="{{$role->id}}" {{ old('role') == $role->id ? 'selected' : '' }}>{{$role->name}}</option>
+                                    <option value="{{$role->id}}" {{ collect(old('role'))->contains($role->id) ? 'selected' : '' }}>{{$role->name}}</option>
                                     @endforeach
                                     @endif
                                 </select>
@@ -168,9 +190,9 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+                            <label for="password" class="col-md-2 col-form-label text-md-end">{{ __('Password') }}</label>
 
-                            <div class="col-md-8">
+                            <div class="col-md-10">
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
 
                                 @error('password')
@@ -182,19 +204,17 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
+                            <label for="password-confirm" class="col-md-2 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
 
-                            <div class="col-md-8">
+                            <div class="col-md-10">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                             </div>
                         </div>
 
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to submit this form?')">
-                                    {{ __('Submit') }}
-                                </button>
-                            </div>
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-primary p-2" onclick="return confirm('Are you sure you want to submit this form?')">
+                                {{ __('Submit') }}
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -203,4 +223,10 @@
     </div>
     @endif
 </div>
+<script>
+    //  $(document).ready(function () {
+    //     $('.selectpicker').selectpicker();
+    // })
+    // $('select').selectpicker();
+</script>
 @endsection

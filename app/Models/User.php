@@ -27,7 +27,7 @@ class User extends Authenticatable
         'password',
         'created_by',
         'last_login',
-        'role',
+        'roles',
     ];
 
     /**
@@ -47,7 +47,9 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'roles' => 'array'
     ];
+
 
     public function created_user(){
         return $this->hasOne(User::class, 'id', 'created_by');

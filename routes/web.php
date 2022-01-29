@@ -38,9 +38,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/employees', [App\Http\Controllers\HomeController::class, 'employees'])->name('employees');
         Route::match(['get', 'post'], '/edit-employee/{id}', [App\Http\Controllers\HomeController::class, 'edit_employee'])->name('edit.employee');
         Route::match(['get', 'post'], '/view-employee/{id}', [App\Http\Controllers\HomeController::class, 'view_employee'])->name('view.employee');
-        Route::match(['get', 'post'], '/view-employees-salary/{id}', [App\Http\Controllers\HomeController::class, 'salary_employee'])->name('salary.employee');
+        Route::match(['get', 'post'], '/view-employees-salary/{id}', [App\Http\Controllers\HomeController::class, 'employee_salary'])->name('salary.employee');
+        Route::match(['get', 'post'], '/view-employees-record/{id}', [App\Http\Controllers\HomeController::class, 'employee_record'])->name('record.employee');
         Route::match(['get', 'post'], '/create-employee', [App\Http\Controllers\HomeController::class, 'create_employee'])->name('create.employee');
         Route::post('/add-salary', [App\Http\Controllers\HomeController::class, 'add_salary'])->name('add.salary');
+        Route::post('/add-record', [App\Http\Controllers\HomeController::class, 'add_record'])->name('add.record');
     });
 
 

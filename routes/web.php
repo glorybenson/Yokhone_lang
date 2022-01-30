@@ -56,6 +56,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/trees', [App\Http\Controllers\HomeController::class, 'trees'])->name('trees');
         Route::match(['get', 'post'], '/create-tree', [App\Http\Controllers\HomeController::class, 'create_tree'])->name('create.tree');
         Route::match(['get', 'post'], '/edit-tree/{id}', [App\Http\Controllers\HomeController::class, 'edit_tree'])->name('edit.tree');
+    
+        //Crops Routes
+        Route::get('/crops', [App\Http\Controllers\HomeController::class, 'crops'])->name('crops');
+        Route::match(['get', 'post'], '/create-crop', [App\Http\Controllers\HomeController::class, 'create_crop'])->name('create.crop');
+        Route::match(['get', 'post'], '/edit-crop/{id}', [App\Http\Controllers\HomeController::class, 'edit_crop'])->name('edit.crop');
     });
 
 
@@ -76,6 +81,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/invoices', [App\Http\Controllers\HomeController::class, 'invoices'])->name('invoices');
         Route::match(['get', 'post'], '/create-invoice', [App\Http\Controllers\HomeController::class, 'create_invoice'])->name('create.invoice');
         Route::match(['get', 'post'], '/edit-invoice/{id}', [App\Http\Controllers\HomeController::class, 'edit_invoice'])->name('edit.invoice');
+        Route::match(['post'], '/get_farm_crop', [App\Http\Controllers\HomeController::class, 'get_farm_crop'])->name('get.crop.farm');
     });
 
     //Settings

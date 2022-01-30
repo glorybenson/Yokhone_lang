@@ -18,8 +18,13 @@ class Invoice extends Model
         'total_price_before_discount',
         'discount',
         'total_price_after_discount',
+        'crop_id',
         'farm_id',
     ];
+
+    public function crop(){
+        return $this->hasOne(Crop::class, 'id', 'crop_id');
+    }
 
     public function farm(){
         return $this->hasOne(Farm::class, 'id', 'farm_id');

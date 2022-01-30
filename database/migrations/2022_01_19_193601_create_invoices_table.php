@@ -17,6 +17,7 @@ class CreateInvoicesTable extends Migration
             $table->id();
             $table->foreignId('client_id')->constrained('clients')->cascadeOnDelete();
             $table->foreignId('farm_id')->constrained('farms')->cascadeOnDelete();
+            $table->foreignId('crop_id')->constrained('crops')->cascadeOnDelete();
             $table->date('date');
             $table->longText('desc');
             $table->integer('quantity');            

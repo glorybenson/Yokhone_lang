@@ -22,7 +22,7 @@
                 <div class="card-header">
                     <h4 class="card-title float-left">Update User</h4>
                     <div class="text-right">
-                        <a href="{{ route('home') }}" class="btn btn-secondary p-2">Back to Users</a>
+                        <a href="{{ route('home') }}" class="btn btn-dark p-2">Back to Users</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -122,7 +122,7 @@
                 <div class="card-header">
                     <h4 class="card-title float-left">Create User</h4>
                     <div class="text-right">
-                        <a href="{{ route('home') }}" class="btn btn-secondary p-2">Back to Users</a>
+                        <a href="{{ route('home') }}" class="btn btn-dark p-2">Back to Users</a>
                     </div>
                 </div>
                 <div class="card-body">

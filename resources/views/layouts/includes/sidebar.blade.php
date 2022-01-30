@@ -21,13 +21,13 @@
                 @endif
 
                 @if(in_array(1, Auth::user()->roles) || in_array(4, Auth::user()->roles))
-                <li class="{{ request()->is('farms') || request()->is('edit-farm/*') || request()->is('create-farm') || request()->is('trees') || request()->is('edit-tree/*') || request()->is('create-tree')  ? 'active active-now' : '' }}">
+                <li class="{{ request()->is('farms') || request()->is('edit-farm/*') || request()->is('create-farm') || request()->is('trees') || request()->is('edit-tree/*') || request()->is('create-tree') || request()->is('crops') || request()->is('edit-crop/*') || request()->is('create-crop')  ? 'active active-now' : '' }}">
                     <a href="#"><i class="feather-user-plus"></i>
                         <span class="shape1"></span><span class="shape2"></span> <span> Farm</span> <span class="menu-arrow"></span></a>
                     <ul style="display: none;">
-                        <li><a class="{{ request()->is('trees') || request()->is('edit-tree/*') || request()->is('create-tree')  ? 'active active-now' : '' }}" href="{{ route('trees') }}">Trees</a></li>
-                        <li><a class="{{ request()->is('farms') || request()->is('edit-farm/*') || request()->is('create-farm')  ? 'active active-now' : '' }}" href="{{ route('farms') }}">Farm</a></li>
-                        <li><a class="{{ request()->is('farms') || request()->is('edit-farm/*') || request()->is('create-farm')  ? 'active active-now' : '' }}" href="{{ route('farms') }}">Crop</a></li>
+                        <li><a class="{{ request()->is('farms') || request()->is('edit-farm/*') || request()->is('create-farm')  ? 'active' : '' }}" href="{{ route('farms') }}">Farm</a></li>
+                        <li><a class="{{ request()->is('trees') || request()->is('edit-tree/*') || request()->is('create-tree')  ? 'active' : '' }}" href="{{ route('trees') }}">Trees</a></li>
+                        <li><a class="{{ request()->is('crops') || request()->is('edit-crop/*') || request()->is('create-crop')  ? 'active' : '' }}" href="{{ route('crops') }}">Crops</a></li>
                     </ul>
                 </li>
                 @endif
@@ -38,6 +38,17 @@
                     <a href="{{ route('employees') }}"><i class="feather-lock"></i>
                         <span class="shape1"></span><span class="shape2"></span>
                         <span> Employees</span></a>
+                </li>
+                
+                <li class="{{ request()->is('employees') || request()->is('view-employees-salary/*') || request()->is('view-employee/*') || request()->is('edit-employee/*') || request()->is('create-employee')  ? 'active active-now' : '' }}">
+                    <a href="#"><i class="feather-user"></i>
+                        <span class="shape1"></span><span class="shape2"></span>
+                        <span> Employees</span> <span class="menu-arrow"></span></a>
+                    <ul style="display: none;">
+                        <li><a class="{{ request()->is('employees') || request()->is('view-employees-salary/*') || request()->is('view-employee/*') || request()->is('edit-employee/*') || request()->is('create-employee') ? 'active active-now' : '' }}" href="{{ route('expenses') }}">Employees</a></li>
+                        <li><a class="{{ request()->is('employees') || request()->is('view-employees-salary/*') || request()->is('view-employee/*') || request()->is('edit-employee/*') || request()->is('create-employee') ? 'active active-now' : '' }}" href="{{ route('expenses') }}">Employee Record</a></li>
+                        <li><a class="{{ request()->is('invoices') || request()->is('create-invoice') || request()->is('edit-invoice/*') ? 'active active-now' : ''  }}" href="{{ route('invoices') }}">Payment</a></li>
+                    </ul>
                 </li>
                 @endif
 

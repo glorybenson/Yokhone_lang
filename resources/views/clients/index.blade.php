@@ -2,13 +2,25 @@
 
 @section('content')
 <div class="content container-fluid">
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col-md-12">
+                <div class="d-flex align-items-center">
+                    <h5 class="page-title">Dashboard</h5>
+                    <ul class="breadcrumb ml-2">
+                        <li class="breadcrumb-item active">Clients</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title float-left">Clients</h4>
                     <div class="text-right">
-                        <a href="{{ route('create.client') }}" class="btn btn-success p-2">Add New client</a>
+                        <a href="{{ route('create.client') }}" class="btn btn-dark p-2">Add New client</a>
                     </div>
                 </div>
                 <div class="card-body">

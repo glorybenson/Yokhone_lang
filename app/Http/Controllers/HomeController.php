@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\Crop;
 use App\Models\Employee;
 use App\Models\Expense;
 use App\Models\Farm;
@@ -734,13 +735,127 @@ class HomeController extends Controller
                     'quantity' => $request->quantity,
                     'date_planted' => $request->date_planted
                 ]);
-                send_notification('Updated a new Tree data');
+                send_notification('Updated Tree data');
 
                 Session::flash('success', "Tree data updated successfully");
                 return redirect()->route('trees');
             }
             $data['title'] = "Edit Tree";
             return view('trees.create', $data);
+        } catch (\Throwable $th) {
+            Session::flash('error', $th->getMessage());
+            return back();
+        }
+    }
+
+    public function crops()
+    {
+        try {
+            //code...
+            $data['title'] = "Crops";
+            $data['sn'] = 1;
+            $data['crops'] = Crop::with('farm:id,farm_name')->orderBy('id', 'desc')->get();
+            return view('crop.index', $data);
+        } catch (\Throwable $th) {
+            Session::flash('error', $th->getMessage());
+            // Session::flash('error', "Try again!");
+            return back();
+        }
+    }
+
+    public function create_crop(Request $request)
+    {
+        try {
+            //code...
+            $data['mode'] = "create";
+            $data['farms'] = $f = Farm::orderBy('id', 'desc')->get();
+            if ($_POST) {
+                $rules = array(
+                    'farm_id' => ['required', 'string', 'max:255'],
+                    'desc' => ['required', 'string', 'max:255'],
+                    'type_of_crop' => ['required', 'string', 'max:255'],
+                    'quantity' => ['required', 'string', 'max:255'],
+                    'weight' => ['required', 'string', 'max:255'],
+                    'date' => ['required', 'string']
+                );
+
+                $validator = Validator::make($request->all(), $rules);
+
+                if ($validator->fails()) {
+                    Session::flash('warning', 'All fields are required');
+                    return back()->withErrors($validator)->withInput();
+                }
+
+
+                Crop::create([
+                    'farm_id' => $request->farm_id,
+                    'desc' => $request->desc,
+                    'type_of_crop' => $request->type_of_crop,
+                    'quantity' => $request->quantity,
+                    'weight' => $request->weight,
+                    'date' => $request->date
+                ]);
+
+                send_notification('Created a new Crop data');
+
+                Session::flash('success', "Crop created successfully");
+                return redirect()->route('crops');
+            }
+
+            $data['title'] = "Create New Crop";
+            return view('crop.create', $data);
+        } catch (\Throwable $th) {
+            // Session::flash('error', "An error occur try again");
+            Session::flash('error', $th->getMessage());
+            return back();
+        }
+    }
+
+    public function edit_crop(Request $request, $id)
+    {
+        try {
+            $data['mode'] = "edit";
+            $data['crop'] = $crop = Crop::find($id);
+            $data['farms'] = Farm::orderBy('id', 'desc')->get();
+            if (!isset($crop)) {
+                Session::flash('warning', 'Crop not found');
+                return redirect()->route('crops');
+            }
+            if ($_POST) {
+
+                
+                $rules = array(
+                    'farm_id' => ['required', 'string', 'max:255'],
+                    'desc' => ['required', 'string', 'max:255'],
+                    'type_of_crop' => ['required', 'string', 'max:255'],
+                    'quantity' => ['required', 'string', 'max:255'],
+                    'weight' => ['required', 'string', 'max:255'],
+                    'date' => ['required', 'string']
+                );
+
+                $validator = Validator::make($request->all(), $rules);
+
+                if ($validator->fails()) {
+                    Session::flash('warning', 'All fields are required');
+                    return back()->withErrors($validator)->withInput();
+                }
+
+
+                Crop::where('id', $request->id)->update([
+                    'farm_id' => $request->farm_id,
+                    'desc' => $request->desc,
+                    'type_of_crop' => $request->type_of_crop,
+                    'quantity' => $request->quantity,
+                    'weight' => $request->weight,
+                    'date' => $request->date
+                ]);
+                send_notification('Updated a Crop data');
+
+                Session::flash('success', "Crop data updated successfully");
+                return redirect()->route('crops');
+            }
+            $data['title'] = "Update Crop Data";
+            return view('crop.create', $data);
         } catch (\Throwable $th) {
             Session::flash('error', $th->getMessage());
             return back();
@@ -995,7 +1110,7 @@ class HomeController extends Controller
             //code...
             $data['title'] = "Invoices";
             $data['sn'] = 1;
-            $data['invoices'] = Invoice::with(['farm:id,farm_name', 'client:id,client_name'])->orderBy('id', 'desc')->get();
+            $data['invoices'] = Invoice::with(['farm:id,farm_name', 'client:id,client_name', 'crop:*'])->orderBy('id', 'desc')->get();
             return view('invoices.index', $data);
         } catch (\Throwable $th) {
             // Session::flash('error', "Try again!");
@@ -1011,6 +1126,7 @@ class HomeController extends Controller
             $data['mode'] = "create";
             $data['clients'] = Client::orderBy('client_name', 'asc')->get(['id', 'client_name']);
             $data['farms'] = Farm::orderBy('farm_name', 'asc')->get(['id', 'farm_name']);
+            $data['crops'] = Crop::orderBy('id', 'desc')->get();
             $data['employees'] = Employee::orderBy('first_name', 'asc')->get(['id', 'first_name', 'last_name']);
             if ($_POST) {
                 $rules = array(
@@ -1022,6 +1138,7 @@ class HomeController extends Controller
                     'total_price_before_discount' => ['required', 'string'],
                     'discount' => ['required', 'string'],
                     'total_price_after_discount' => ['required', 'string'],
+                    'crop' => ['required', 'string'],
                     'farm' => ['required', 'string']
                 );
 
@@ -1041,6 +1158,7 @@ class HomeController extends Controller
                     'total_price_before_discount' => $request->total_price_before_discount,
                     'discount' => $request->discount,
                     'total_price_after_discount' => $request->total_price_after_discount,
+                    'crop_id' => $request->crop,
                     'farm_id' => $request->farm,
                 ]);
 
@@ -1063,6 +1181,7 @@ class HomeController extends Controller
         try {
             $data['mode'] = "edit";
             $data['clients'] = Client::orderBy('client_name', 'asc')->get(['id', 'client_name']);
+            $data['crops'] = Crop::orderBy('id', 'desc')->get();
             $data['farms'] = Farm::orderBy('farm_name', 'asc')->get(['id', 'farm_name']);
             $data['invoice'] = $invoice = Invoice::where('id', $id)->with(['farm:id,farm_name', 'client:id,client_name'])->first();
             if (!isset($invoice)) {
@@ -1079,6 +1198,7 @@ class HomeController extends Controller
                     'total_price_before_discount' => ['required', 'string'],
                     'discount' => ['required', 'string'],
                     'total_price_after_discount' => ['required', 'string'],
+                    'crop' => ['required', 'string'],
                     'farm' => ['required', 'string']
                 );
 
@@ -1086,6 +1206,7 @@ class HomeController extends Controller
 
                 if ($validator->fails()) {
                     Session::flash('warning', 'All fields are required');
+                    dd($request->all());
                     return back()->withErrors($validator)->withInput();
                 }
 
@@ -1098,6 +1219,7 @@ class HomeController extends Controller
                     'total_price_before_discount' => $request->total_price_before_discount,
                     'discount' => $request->discount,
                     'total_price_after_discount' => $request->total_price_after_discount,
+                    'crop_id' => $request->crop,
                     'farm_id' => $request->farm,
                 ]);
 
@@ -1114,6 +1236,18 @@ class HomeController extends Controller
         }
     }
 
+    public function get_farm_crop(Request $request)
+    {
+        # code...
+        $crop = Crop::where('id', $request->crop_id)->with('farm:id,farm_name')->first();
+         $data = array(
+            'farm_id' => $crop->farm->id,
+            'farm_name' => $crop->farm->farm_name,
+            'status' => true
+        );
+        return $data;
+    }
+
     public function delete_notification(Request $request)
     {
         # code...
@@ -1127,6 +1261,7 @@ class HomeController extends Controller
         // );
         return true;
     }
+
     public function delete_all_notification()
     {
         # code...

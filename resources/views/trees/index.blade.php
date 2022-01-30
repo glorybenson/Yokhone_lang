@@ -1,13 +1,26 @@
 @extends('layouts.app')
 @section('content')
 <div class="content container-fluid">
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col-md-12">
+                <div class="d-flex align-items-center">
+                    <h5 class="page-title">Dashboard</h5>
+                    <ul class="breadcrumb ml-2">
+                        <li class="breadcrumb-item"><a href="{{ route('farms') }}">Farms</a></li>
+                        <li class="breadcrumb-item active">Tree</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title float-left">Trees</h4>
                     <div class="text-right">
-                        <a href="{{ route('create.tree') }}" class="btn btn-success p-2">Add New Tree</a>
+                        <a href="{{ route('create.tree') }}" class="btn btn-dark p-2">Add New Tree</a>
                     </div>
                 </div>
                 <div class="card-body">

@@ -9,8 +9,8 @@
                     <h5 class="page-title">Dashboard</h5>
                     <ul class="breadcrumb ml-2">
                         <li class="breadcrumb-item"><a href="{{ route('farms') }}">Farms</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('trees') }}">Trees</a></li>
-                        <li class="breadcrumb-item active">Update Tree Data</li>
+                        <li class="breadcrumb-item"><a href="{{ route('crops') }}">Crops</a></li>
+                        <li class="breadcrumb-item active">Update Crop Data</li>
                     </ul>
                 </div>
             </div>
@@ -20,15 +20,15 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title float-left">Update Tree Data</h4>
+                    <h4 class="card-title float-left">Update Crop Data</h4>
                     <div class="text-right">
-                        <a href="{{ route('trees') }}" class="btn btn-dark p-2">Back to Trees</a>
+                        <a href="{{ route('crops') }}" class="btn btn-dark p-2">Back to Crop</a>
                     </div>
                 </div>
-                <div class="card-body">                    
-                    <form method="POST" action="{{ route('edit.tree', $tree->id) }}">
+                <div class="card-body">
+                    <form method="POST" action="{{ route('edit.crop', $crop->id) }}">
                         @csrf
-                        <input type="hidden" name="id" value="{{$tree->id}}">
+                        <input type="hidden" name="id" value="{{$crop->id}}">
                         <div class="row mb-3">
                             <label for="farm_id" class="col-md-2 col-form-label text-md-end">{{ __('Farm Name') }}</label>
                             <div class="col-md-10">
@@ -36,7 +36,7 @@
                                     <option value="">Select Farm</option>
                                     @if(isset($farms))
                                     @foreach($farms as $farm)
-                                    <option value="{{$farm->id}}" {{ $tree->farm_id == $farm->id ? 'selected' : '' }}>{{$farm->farm_name}}</option>
+                                    <option value="{{$farm->id}}" {{ $crop->farm_id == $farm->id ? 'selected' : '' }}>{{$farm->farm_name}}</option>
                                     @endforeach
                                     @endif
                                 </select>
@@ -49,9 +49,25 @@
                         </div>
 
                         <div class="row mb-3">
+                            <label for="type_of_crop" class="col-md-2 col-form-label text-md-end">{{ __('Type Of Crop') }}</label>
+                            <div class="col-md-10">
+                                <select id="type_of_crop" class="form-control select @error('type_of_crop') is-invalid @enderror" name="type_of_crop" required>
+                                    <option value="">Select Type</option>
+                                    <option value="Fruits" {{ $crop->type_of_crop == "Fruits" ? 'selected' : '' }}>Fruits</option>
+                                    <option value="Vegetables" {{ $crop->type_of_crop == "Vegetables" ? 'selected' : '' }}>Vegetables</option>
+                                </select>
+                                @error('type_of_crop')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
                             <label for="desc" class="col-md-2 col-form-label text-md-end">{{ __('Description') }}</label>
                             <div class="col-md-10">
-                                <textarea id="desc" class="form-control @error('desc') is-invalid @enderror" required name="desc">{{ $tree->desc }}</textarea>
+                                <textarea id="desc" class="form-control @error('desc') is-invalid @enderror" required name="desc">{{ $crop->desc }}</textarea>
                                 @error('desc')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -60,27 +76,11 @@
                             </div>
                         </div>
 
-                                          
-                        <div class="row mb-3">
-                            <label for="reason" class="col-md-2 col-form-label text-md-end">{{ __('Reason') }}</label>
-                            <div class="col-md-10">
-                                <select id="reason" class="form-control @error('reason') is-invalid @enderror" name="reason" required>
-                                    <option value="">Select Reason</option>
-                                    <option value="Plantation" {{ $tree->reason == "Plantation" ? 'selected' : '' }}>Plantation</option>
-                                    <option value="Death" {{ $tree->reason == "Death" ? 'selected' : '' }}>Death</option>
-                                </select>
-                                @error('reason')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
 
                         <div class="row mb-3">
                             <label for="quantity" class="col-md-2 col-form-label text-md-end">{{ __('Quantity') }}</label>
                             <div class="col-md-10">
-                                <input id="quantity" type="number" class="form-control @error('quantity') is-invalid @enderror" required name="quantity" value="{{ $tree->quantity }}" autocomplete="date">
+                                <input id="quantity" type="number" class="form-control @error('quantity') is-invalid @enderror" required name="quantity" value="{{ $crop->quantity }}" autocomplete="date">
                                 @error('quantity')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -88,12 +88,29 @@
                                 @enderror
                             </div>
                         </div>
+                        
+                        <div class="row mb-3">
+                            <label for="weight" class="col-md-2 col-form-label text-md-end">{{ __('Weight') }}</label>
+                            <div class="col-md-10">
+                                <select id="weight" class="form-control select @error('weight') is-invalid @enderror" name="weight" required>
+                                    <option value="">Select Type</option>
+                                    <option value="KG" {{ $crop->weight == "KG" ? 'selected' : '' }}>KG</option>
+                                    <option value="Gr" {{ $crop->weight == "Gr" ? 'selected' : '' }}>Gr</option>
+                                    <option value="To" {{ $crop->weight == "To" ? 'selected' : '' }}>To</option>
+                                </select>
+                                @error('weight')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
 
                         <div class="row mb-3">
-                            <label for="date_planted" class="col-md-2 col-form-label text-md-end">{{ __('Date Planted') }}</label>
+                            <label for="date" class="col-md-2 col-form-label text-md-end">{{ __('Date Of Crop') }}</label>
                             <div class="col-md-10">
-                                <input id="date_planted" type="date" class="form-control @error('date_planted') is-invalid @enderror" name="date_planted" value="{{ $tree->date_planted }}" required>
-                                @error('date_planted')
+                                <input id="date" type="date" class="form-control @error('date') is-invalid @enderror" name="date" value="{{ $crop->date }}" required>
+                                @error('date')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -102,9 +119,9 @@
                         </div>
 
                         <div class="text-right">
-                                <button type="submit" class="btn btn-primary p-2" onclick="return confirm('Are you sure you want to submit this form?')">
-                                    {{ __('Submit') }}
-                                </button>
+                            <button type="submit" class="btn btn-primary p-2" onclick="return confirm('Are you sure you want to submit this form?')">
+                                {{ __('Submit') }}
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -120,8 +137,8 @@
                     <h5 class="page-title">Dashboard</h5>
                     <ul class="breadcrumb ml-2">
                         <li class="breadcrumb-item"><a href="{{ route('farms') }}">Farms</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('trees') }}">Trees</a></li>
-                        <li class="breadcrumb-item active">Create New Tree</li>
+                        <li class="breadcrumb-item"><a href="{{ route('crops') }}">Crops</a></li>
+                        <li class="breadcrumb-item active">Create New Crop</li>
                     </ul>
                 </div>
             </div>
@@ -131,13 +148,13 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title float-left">Create New Tree</h4>
+                    <h4 class="card-title float-left">Create New Crop</h4>
                     <div class="text-right">
-                        <a href="{{ route('trees') }}" class="btn btn-dark p-2">Back to Trees</a>
+                        <a href="{{ route('crops') }}" class="btn btn-dark p-2">Back to Crops</a>
                     </div>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('create.tree') }}">
+                    <form method="POST" action="{{ route('create.crop') }}">
                         @csrf
                         <div class="row mb-3">
                             <label for="farm_id" class="col-md-2 col-form-label text-md-end">{{ __('Farm Name') }}</label>
@@ -159,6 +176,23 @@
                         </div>
 
                         <div class="row mb-3">
+                            <label for="type_of_crop" class="col-md-2 col-form-label text-md-end">{{ __('Type Of Crop') }}</label>
+                            <div class="col-md-10">
+                                <select id="type_of_crop" class="form-control select @error('type_of_crop') is-invalid @enderror" name="type_of_crop" required>
+                                    <option value="">Select Type</option>
+                                    <option value="Fruits" {{ old('type_of_crop') == "Fruits" ? 'selected' : '' }}>Fruits</option>
+                                    <option value="Vegetables" {{ old('type_of_crop') == "Vegetables" ? 'selected' : '' }}>Vegetables</option>
+                                </select>
+                                @error('type_of_crop')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+
+
+                        <div class="row mb-3">
                             <label for="desc" class="col-md-2 col-form-label text-md-end">{{ __('Description') }}</label>
                             <div class="col-md-10">
                                 <textarea id="desc" class="form-control @error('desc') is-invalid @enderror" required name="desc">{{ old('desc') }}</textarea>
@@ -170,22 +204,6 @@
                             </div>
                         </div>
 
-                                          
-                        <div class="row mb-3">
-                            <label for="reason" class="col-md-2 col-form-label text-md-end">{{ __('Reason') }}</label>
-                            <div class="col-md-10">
-                                <select id="reason" class="form-control select @error('reason') is-invalid @enderror" name="reason" required>
-                                    <option value="">Select Reason</option>
-                                    <option value="Plantation" {{ old('reason') == "Plantation" ? 'selected' : '' }}>Plantation</option>
-                                    <option value="Death" {{ old('reason') == "Death" ? 'selected' : '' }}>Death</option>
-                                </select>
-                                @error('reason')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
 
                         <div class="row mb-3">
                             <label for="quantity" class="col-md-2 col-form-label text-md-end">{{ __('Quantity') }}</label>
@@ -198,12 +216,29 @@
                                 @enderror
                             </div>
                         </div>
+                        
+                        <div class="row mb-3">
+                            <label for="weight" class="col-md-2 col-form-label text-md-end">{{ __('Weight') }}</label>
+                            <div class="col-md-10">
+                                <select id="weight" class="form-control select @error('weight') is-invalid @enderror" name="weight" required>
+                                    <option value="">Select Type</option>
+                                    <option value="KG" {{ old('weight') == "KG" ? 'selected' : '' }}>KG</option>
+                                    <option value="Gr" {{ old('weight') == "Gr" ? 'selected' : '' }}>Gr</option>
+                                    <option value="To" {{ old('weight') == "To" ? 'selected' : '' }}>To</option>
+                                </select>
+                                @error('weight')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
 
                         <div class="row mb-3">
-                            <label for="date_planted" class="col-md-2 col-form-label text-md-end">{{ __('Date Planted') }}</label>
+                            <label for="date" class="col-md-2 col-form-label text-md-end">{{ __('Date Of Crop') }}</label>
                             <div class="col-md-10">
-                                <input id="date_planted" type="date" class="form-control @error('date_planted') is-invalid @enderror" name="date_planted" value="{{ old('date_planted') }}" required>
-                                @error('date_planted')
+                                <input id="date" type="date" class="form-control @error('date') is-invalid @enderror" name="date" value="{{ old('date') }}" required>
+                                @error('date')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -212,9 +247,9 @@
                         </div>
 
                         <div class="text-right">
-                                <button type="submit" class="btn btn-primary p-2" onclick="return confirm('Are you sure you want to submit this form?')">
-                                    {{ __('Submit') }}
-                                </button>
+                            <button type="submit" class="btn btn-primary p-2" onclick="return confirm('Are you sure you want to submit this form?')">
+                                {{ __('Submit') }}
+                            </button>
                         </div>
                     </form>
                 </div>

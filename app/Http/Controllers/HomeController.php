@@ -8,6 +8,7 @@ use App\Models\Employee;
 use App\Models\Expense;
 use App\Models\Farm;
 use App\Models\Invoice;
+use App\Models\Payment;
 use App\Models\Record;
 use App\Models\Role;
 use App\Models\Salary;
@@ -144,7 +145,7 @@ class HomeController extends Controller
         }
     }
 
-    
+
     public function create_user(Request $request)
     {
         try {
@@ -391,6 +392,83 @@ class HomeController extends Controller
             send_notification('Created a new record for employee', $employee->first_name, $employee->last_name);
 
             Session::flash('success', "Record added successfully");
+            return back();
+        } catch (\Throwable $th) {
+            Session::flash('error', $th->getMessage());
+            return back();
+        }
+    }
+
+    public function employee_payment($id)
+    {
+        $data['sn'] = 1;
+        $data['employee'] = $employee = Employee::find($id);
+        if (!isset($employee)) {
+            Session::flash('warning', 'Employee not found');
+            return redirect()->route('employees');
+        }
+        $data['payments'] = Payment::where('employee_id', $employee->id)->orderBy('id', 'desc')->get();
+        $data['title'] = $employee->first_name . " " . $employee->last_name . " Payments";
+        return view('employees.payment', $data);
+    }
+
+    public function add_payment(Request $request)
+    {
+        try {
+            $data['employee'] = $employee = Employee::find($request->employee_id);
+            //code...
+            $rules = array(
+                'employee_id' => ['required'],
+                'amount' => ['required'],
+                'date' => ['required'],
+                'details' => ['required', 'string', 'max:255'],
+                'payment_method' => ['required', 'string', 'max:255'],
+                'payment_proof' => ['max:15000'],
+            );
+
+            $validator = Validator::make($request->all(), $rules);
+
+            if ($validator->fails()) {
+                Session::flash('warning', 'All fields are required');
+                if (isset($request->id)) {
+                    # code...                    
+                    return back()->withErrors($validator);
+                }
+                return back()->withErrors($validator)->withInput();
+            }
+            if ($request->id) {
+                if ($request->hasFile('payment_proof')) {
+                    $payment_proof = save_file($request->file('payment_proof'), "PAYMENT_PROOF");
+                }
+                $get_payment = Payment::where(['employee_id' => $employee->id, 'id' => $request->id])->first();
+                $get_payment->employee_id = $employee->id;
+                $get_payment->amount = $request->amount;
+                $get_payment->date = $request->date;
+                $get_payment->payment_method = $request->payment_method;
+                $get_payment->details = $request->details;
+                $get_payment->payment_proof = $payment_proof ?? $get_payment->payment_proof;
+                $get_payment->save();
+                send_notification('Updated payment for employee', $employee->first_name, $employee->last_name);
+
+                Session::flash('success', "Payment Updated successfully");
+                return back();
+            }
+
+            if ($request->hasFile('payment_proof')) {
+                $payment_proof = save_file($request->file('payment_proof'), "PAYMENT_PROOF");
+            }
+
+            Payment::create([
+                'employee_id' => $request->employee_id,
+                'amount' => $request->amount,
+                'date' => $request->date,
+                'payment_method' => $request->payment_method,
+                'details' => $request->details,
+                'payment_proof' => $payment_proof ?? '',
+            ]);
+            send_notification('Created a new payment for employee', $employee->first_name, $employee->last_name);
+
+            Session::flash('success', "Payment added successfully");
             return back();
         } catch (\Throwable $th) {
             Session::flash('error', $th->getMessage());
@@ -823,7 +901,7 @@ class HomeController extends Controller
             }
             if ($_POST) {
 
-                
+
                 $rules = array(
                     'farm_id' => ['required', 'string', 'max:255'],
                     'desc' => ['required', 'string', 'max:255'],
@@ -1162,7 +1240,7 @@ class HomeController extends Controller
                     'farm_id' => $request->farm,
                 ]);
 
-                send_notification('Created a new invoice data', $request->client_name);
+                send_notification('Created a new invoice data');
                 Session::flash('success', "Invoice created successfully");
                 return redirect()->route('invoices');
             }
@@ -1223,7 +1301,7 @@ class HomeController extends Controller
                     'farm_id' => $request->farm,
                 ]);
 
-                send_notification('Updated a invoice data', $request->client_name);
+                send_notification('Updated a invoice data', $invoice->client->client_name);
 
                 Session::flash('success', "Invoice data updated successfully");
                 return redirect()->route('invoices');
@@ -1240,7 +1318,7 @@ class HomeController extends Controller
     {
         # code...
         $crop = Crop::where('id', $request->crop_id)->with('farm:id,farm_name')->first();
-         $data = array(
+        $data = array(
             'farm_id' => $crop->farm->id,
             'farm_name' => $crop->farm->farm_name,
             'status' => true

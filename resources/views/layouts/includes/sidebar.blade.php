@@ -34,13 +34,13 @@
 
 
                 @if(in_array(1, Auth::user()->roles) || in_array(5, Auth::user()->roles))
-                <li class="{{ request()->is('employees') || request()->is('view-employees-salary/*') || request()->is('view-employee/*') || request()->is('edit-employee/*') || request()->is('create-employee')  ? 'active active-now' : '' }}">
+                <li class="{{ request()->is('employees') || request()->is('view-employees-salary/*') || request()->is('view-employees-record/*') || request()->is('view-employees-payment/*') || request()->is('view-employee/*') || request()->is('edit-employee/*') || request()->is('create-employee')  ? 'active active-now' : '' }}">
                     <a href="{{ route('employees') }}"><i class="feather-lock"></i>
                         <span class="shape1"></span><span class="shape2"></span>
                         <span> Employees</span></a>
                 </li>
                 
-                <li class="{{ request()->is('employees') || request()->is('view-employees-salary/*') || request()->is('view-employee/*') || request()->is('edit-employee/*') || request()->is('create-employee')  ? 'active active-now' : '' }}">
+                <!-- <li class="{{ request()->is('employees') || request()->is('view-employees-salary/*') || request()->is('view-employee/*') || request()->is('edit-employee/*') || request()->is('create-employee')  ? 'active active-now' : '' }}">
                     <a href="#"><i class="feather-user"></i>
                         <span class="shape1"></span><span class="shape2"></span>
                         <span> Employees</span> <span class="menu-arrow"></span></a>
@@ -49,7 +49,7 @@
                         <li><a class="{{ request()->is('employees') || request()->is('view-employees-salary/*') || request()->is('view-employee/*') || request()->is('edit-employee/*') || request()->is('create-employee') ? 'active active-now' : '' }}" href="{{ route('expenses') }}">Employee Record</a></li>
                         <li><a class="{{ request()->is('invoices') || request()->is('create-invoice') || request()->is('edit-invoice/*') ? 'active active-now' : ''  }}" href="{{ route('invoices') }}">Payment</a></li>
                     </ul>
-                </li>
+                </li> -->
                 @endif
 
 
@@ -82,8 +82,6 @@
                     </ul>
                 </li>
                 @endif
-
-
             </ul>
         </div>
     </div>

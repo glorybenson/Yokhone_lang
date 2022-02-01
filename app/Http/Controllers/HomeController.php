@@ -847,6 +847,7 @@ class HomeController extends Controller
             //code...
             $data['mode'] = "create";
             $data['farms'] = $f = Farm::orderBy('id', 'desc')->get();
+            $data['trees'] = Tree::orderBy('id', 'desc')->get();
             if ($_POST) {
                 $rules = array(
                     'farm_id' => ['required', 'string', 'max:255'],
@@ -895,6 +896,7 @@ class HomeController extends Controller
             $data['mode'] = "edit";
             $data['crop'] = $crop = Crop::find($id);
             $data['farms'] = Farm::orderBy('id', 'desc')->get();
+            $data['trees'] = Tree::orderBy('id', 'desc')->get();
             if (!isset($crop)) {
                 Session::flash('warning', 'Crop not found');
                 return redirect()->route('crops');
@@ -1213,9 +1215,7 @@ class HomeController extends Controller
                     'desc' => ['required', 'string'],
                     'quantity' => ['required', 'string'],
                     'unit_price' => ['required', 'string'],
-                    'total_price_before_discount' => ['required', 'string'],
                     'discount' => ['required', 'string'],
-                    'total_price_after_discount' => ['required', 'string'],
                     'crop' => ['required', 'string'],
                     'farm' => ['required', 'string']
                 );
@@ -1233,9 +1233,9 @@ class HomeController extends Controller
                     'desc' => $request->desc,
                     'quantity' => $request->quantity,
                     'unit_price' => $request->unit_price,
-                    'total_price_before_discount' => $request->total_price_before_discount,
+                    'total_price_before_discount' => $request->quantity * $request->unit_price,
                     'discount' => $request->discount,
-                    'total_price_after_discount' => $request->total_price_after_discount,
+                    'total_price_after_discount' => ($request->quantity * $request->unit_price) - $request->discount,
                     'crop_id' => $request->crop,
                     'farm_id' => $request->farm,
                 ]);
@@ -1273,9 +1273,7 @@ class HomeController extends Controller
                     'desc' => ['required', 'string'],
                     'quantity' => ['required', 'string'],
                     'unit_price' => ['required', 'string'],
-                    'total_price_before_discount' => ['required', 'string'],
                     'discount' => ['required', 'string'],
-                    'total_price_after_discount' => ['required', 'string'],
                     'crop' => ['required', 'string'],
                     'farm' => ['required', 'string']
                 );
@@ -1294,9 +1292,9 @@ class HomeController extends Controller
                     'desc' => $request->desc,
                     'quantity' => $request->quantity,
                     'unit_price' => $request->unit_price,
-                    'total_price_before_discount' => $request->total_price_before_discount,
+                    'total_price_before_discount' => $request->quantity * $request->unit_price,
                     'discount' => $request->discount,
-                    'total_price_after_discount' => $request->total_price_after_discount,
+                    'total_price_after_discount' => ($request->quantity * $request->unit_price) - $request->discount,
                     'crop_id' => $request->crop,
                     'farm_id' => $request->farm,
                 ]);

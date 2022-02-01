@@ -96,7 +96,7 @@
                             </div>
                         </div>
 
-                        <div class="row mb-3">
+                        <!-- <div class="row mb-3">
                             <label for="total_price_before_discount" class="col-md-2 col-form-label text-md-end">{{ __('Total Price before discount') }}</label>
                             <div class="col-md-10">
                                 <input id="total_price_before_discount" type="number" class="form-control @error('total_price_before_discount') is-invalid @enderror" name="total_price_before_discount" required value="{{ $invoice->total_price_before_discount }}" autocomplete="">
@@ -106,7 +106,7 @@
                                 </span>
                                 @enderror
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="row mb-3">
                             <label for="discount" class="col-md-2 col-form-label text-md-end">{{ __('Discount') }}</label>
@@ -121,7 +121,7 @@
                         </div>
 
 
-                        <div class="row mb-3">
+                        <!-- <div class="row mb-3">
                             <label for="total_price_after_discount" class="col-md-2 col-form-label text-md-end">{{ __('Total Price after discount') }}</label>
                             <div class="col-md-10">
                                 <input id="total_price_after_discount" type="number" class="form-control @error('total_price_after_discount') is-invalid @enderror" name="total_price_after_discount" value="{{ $invoice->total_price_after_discount }}" required autocomplete="date">
@@ -131,7 +131,7 @@
                                 </span>
                                 @enderror
                             </div>
-                        </div>
+                        </div> -->
 
 
 
@@ -272,7 +272,7 @@
                             </div>
                         </div>
 
-                        <div class="row mb-3">
+                        <!-- <div class="row mb-3">
                             <label for="total_price_before_discount" class="col-md-2 col-form-label text-md-end">{{ __('Total Price before discount') }}</label>
                             <div class="col-md-10">
                                 <input id="total_price_before_discount" type="number" class="form-control @error('total_price_before_discount') is-invalid @enderror" name="total_price_before_discount" value="{{ old('total_price_before_discount') }}" required>
@@ -282,7 +282,7 @@
                                 </span>
                                 @enderror
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="row mb-3">
                             <label for="discount" class="col-md-2 col-form-label text-md-end">{{ __('Discount') }}</label>
@@ -297,7 +297,7 @@
                         </div>
 
 
-                        <div class="row mb-3">
+                        <!-- <div class="row mb-3">
                             <label for="total_price_after_discount" class="col-md-2 col-form-label text-md-end">{{ __('Total Price after discount') }}</label>
                             <div class="col-md-10">
                                 <input id="total_price_after_discount" type="number" class="form-control @error('total_price_after_discount') is-invalid @enderror" name="total_price_after_discount" value="{{ old('total_price_after_discount') }}" required>
@@ -307,7 +307,7 @@
                                 </span>
                                 @enderror
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="row">
                             <label for="crop" class="col-md-2 col-form-label text-md-end">Crop</label>

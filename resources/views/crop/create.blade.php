@@ -67,7 +67,14 @@
                         <div class="row mb-3">
                             <label for="desc" class="col-md-2 col-form-label text-md-end">{{ __('Description') }}</label>
                             <div class="col-md-10">
-                                <textarea id="desc" class="form-control @error('desc') is-invalid @enderror" required name="desc">{{ $crop->desc }}</textarea>
+                                <select id="desc" class="select @error('desc') is-invalid @enderror" name="desc" required>
+                                    <option value="">Select Description</option>
+                                    @if(isset($trees))
+                                    @foreach($trees as $tree)
+                                    <option value="{{$tree->desc}}" {{ $crop->desc == $tree->desc ? 'selected' : '' }}>{{$tree->desc}}</option>
+                                    @endforeach
+                                    @endif
+                                </select>
                                 @error('desc')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -88,7 +95,7 @@
                                 @enderror
                             </div>
                         </div>
-                        
+
                         <div class="row mb-3">
                             <label for="weight" class="col-md-2 col-form-label text-md-end">{{ __('Weight') }}</label>
                             <div class="col-md-10">
@@ -195,7 +202,14 @@
                         <div class="row mb-3">
                             <label for="desc" class="col-md-2 col-form-label text-md-end">{{ __('Description') }}</label>
                             <div class="col-md-10">
-                                <textarea id="desc" class="form-control @error('desc') is-invalid @enderror" required name="desc">{{ old('desc') }}</textarea>
+                                <select id="desc" class="select @error('desc') is-invalid @enderror" name="desc" required>
+                                    <option value="">Select Description</option>
+                                    @if(isset($trees))
+                                    @foreach($trees as $tree)
+                                    <option value="{{$tree->desc}}" {{ old('desc') == $tree->desc ? 'selected' : '' }}>{{$tree->desc}}</option>
+                                    @endforeach
+                                    @endif
+                                </select>
                                 @error('desc')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -216,7 +230,7 @@
                                 @enderror
                             </div>
                         </div>
-                        
+
                         <div class="row mb-3">
                             <label for="weight" class="col-md-2 col-form-label text-md-end">{{ __('Weight') }}</label>
                             <div class="col-md-10">

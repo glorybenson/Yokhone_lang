@@ -21,7 +21,7 @@
                 <div class="card-header">
                     <h4 class="card-title float-left">Update Employee Data</h4>
                     <div class="text-right">
-                        <a href="{{ route('employees') }}" class="btn btn-outline-dark p-2">Back to Employees</a>
+                        <a href="{{ route('employees') }}" class="btn btn-dark p-2">Back to Employees</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -240,7 +240,7 @@
                 <div class="card-header">
                     <h4 class="card-title float-left">Create Employee</h4>
                     <div class="text-right">
-                        <a href="{{ route('employees') }}" class="btn btn-outline-dark p-2">Back to Employees</a>
+                        <a href="{{ route('employees') }}" class="btn btn-dark p-2">Back to Employees</a>
                     </div>
                 </div>
                 <div class="card-body">

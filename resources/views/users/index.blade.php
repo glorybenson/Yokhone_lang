@@ -51,10 +51,12 @@
                                     </td>
                                     <td>
                                         <div class="d-flex">
-                                            @if($user->role != 1)
+                                            @if(!in_array(1, $user->roles))
                                             <a href="{{ route('edit.user', $user->id) }}" class="btn btn-sm p-2" title="Edit"><i class="fa fa-edit"></i></a>
+                                            @endif
 
-                                            @if(Auth::user()->role == 1)
+                                            @if(in_array(1, Auth::user()->roles))
+                                            @if(!in_array(1, $user->roles))
                                             <a href="{{ route('delete.user', $user->id) }}" onclick="return confirm('Are you sure you want to delete this user?')" title="Delete" class="btn btn-sm p-2" title="Edit"><i class="fa fa-trash"></i></a>
                                             @endif
                                             @endif

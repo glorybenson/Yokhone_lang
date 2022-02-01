@@ -3,6 +3,18 @@
 @section('content')
 <div class="content container-fluid">
     @if(isset($mode) && $mode == "password")
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col-md-12">
+                <div class="d-flex align-items-center">
+                    <h5 class="page-title">Dashboard</h5>
+                    <ul class="breadcrumb ml-2">
+                        <li class="breadcrumb-item active">Change Password</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -51,7 +63,7 @@
                         </div>
                         <div class="">
                             <div class="text-right m-3">
-                                <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to submit this form?')">
+                                <button type="submit" class="btn btn-primary p-2" onclick="return confirm('Are you sure you want to submit this form?')">
                                     {{ __('Update Profile') }}
                                 </button>
                             </div>
@@ -63,6 +75,18 @@
     </div>
     @endif
     @if(isset($mode) && $mode == "profile")
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col-md-12">
+                <div class="d-flex align-items-center">
+                    <h5 class="page-title">Dashboard</h5>
+                    <ul class="breadcrumb ml-2">
+                        <li class="breadcrumb-item active">Update Profile</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -113,7 +137,7 @@
                         </div>
                         <div class="">
                             <div class="text-right m-3">
-                                <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to submit this form?')">
+                                <button type="submit" class="btn btn-primary p-2" onclick="return confirm('Are you sure you want to submit this form?')">
                                     {{ __('Update Profile') }}
                                 </button>
                             </div>

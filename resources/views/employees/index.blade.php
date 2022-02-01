@@ -21,7 +21,7 @@
                 <div class="card-header">
                     <h4 class="card-title float-left">Employees</h4>
                     <div class="text-right">
-                        <a href="{{ route('create.employee') }}" class="btn btn-outline-dark p-2">Add New Employee</a>
+                        <a href="{{ route('create.employee') }}" class="btn btn-dark p-2">Add New Employee</a>
                     </div>
                 </div>
                 <div class="card-body">

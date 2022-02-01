@@ -250,7 +250,7 @@
                         <div class="row mb-3">
                             <label for="first_name" class="col-md-2 col-form-label text-md-end">{{ __('First Name') }}</label>
                             <div class="col-md-10">
-                                <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" autocomplete="name" required autofocus>
+                                <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" autocomplete="first name" required autofocus>
                                 @error('first_name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -262,7 +262,7 @@
                         <div class="row mb-3">
                             <label for="last_name" class="col-md-2 col-form-label text-md-end">{{ __('Last Name') }}</label>
                             <div class="col-md-10">
-                                <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" autocomplete="name" required autofocus>
+                                <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" autocomplete="last name" required autofocus>
                                 @error('last_name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

@@ -2044,7 +2044,7 @@ button.bg-danger:hover {
 }
 
 .menu-title>span {
-    color: #ff9800;
+    color: #04AA6D;
     display: flex;
     font-size: 14px;
     opacity: 1;
@@ -3823,7 +3823,7 @@ table.table-inbox tbody tr.checked {
 }
 
 .error-box h1 {
-    color: #ff9800;
+    color: #04AA6D;
     font-size: 10em
 }
 
@@ -3891,7 +3891,7 @@ table.table-inbox tbody tr.checked {
 }
 
 .breadcrumb-item.active {
-    color: #ff9800
+    color: #04AA6D
 }
 
 .page-title {
@@ -3980,7 +3980,7 @@ table.table-inbox tbody tr.checked {
 }
 
 .login-wrapper .loginbox .login-right .dont-have {
-    color: #ff9800;
+    color: #04AA6D;
     margin-top: 1.875rem
 }
 
@@ -4211,7 +4211,7 @@ table.table-inbox tbody tr.checked {
 }
 
 .header-chat {
-    background-color: #ff9800 !important;
+    background-color: #04AA6D !important;
     -webkit-animation: pulse 2s infinite !important;
     animation: pulse 2s infinite !important;
     -webkit-box-shadow: 0 0 0 rgba(50, 53, 132, .9);
@@ -4443,7 +4443,7 @@ table.table-inbox tbody tr.checked {
 }
 
 .activity-feed .feed-item .feed-text {
-    color: #ff9800;
+    color: #04AA6D;
     position: relative
 }
 
@@ -5175,7 +5175,7 @@ input:checked+.slider:before {
 }
 
 .list-inline-item i {
-    color: #ff9800
+    color: #04AA6D
 }
 
 .calendar {
@@ -5211,7 +5211,7 @@ input:checked+.slider:before {
 
 .fc-state-active,
 .fc-state-down {
-    background-color: #ff9800;
+    background-color: #04AA6D;
     background-image: none;
     box-shadow: none;
     color: #fff
@@ -5349,7 +5349,7 @@ input:checked+.slider:before {
 }
 
 .img-icon {
-    color: #ff9800
+    color: #04AA6D
 }
 
 .documennts i {
@@ -5546,7 +5546,7 @@ input:checked+.slider:before {
 }
 
 .settings-menu ul li a.active {
-    color: #ff9800 !important;
+    color: #04AA6D !important;
     border: 0
 }
 

@@ -22,7 +22,7 @@ class CreateClientsTable extends Migration
             $table->string('contact_email');
             $table->date('date_become_client');
             $table->string('referred_by');
-            $table->foreignId('employee_id')->constrained('employees')->cascadeOnDelete();
+            $table->foreignId('employee_id')->nullable()->constrained('employees')->cascadeOnDelete();
             $table->longText('note')->nullable();
             $table->timestamps();
         });

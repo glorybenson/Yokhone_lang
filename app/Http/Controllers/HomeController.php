@@ -995,7 +995,7 @@ class HomeController extends Controller
                     'contact_email' => $request->contact_email,
                     'date_become_client' => $request->date_become_client,
                     'referred_by' => $request->referred_by,
-                    'employee_id' => $request->employee ?? null,
+                    'employee_id' => $request->employee,
                     'note' => $request->note ?? null,
                 ]);
 

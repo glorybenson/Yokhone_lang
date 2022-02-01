@@ -32,7 +32,7 @@
                         <div class="row mb-3">
                             <label for="farm_id" class="col-md-2 col-form-label text-md-end">{{ __('Farm Name') }}</label>
                             <div class="col-md-10">
-                                <select id="farm_id" class="form-control @error('farm_id') is-invalid @enderror" name="farm_id" required>
+                                <select id="farm_id" class="select form-control @error('farm_id') is-invalid @enderror" name="farm_id" required>
                                     <option value="">Select Farm</option>
                                     @if(isset($farms))
                                     @foreach($farms as $farm)
@@ -64,7 +64,7 @@
                         <div class="row mb-3">
                             <label for="reason" class="col-md-2 col-form-label text-md-end">{{ __('Reason') }}</label>
                             <div class="col-md-10">
-                                <select id="reason" class="form-control @error('reason') is-invalid @enderror" name="reason" required>
+                                <select id="reason" class="select form-control @error('reason') is-invalid @enderror" name="reason" required>
                                     <option value="">Select Reason</option>
                                     <option value="Plantation" {{ $tree->reason == "Plantation" ? 'selected' : '' }}>Plantation</option>
                                     <option value="Death" {{ $tree->reason == "Death" ? 'selected' : '' }}>Death</option>

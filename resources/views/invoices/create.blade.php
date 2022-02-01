@@ -2,13 +2,27 @@
 @section('content')
 <div class="content container-fluid">
     @if(isset($mode) && $mode == "edit")
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col-md-12">
+                <div class="d-flex align-items-center">
+                    <h5 class="page-title">Dashboard</h5>
+                    <ul class="breadcrumb ml-2">
+                        <li class="breadcrumb-item">Finance</li>
+                        <li class="breadcrumb-item"><a href="{{ route('invoices') }}">Invoice</a></li>
+                        <li class="breadcrumb-item active">Update Invoice</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title float-left">Edit Invoice Data</h4>
+                    <h4 class="card-title float-left">Update Invoice Data</h4>
                     <div class="text-right">
-                        <a href="{{ route('invoices') }}" class="btn btn-secondary p-2">Back to Invoices</a>
+                        <a href="{{ route('invoices') }}" class="btn btn-dark p-2">Back to Invoices</a>
                     </div>
                 </div>
                 <div class="card-body">

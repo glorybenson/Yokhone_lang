@@ -10,7 +10,7 @@
                     <ul class="breadcrumb ml-2">
                         <li class="breadcrumb-item">Finance</li>
                         <li class="breadcrumb-item"><a href="{{ route('expenses') }}">Expenses</a></li>
-                        <li class="breadcrumb-item active">Create New Expense</li>
+                        <li class="breadcrumb-item active">Update Expense</li>
                     </ul>
                 </div>
             </div>
@@ -20,9 +20,9 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title float-left">Edit Client Data</h4>
+                    <h4 class="card-title float-left">Update Expense Data</h4>
                     <div class="text-right">
-                        <a href="{{ route('clients') }}" class="btn btn-darl p-2">Back to Clients</a>
+                        <a href="{{ route('expenses') }}" class="btn btn-dark p-2">Back to Expenses</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -30,8 +30,8 @@
                         @csrf
                         <input type="hidden" name="id" value="{{$expense->id}}">
                         <div class="row mb-3">
-                            <label for="date" class="col-md-4 col-form-label text-md-end">{{ __('Date') }}</label>
-                            <div class="col-md-8">
+                            <label for="date" class="col-md-2 col-form-label text-md-end">{{ __('Date') }}</label>
+                            <div class="col-md-10">
                                 <input id="date" type="date" class="form-control @error('date') is-invalid @enderror" name="date" value="{{ $expense->date }}" autocomplete="name" required>
                                 @error('date')
                                 <span class="invalid-feedback" role="alert">
@@ -42,8 +42,8 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="desc" class="col-md-4 col-form-label text-md-end">{{ __('Description') }}</label>
-                            <div class="col-md-8">
+                            <label for="desc" class="col-md-2 col-form-label text-md-end">{{ __('Description') }}</label>
+                            <div class="col-md-10">
                                 <textarea id="desc" class="form-control @error('desc') is-invalid @enderror" required name="desc">{{ $expense->desc }}</textarea>
                                 @error('desc')
                                 <span class="invalid-feedback" role="alert">
@@ -54,8 +54,8 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="amount" class="col-md-4 col-form-label text-md-end">{{ __('Amount') }}</label>
-                            <div class="col-md-8">
+                            <label for="amount" class="col-md-2 col-form-label text-md-end">{{ __('Amount') }}</label>
+                            <div class="col-md-10">
                                 <input id="amount" type="number" class="form-control @error('amount') is-invalid @enderror" name="amount" value="{{ $expense->amount }}" required>
                                 @error('amount')
                                 <span class="invalid-feedback" role="alert">
@@ -66,9 +66,9 @@
                         </div>
 
                         <div class="row">
-                            <label for="farm" class="col-md-4 col-form-label text-md-end">Farm</label>
-                            <div class="col-md-8 mb-3">
-                                <select class="form-control @error('farm') is-invalid @enderror" name="farm">
+                            <label for="farm" class="col-md-2 col-form-label text-md-end">Farm</label>
+                            <div class="col-md-10 mb-3">
+                                <select class="select form-control @error('farm') is-invalid @enderror" name="farm">
                                     <option value="">Select a Farm</option>
                                     @if(isset($farms))
                                     @foreach($farms as $farm)
@@ -85,9 +85,9 @@
                         </div>
 
                         <div class="row">
-                            <label for="employee" class="col-md-4 col-form-label text-md-end">Employee</label>
-                            <div class="col-md-8 mb-3">
-                                <select class="form-control @error('employee') is-invalid @enderror" name="employee">
+                            <label for="employee" class="col-md-2 col-form-label text-md-end">Employee</label>
+                            <div class="col-md-10 mb-3">
+                                <select class="select form-control @error('employee') is-invalid @enderror" name="employee">
                                     <option value="">Select an Employee</option>
                                     @if(isset($employees))
                                     @foreach($employees as $employee)
@@ -103,12 +103,10 @@
                             </div>
                         </div>
 
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to submit this form?')">
+                        <div class="text-right">
+                                <button type="submit" class="btn btn-primary p-2" onclick="return confirm('Are you sure you want to submit this form?')">
                                     {{ __('Submit') }}
                                 </button>
-                            </div>
                         </div>
                     </form>
                 </div>
@@ -144,8 +142,8 @@
                     <form method="POST" action="{{ route('create.expense') }}">
                         @csrf
                         <div class="row mb-3">
-                            <label for="date" class="col-md-4 col-form-label text-md-end">{{ __('Date') }}</label>
-                            <div class="col-md-8">
+                            <label for="date" class="col-md-2 col-form-label text-md-end">{{ __('Date') }}</label>
+                            <div class="col-md-10">
                                 <input id="date" type="date" class="form-control @error('date') is-invalid @enderror" name="date" value="{{ old('date') }}" autocomplete="name" required>
                                 @error('date')
                                 <span class="invalid-feedback" role="alert">
@@ -156,8 +154,8 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="desc" class="col-md-4 col-form-label text-md-end">{{ __('Description') }}</label>
-                            <div class="col-md-8">
+                            <label for="desc" class="col-md-2 col-form-label text-md-end">{{ __('Description') }}</label>
+                            <div class="col-md-10">
                                 <textarea id="desc" class="form-control @error('desc') is-invalid @enderror" required name="desc">{{ old('desc') }}</textarea>
                                 @error('desc')
                                 <span class="invalid-feedback" role="alert">
@@ -167,10 +165,10 @@
                             </div>
                         </div>
 
-                        
+
                         <div class="row mb-3">
-                            <label for="amount" class="col-md-4 col-form-label text-md-end">{{ __('Amount') }}</label>
-                            <div class="col-md-8">
+                            <label for="amount" class="col-md-2 col-form-label text-md-end">{{ __('Amount') }}</label>
+                            <div class="col-md-10">
                                 <input id="amount" type="number" class="form-control @error('amount') is-invalid @enderror" name="amount" value="{{ old('amount') }}" required>
                                 @error('amount')
                                 <span class="invalid-feedback" role="alert">
@@ -181,9 +179,9 @@
                         </div>
 
                         <div class="row">
-                            <label for="farm" class="col-md-4 col-form-label text-md-end">Farm</label>
-                            <div class="col-md-8 mb-3">
-                                <select class="form-control @error('farm') is-invalid @enderror" name="farm">
+                            <label for="farm" class="col-md-2 col-form-label text-md-end">Farm</label>
+                            <div class="col-md-10 mb-3">
+                                <select class="select form-control @error('farm') is-invalid @enderror" name="farm">
                                     <option value="">Select a Farm</option>
                                     @if(isset($farms))
                                     @foreach($farms as $farm)
@@ -200,9 +198,9 @@
                         </div>
 
                         <div class="row">
-                            <label for="employee" class="col-md-4 col-form-label text-md-end">Employee</label>
-                            <div class="col-md-8 mb-3">
-                                <select class="form-control @error('employee') is-invalid @enderror" name="employee">
+                            <label for="employee" class="col-md-2 col-form-label text-md-end">Employee</label>
+                            <div class="col-md-10 mb-3">
+                                <select class="select form-control @error('employee') is-invalid @enderror" name="employee">
                                     <option value="">Select an Employee</option>
                                     @if(isset($employees))
                                     @foreach($employees as $employee)
@@ -218,12 +216,10 @@
                             </div>
                         </div>
 
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to submit this form?')">
-                                    {{ __('Submit') }}
-                                </button>
-                            </div>
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-primary p-2" onclick="return confirm('Are you sure you want to submit this form?')">
+                                {{ __('Submit') }}
+                            </button>
                         </div>
                     </form>
                 </div>

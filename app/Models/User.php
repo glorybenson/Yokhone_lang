@@ -57,10 +57,4 @@ class User extends Authenticatable
     public function user_role(){
         return $this->hasOne(Role::class, 'id', 'role');
     }
-
-    // public function isAdmin() {
-    //     $user = User::whereId(Auth::user()->id)->first();
-    //     //d$user->user_role);        
-    //     return $this->role = $this->user_role->name;
-    //  }
 }

@@ -2,13 +2,26 @@
 @section('content')
 <div class="content container-fluid">
     @if(isset($mode) && $mode == "edit")
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col-md-12">
+                <div class="d-flex align-items-center">
+                    <h5 class="page-title">Dashboard</h5>
+                    <ul class="breadcrumb ml-2">
+                        <li class="breadcrumb-item"><a href="{{ route('farms') }}">Farms</a></li>
+                        <li class="breadcrumb-item active">Update Farm Data</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title float-left">Edit Farm</h4>
+                    <h4 class="card-title float-left">Update Farm Data</h4>
                     <div class="text-right">
-                        <a href="{{ route('farms') }}" class="btn btn-secondary p-2">Back to Farms</a>
+                        <a href="{{ route('farms') }}" class="btn btn-dark p-2">Back to Farms</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -98,12 +111,10 @@
                             </div>
                         </div>
 
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to submit this form?')">
+                        <div class="text-right">
+                                <button type="submit" class="btn btn-primary p-2" onclick="return confirm('Are you sure you want to submit this form?')">
                                     {{ __('Submit') }}
                                 </button>
-                            </div>
                         </div>
                     </form>
                 </div>

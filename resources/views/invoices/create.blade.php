@@ -75,7 +75,7 @@
                         <div class="row mb-3">
                             <label for="quantity" class="col-md-2 col-form-label text-md-end">{{ __('Quantity') }}</label>
                             <div class="col-md-10">
-                                <input id="quantity" type="number" class="form-control @error('quantity') is-invalid @enderror" name="quantity" value="{{ $invoice->quantity }}" autocomplete="" required>
+                                <input id="quantity" type="number" oninput="firstFunction()" class="form-control @error('quantity') is-invalid @enderror" name="quantity" value="{{ $invoice->quantity }}" autocomplete="" required>
                                 @error('quantity')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -87,7 +87,7 @@
                         <div class="row mb-3">
                             <label for="unit_price" class="col-md-2 col-form-label text-md-end">{{ __('Unit Price') }}</label>
                             <div class="col-md-10">
-                                <input id="unit_price" type="number" class="form-control @error('unit_price') is-invalid @enderror" name="unit_price" value="{{ $invoice->unit_price }}" autocomplete="date" required>
+                                <input id="unit_price" type="number" oninput="firstFunction()" class="form-control @error('unit_price') is-invalid @enderror" name="unit_price" value="{{ $invoice->unit_price }}" autocomplete="date" required>
                                 @error('unit_price')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -96,22 +96,22 @@
                             </div>
                         </div>
 
-                        <!-- <div class="row mb-3">
+                        <div class="row mb-3">
                             <label for="total_price_before_discount" class="col-md-2 col-form-label text-md-end">{{ __('Total Price before discount') }}</label>
                             <div class="col-md-10">
-                                <input id="total_price_before_discount" type="number" class="form-control @error('total_price_before_discount') is-invalid @enderror" name="total_price_before_discount" required value="{{ $invoice->total_price_before_discount }}" autocomplete="">
+                                <input id="total_price_before_discount" type="number" readonly class="form-control @error('total_price_before_discount') is-invalid @enderror">
                                 @error('total_price_before_discount')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
                             </div>
-                        </div> -->
+                        </div>
 
                         <div class="row mb-3">
                             <label for="discount" class="col-md-2 col-form-label text-md-end">{{ __('Discount') }}</label>
                             <div class="col-md-10">
-                                <input id="discount" type="number" class="form-control @error('discount') is-invalid @enderror" name="discount" value="{{ $invoice->discount }}" autocomplete="date" required>
+                                <input id="discount" type="number" oninput="secondFunction()" class="form-control @error('discount') is-invalid @enderror" name="discount" value="{{ $invoice->discount }}" autocomplete="date" required>
                                 @error('discount')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -121,17 +121,17 @@
                         </div>
 
 
-                        <!-- <div class="row mb-3">
+                        <div class="row mb-3">
                             <label for="total_price_after_discount" class="col-md-2 col-form-label text-md-end">{{ __('Total Price after discount') }}</label>
                             <div class="col-md-10">
-                                <input id="total_price_after_discount" type="number" class="form-control @error('total_price_after_discount') is-invalid @enderror" name="total_price_after_discount" value="{{ $invoice->total_price_after_discount }}" required autocomplete="date">
+                                <input id="total_price_after_discount" type="number" readonly class="form-control @error('total_price_after_discount') is-invalid @enderror">
                                 @error('total_price_after_discount')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
                             </div>
-                        </div> -->
+                        </div>
 
 
 
@@ -251,7 +251,7 @@
                         <div class="row mb-3">
                             <label for="quantity" class="col-md-2 col-form-label text-md-end">{{ __('Quantity') }}</label>
                             <div class="col-md-10">
-                                <input id="quantity" type="number" class="form-control @error('quantity') is-invalid @enderror" name="quantity" value="{{ old('quantity') }}" autocomplete="" required>
+                                <input id="quantity" type="number" oninput="firstFunction()" class="form-control @error('quantity') is-invalid @enderror" name="quantity" value="{{ old('quantity') }}" autocomplete="" required>
                                 @error('quantity')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -263,7 +263,7 @@
                         <div class="row mb-3">
                             <label for="unit_price" class="col-md-2 col-form-label text-md-end">{{ __('Unit Price') }}</label>
                             <div class="col-md-10">
-                                <input id="unit_price" type="number" class="form-control @error('unit_price') is-invalid @enderror" name="unit_price" value="{{ old('unit_price') }}" required>
+                                <input id="unit_price" type="number" oninput="firstFunction()" class="form-control @error('unit_price') is-invalid @enderror" name="unit_price" value="{{ old('unit_price') }}" required>
                                 @error('unit_price')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -272,22 +272,22 @@
                             </div>
                         </div>
 
-                        <!-- <div class="row mb-3">
+                        <div class="row mb-3">
                             <label for="total_price_before_discount" class="col-md-2 col-form-label text-md-end">{{ __('Total Price before discount') }}</label>
                             <div class="col-md-10">
-                                <input id="total_price_before_discount" type="number" class="form-control @error('total_price_before_discount') is-invalid @enderror" name="total_price_before_discount" value="{{ old('total_price_before_discount') }}" required>
+                                <input id="total_price_before_discount" type="number" readonly class="form-control @error('total_price_before_discount') is-invalid @enderror">
                                 @error('total_price_before_discount')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
                             </div>
-                        </div> -->
+                        </div>
 
                         <div class="row mb-3">
                             <label for="discount" class="col-md-2 col-form-label text-md-end">{{ __('Discount') }}</label>
                             <div class="col-md-10">
-                                <input id="discount" type="number" class="form-control @error('discount') is-invalid @enderror" name="discount" value="{{ old('discount') }}" required>
+                                <input id="discount" type="number" oninput="secondFunction()" class="form-control @error('discount') is-invalid @enderror" name="discount" value="{{ old('discount') }}" required>
                                 @error('discount')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -297,17 +297,17 @@
                         </div>
 
 
-                        <!-- <div class="row mb-3">
+                        <div class="row mb-3">
                             <label for="total_price_after_discount" class="col-md-2 col-form-label text-md-end">{{ __('Total Price after discount') }}</label>
                             <div class="col-md-10">
-                                <input id="total_price_after_discount" type="number" class="form-control @error('total_price_after_discount') is-invalid @enderror" name="total_price_after_discount" value="{{ old('total_price_after_discount') }}" required>
+                                <input id="total_price_after_discount" type="number" readonly class="form-control @error('total_price_after_discount') is-invalid @enderror">
                                 @error('total_price_after_discount')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
                             </div>
-                        </div> -->
+                        </div>
 
                         <div class="row">
                             <label for="crop" class="col-md-2 col-form-label text-md-end">Crop</label>
@@ -380,9 +380,31 @@
         }
     }
 
+    function firstFunction() {
+        quantity = document.getElementById('quantity').value
+        unit = document.getElementById('unit_price').value
+        if (quantity >= 0 && unit >= 0) {
+            document.getElementById('total_price_before_discount').value = quantity * unit
+        } else {
+            document.getElementById('total_price_before_discount').value = 0
+        }
+    }
+
+    function secondFunction() {
+        discount = document.getElementById('discount').value
+        before_discount = document.getElementById('total_price_before_discount').value
+        if (discount >= 0 && before_discount >= 0) {
+            document.getElementById('total_price_after_discount').value = before_discount - discount
+        } else {
+            document.getElementById('total_price_after_discount').value = 0
+        }
+    }
+
     document.onreadystatechange = function() {
         data = document.getElementById('crop_id')
         loadFarm(data, '{{csrf_token()}}')
+        firstFunction()
+        secondFunction()
     }
 </script>
 @endsection

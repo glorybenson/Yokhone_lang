@@ -33,7 +33,7 @@
                             <label for="client_name" class="col-md-2 col-form-label text-md-end">Client Name</label>
                             <div class="col-md-10 mb-3">
                                 <select class="form-control @error('client_name') is-invalid @enderror" name="client_name" required>
-                                    <option value="">Select an Client</option>
+                                    <option value="">Select a Client</option>
                                     @if(isset($clients))
                                     @foreach($clients as $client)
                                     <option value="{{$client->id}}" {{ $invoice->client_id == $client->id ? 'selected' : '' }}>{{$client->client_name}}</option>
@@ -209,7 +209,7 @@
                             <label for="client_name" class="col-md-2 col-form-label text-md-end">Client Name</label>
                             <div class="col-md-10 mb-3">
                                 <select class="form-control select @error('client_name') is-invalid @enderror" name="client_name">required
-                                    <option value="">Select an Client</option>
+                                    <option value="">Select a Client</option>
                                     @if(isset($clients))
                                     @foreach($clients as $client)
                                     <option value="{{$client->id}}" {{ old('client_name') == $client->id ? 'selected' : '' }}>{{$client->client_name}}</option>

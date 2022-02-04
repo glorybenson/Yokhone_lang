@@ -235,7 +235,7 @@ class HomeController extends Controller
     {
         try {
             //code...
-            if (Auth::user()->role != 1) {
+            if (!in_array(1, Auth::user()->roles)) {
                 Session::flash('permission_warning', 'You no not have access to delete this record');
                 return back();
             }

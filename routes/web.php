@@ -19,8 +19,8 @@ use Illuminate\Support\Facades\Route;
         if (isset($locale) && in_array($locale, config('app.available_locales'))) {
             app()->setLocale($locale);
         }
-    //return redirect()->route('login');
-    return view('welcome');
+    return redirect()->route('login');
+    //return view('welcome');
 });
 
 

@@ -23,7 +23,7 @@ Route::get('/{locale?}', function ($locale = null) {
 });
 
 
-Auth::routes();
+//Auth::routes();
 
 Route::group(['middleware' => ['auth']], function () {
 

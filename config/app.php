@@ -117,10 +117,10 @@ return [
     |
     */
 
-    'available_locales' => [
-    'English' => 'en',
-    'French' => 'fr',
-],
+    //'available_locales' => [
+    //'English' => 'en',
+    //'French' => 'fr',
+//],
 
     /*
     |--------------------------------------------------------------------------

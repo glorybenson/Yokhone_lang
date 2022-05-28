@@ -18,7 +18,7 @@ Route::get('/{locale?}', function ($locale = null) {
     if (isset($locale) && in_array($locale, config('app.available_locales'))) {
         app()->setLocale($locale);
     }
-    return view('login');
+    return redirect()->route('login');
     // return view('welcome');
 });
 

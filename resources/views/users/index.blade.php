@@ -6,7 +6,7 @@
         <div class="row align-items-center">
             <div class="col-md-12">
                 <div class="d-flex align-items-center">
-                    <h5 class="page-title">{{ trans('greetings.dashboard')}}</h5>
+                    <h5 class="page-title">{{ trans('dashboard')}}</h5>
                     <ul class="breadcrumb ml-2">
                         <li class="breadcrumb-item active">Users</li>
                     </ul>
@@ -18,7 +18,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title float-left">{{ trans('greetings.users')}}</h4>
+                    <h4 class="card-title float-left">{{ __('users')}}</h4>
                     <div class="text-right">
                         <a href="{{ route('create.user') }}" class="btn btn-dark p-2">Add New User</a>
                     </div>

@@ -1,5 +1,5 @@
 <?php
 return array(
-    'dashboad'=> 'Tableau de bord',
+    'dashboard'=> 'Tableau de bord',
     'users'=> 'Utilisateurs'
 );

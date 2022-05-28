@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    Lang::setLocale('fr');
     return redirect()->route('login');
     // return view('welcome');
 });
@@ -26,7 +27,6 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::group(['middleware' => ['user']], function () {
         //User Routes
-        Lang::setLocale('fr');
         Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
         Route::match(['get', 'post'], '/edit-user/{id}', [App\Http\Controllers\HomeController::class, 'edit_user'])->name('edit.user');
         Route::match(['get', 'post'], '/create-user', [App\Http\Controllers\HomeController::class, 'create_user'])->name('create.user');
